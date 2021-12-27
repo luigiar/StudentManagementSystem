@@ -1,3 +1,4 @@
+package Entità;
 
 public class Lezione {
 

@@ -1,3 +1,4 @@
+package Entità;
 import java.util.ArrayList;
 
 public class Corso {

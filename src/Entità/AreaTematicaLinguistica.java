@@ -1,4 +1,4 @@
-
+package Entità;
 public class AreaTematicaLinguistica extends AreeTematiche {
 // attributi
 	public String nome;
