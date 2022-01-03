@@ -188,7 +188,9 @@ public class LoginFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(txtUsername.getText().equals("admin") && pwdPassword.getText().equals("admin")) {
-					// se gli input sono corretti apri prossima finestra 
+					MainFrame mainFrame = new MainFrame();
+					mainFrame.setVisible(true);
+					LoginFrame.this.dispose();
 					loginMessageLabel.setText("");
 					JOptionPane.showMessageDialog(null, "Login eseguito");
 				}

@@ -33,29 +33,31 @@ import javax.swing.border.LineBorder;
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
+	JLabel lblX = new JLabel("X");
 	JLabel right_label = new JLabel("");
 	JLabel menu_label = new JLabel("");
 	JPanel side_panel = new JPanel();
 	JButton std_btn = new JButton("Studenti");
-	JLabel lblX = new JLabel("X");
 	
 	private final JLabel logo_label = new JLabel("");
 	private final JPanel student_panel = new JPanel();
-	private final JButton addStudent_button = new JButton("Aggiungi Studente");
-	private final JButton ManageStudent_button = new JButton("Gestisci Studente");
-	private final JButton DashboardStudent_button = new JButton("Dettagli Studente");
 	private static boolean StudentButtonPressed = false;
 	private final JButton course_button = new JButton("Corsi");
 	private final JPanel course_panel = new JPanel();
-	private final JButton addCourse_button = new JButton("Aggiungi Corso");
-	private final JButton manageCourse_button = new JButton("Gestisci Corso");
-	private final JButton dashboardCourse_button = new JButton("Dettagli Corso");
 	private static boolean courseButtonPressed = false;
 	private final JButton btnNewButton = new JButton("Esci");
 	private final JLabel welcome_label = new JLabel("Benvenuto");
-	
-
-	
+	JPanel addStudent_panel = new JPanel();
+	JPanel detailsStudent_panel = new JPanel();
+	JPanel manageStudent_panel = new JPanel();
+	private final JPanel addCourse_panel = new JPanel();
+	private final JLabel addCourse_label = new JLabel("Aggiungi Corso");
+	private final JPanel manageCourse_panel = new JPanel();
+	private final JLabel manageCourse_label = new JLabel("Gestisci Corso");
+	private final JPanel detailsCourse_panel = new JPanel();
+	private final JLabel detailsCourse_label = new JLabel("Dettagli Corso");
+	private final JPanel home_panel = new JPanel();
+	private final JLabel home_label = new JLabel("Home");
 
 	/**
 	 * Launch the application.
@@ -126,6 +128,133 @@ public class MainFrame extends JFrame {
 	
 		menu_label.setBounds(10, 0, 50, 42);
 		contentPane.add(menu_label);
+		side_panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		side_panel.setBackground(Color.WHITE);
+		
+		
+		side_panel.setBounds(0, 0, 258, 581);
+		contentPane.add(side_panel);
+		side_panel.setLayout(null);
+		logo_label.setBounds(68, 11, 110, 91);
+		
+		side_panel.add(logo_label);
+		
+		Image img = new ImageIcon(this.getClass().getResource("/logo1.png")).getImage();
+		logo_label.setIcon(new ImageIcon(img));
+		
+		student_panel.setBounds(0, 223, 258, 137);
+		
+		side_panel.add(student_panel);
+		student_panel.setLayout(null);
+		addStudent_panel.setBackground(new Color(255, 215, 0));
+		
+		
+		addStudent_panel.setBounds(0, 0, 258, 47);
+		student_panel.add(addStudent_panel);
+		addStudent_panel.setLayout(null);
+		
+		JLabel addStudent_label = new JLabel("Aggiungi Studente");
+		addStudent_label.setHorizontalAlignment(SwingConstants.CENTER);
+		addStudent_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		addStudent_label.setBounds(75, 11, 119, 25);
+		addStudent_panel.add(addStudent_label);
+		manageStudent_panel.setBackground(new Color(255, 215, 0));
+		
+		
+		manageStudent_panel.setBounds(0, 45, 258, 45);
+		student_panel.add(manageStudent_panel);
+		manageStudent_panel.setLayout(null);
+		
+		JLabel manageStudent_label = new JLabel("Gestisci Studente");
+		manageStudent_label.setHorizontalAlignment(SwingConstants.CENTER);
+		manageStudent_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		manageStudent_label.setBounds(64, 11, 124, 23);
+		manageStudent_panel.add(manageStudent_label);
+		detailsStudent_panel.setBackground(new Color(255, 215, 0));
+		
+		
+		detailsStudent_panel.setBounds(0, 90, 258, 47);
+		student_panel.add(detailsStudent_panel);
+		detailsStudent_panel.setLayout(null);
+		
+		JLabel detailsStudent_label = new JLabel("Dettagli Studente");
+		detailsStudent_label.setBackground(Color.WHITE);
+		detailsStudent_label.setHorizontalAlignment(SwingConstants.CENTER);
+		detailsStudent_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		detailsStudent_label.setBounds(77, 11, 106, 25);
+		detailsStudent_panel.add(detailsStudent_label);
+		course_button.setForeground(Color.BLACK);
+		course_button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(!courseButtonPressed)
+				{
+					courseButtonOn();
+				}
+				else {
+					courseButtonOff();
+				}
+				courseButtonPressed = !courseButtonPressed;
+			}
+		});
+		course_button.setBackground(Color.ORANGE);
+		course_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		course_button.setHorizontalAlignment(SwingConstants.LEFT);
+		course_button.setBounds(0, 359, 258, 41);
+		
+		side_panel.add(course_button);
+		course_panel.setBounds(0, 401, 258, 137);
+		
+		side_panel.add(course_panel);
+		course_panel.setLayout(null);
+		addCourse_panel.setBackground(new Color(255, 215, 0));
+		addCourse_panel.setLayout(null);
+		addCourse_panel.setBounds(0, 0, 258, 47);
+		
+		course_panel.add(addCourse_panel);
+		addCourse_label.setHorizontalAlignment(SwingConstants.CENTER);
+		addCourse_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		addCourse_label.setBounds(75, 11, 119, 25);
+		
+		addCourse_panel.add(addCourse_label);
+		manageCourse_panel.setBackground(new Color(255, 215, 0));
+		manageCourse_panel.setLayout(null);
+		manageCourse_panel.setBounds(0, 47, 258, 45);
+		
+		course_panel.add(manageCourse_panel);
+		manageCourse_label.setHorizontalAlignment(SwingConstants.CENTER);
+		manageCourse_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		manageCourse_label.setBounds(64, 11, 124, 23);
+		
+		manageCourse_panel.add(manageCourse_label);
+		detailsCourse_panel.setBackground(new Color(255, 215, 0));
+		detailsCourse_panel.setLayout(null);
+		detailsCourse_panel.setBounds(0, 90, 258, 47);
+		
+		course_panel.add(detailsCourse_panel);
+		detailsCourse_label.setHorizontalAlignment(SwingConstants.CENTER);
+		detailsCourse_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		detailsCourse_label.setBounds(77, 11, 106, 25);
+		
+		detailsCourse_panel.add(detailsCourse_label);
+		btnNewButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton.setForeground(Color.BLACK);
+		btnNewButton.setBackground(Color.ORANGE);
+		btnNewButton.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		btnNewButton.setBounds(0, 540, 258, 41);
+		
+		side_panel.add(btnNewButton);
+		welcome_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 14));
+		welcome_label.setHorizontalAlignment(SwingConstants.CENTER);
+		welcome_label.setBounds(0, 109, 220, 33);
+		
+		side_panel.add(welcome_label);
+		std_btn.setBounds(0, 181, 258, 42);
+		side_panel.add(std_btn);
 		std_btn.setHorizontalAlignment(SwingConstants.LEFT);
 		std_btn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -144,98 +273,16 @@ public class MainFrame extends JFrame {
 		std_btn.setForeground(Color.BLACK);
 		std_btn.setBackground(Color.ORANGE);
 		std_btn.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		home_panel.setBackground(Color.ORANGE);
+		home_panel.setBounds(0, 140, 258, 41);
 		
+		side_panel.add(home_panel);
+		home_panel.setLayout(null);
+		home_label.setHorizontalAlignment(SwingConstants.CENTER);
+		home_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		home_label.setBounds(64, 11, 119, 25);
 		
-		std_btn.setBounds(0, 144, 258, 42);
-		contentPane.add(std_btn);
-		side_panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		side_panel.setBackground(Color.WHITE);
-		
-		
-		side_panel.setBounds(0, 0, 258, 542);
-		contentPane.add(side_panel);
-		side_panel.setLayout(null);
-		logo_label.setBounds(68, 11, 110, 91);
-		
-		side_panel.add(logo_label);
-		
-		Image img = new ImageIcon(this.getClass().getResource("/logo1.png")).getImage();
-		logo_label.setIcon(new ImageIcon(img));
-		
-		student_panel.setBounds(0, 188, 258, 137);
-		
-		side_panel.add(student_panel);
-		student_panel.setLayout(null);
-		addStudent_button.setBackground(Color.ORANGE);
-		addStudent_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		addStudent_button.setBounds(0, 0, 258, 47);
-		
-		student_panel.add(addStudent_button);
-		ManageStudent_button.setBackground(Color.ORANGE);
-		ManageStudent_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		ManageStudent_button.setBounds(0, 44, 258, 47);
-		
-		student_panel.add(ManageStudent_button);
-		DashboardStudent_button.setBackground(Color.ORANGE);
-		DashboardStudent_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		DashboardStudent_button.setBounds(0, 92, 258, 45);
-		
-		student_panel.add(DashboardStudent_button);
-		course_button.setForeground(Color.BLACK);
-		course_button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(!courseButtonPressed)
-				{
-					courseButtonOn();
-				}
-				else {
-					courseButtonOff();
-				}
-				courseButtonPressed = !courseButtonPressed;
-			}
-		});
-		course_button.setBackground(Color.ORANGE);
-		course_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		course_button.setHorizontalAlignment(SwingConstants.LEFT);
-		course_button.setBounds(0, 326, 258, 41);
-		
-		side_panel.add(course_button);
-		course_panel.setBounds(0, 367, 258, 115);
-		
-		side_panel.add(course_panel);
-		course_panel.setLayout(null);
-		addCourse_button.setBackground(Color.ORANGE);
-		addCourse_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		addCourse_button.setBounds(0, 0, 258, 40);
-		
-		course_panel.add(addCourse_button);
-		manageCourse_button.setBackground(Color.ORANGE);
-		manageCourse_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		manageCourse_button.setBounds(0, 37, 258, 40);
-		
-		course_panel.add(manageCourse_button);
-		dashboardCourse_button.setBackground(Color.ORANGE);
-		dashboardCourse_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		dashboardCourse_button.setBounds(0, 75, 258, 41);
-		
-		course_panel.add(dashboardCourse_button);
-		btnNewButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setForeground(Color.BLACK);
-		btnNewButton.setBackground(Color.ORANGE);
-		btnNewButton.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		btnNewButton.setBounds(0, 501, 258, 41);
-		
-		side_panel.add(btnNewButton);
-		welcome_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 14));
-		welcome_label.setHorizontalAlignment(SwingConstants.CENTER);
-		welcome_label.setBounds(0, 109, 220, 33);
-		
-		side_panel.add(welcome_label);
+		home_panel.add(home_label);
 		
 		Image img2 = new ImageIcon(this.getClass().getResource("/menuicon.png")).getImage();
 		menu_label.setIcon(new ImageIcon(img2));
@@ -285,15 +332,6 @@ public class MainFrame extends JFrame {
 	{
 		student_panel.setVisible(false);
 		student_panel.setEnabled(false);
-		
-		addStudent_button.setVisible(false);
-		addStudent_button.setEnabled(false);
-		
-		ManageStudent_button.setVisible(false);
-		ManageStudent_button.setEnabled(false);
-		
-		DashboardStudent_button.setVisible(false);
-		DashboardStudent_button.setEnabled(false);
 	}
 	
 	public void studentButtonOn()
@@ -301,42 +339,33 @@ public class MainFrame extends JFrame {
 		student_panel.setVisible(true);
 		student_panel.setEnabled(true);
 		
-		addStudent_button.setVisible(true);
-		addStudent_button.setEnabled(true);
+		addStudent_panel.setVisible(true);
+		addStudent_panel.setEnabled(true);
 		
-		ManageStudent_button.setVisible(true);
-		ManageStudent_button.setEnabled(true);
+		manageStudent_panel.setVisible(true);
+		manageStudent_panel.setEnabled(true);
 		
-		DashboardStudent_button.setVisible(true);
-		DashboardStudent_button.setEnabled(true);
+		detailsStudent_panel.setVisible(true);
+		detailsStudent_panel.setEnabled(true);
 	}
 	
 	public void courseButtonOff()
 	{
 		course_panel.setVisible(false);
 		course_panel.setEnabled(false);
-		
-		addCourse_button.setVisible(false);
-		addCourse_button.setEnabled(false);
-		
-		manageCourse_button.setVisible(false);
-		manageCourse_button.setEnabled(false);
-		
-		dashboardCourse_button.setVisible(false);
-		dashboardCourse_button.setEnabled(false);
 	}
 	public void courseButtonOn()
 	{
 		course_panel.setVisible(true);
 		course_panel.setEnabled(true);
 		
-		addCourse_button.setVisible(true);
-		addCourse_button.setEnabled(true);
+		addCourse_panel.setVisible(true);
+		addCourse_panel.setEnabled(true);
 		
-		manageCourse_button.setVisible(true);
-		manageCourse_button.setEnabled(true);
+		manageCourse_panel.setVisible(true);
+		manageCourse_panel.setEnabled(true);
 		
-		dashboardCourse_button.setVisible(true);
-		dashboardCourse_button.setEnabled(true);
+		detailsCourse_panel.setVisible(true);
+		detailsCourse_panel.setEnabled(true);
 	}
 }
