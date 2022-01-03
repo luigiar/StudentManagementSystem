@@ -11,7 +11,7 @@ public class PanelAggiungiStudente extends JPanel {
 	 */
 	public PanelAggiungiStudente() {
 		setLayout(null);
-		setBounds(277, 28, 644, 542);
+		setSize(673,581);
 		
 		JLabel lblNewLabel = new JLabel("AggiungiStudente");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 17));

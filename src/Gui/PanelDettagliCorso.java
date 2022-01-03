@@ -11,7 +11,7 @@ public class PanelDettagliCorso extends JPanel {
 	 */
 	public PanelDettagliCorso() {
 		setLayout(null);
-		setBounds(277, 28, 644, 542);
+		setBounds(0, 0, 673, 581);
 		
 		JLabel lblNewLabel = new JLabel("Dettagli Corsi");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));

@@ -11,7 +11,7 @@ public class PanelGestisciStudente extends JPanel {
 	 */
 	public PanelGestisciStudente() {
 		setLayout(null);
-		setBounds(277, 28, 644, 542);
+		setBounds(0, 0, 673, 581);
 		
 		JLabel lblNewLabel = new JLabel("Gestisci Studente");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
