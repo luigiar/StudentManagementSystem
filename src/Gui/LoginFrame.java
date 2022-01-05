@@ -29,6 +29,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.UIManager;
+import java.awt.SystemColor;
 
 public class LoginFrame extends JFrame {
 
@@ -61,57 +62,35 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
+		
 		setForeground(Color.WHITE);
 		setBackground(Color.WHITE);
 		setResizable(false);
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 400);
+		setBounds(100, 100, 613, 400);
 		LoginPane = new JPanel();
 		LoginPane.setBackground(Color.WHITE);
 		LoginPane.setBorder(new LineBorder(Color.BLUE, 2));
 		setContentPane(LoginPane);
-		setUndecorated(true);
 		setLocationRelativeTo(null);
 		LoginPane.setLayout(null);
 		
 		JPanel TopPanel = new JPanel();
 		TopPanel.setBounds(0, 0, 600, 38);
-		TopPanel.setBorder(new LineBorder(new Color(255, 200, 0)));
-		TopPanel.setBackground(Color.ORANGE);
+		TopPanel.setBorder(new LineBorder(new Color(255, 165, 0)));
+		TopPanel.setBackground(new Color(255, 165, 0));
 		LoginPane.add(TopPanel);
 		TopPanel.setLayout(null);
 		
 		JLabel TitleTopLabel = new JLabel("Gestione di corsi di fomazione");
+		TitleTopLabel.setForeground(Color.WHITE);
 		TitleTopLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 14));
 		TitleTopLabel.setBounds(21, 11, 199, 14);
 		TopPanel.add(TitleTopLabel);
 		
-		JLabel lblX = new JLabel("X");
-		lblX.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(JOptionPane.showConfirmDialog(null,"Sei sicuro di voler uscire dall'applicazione?", "Conferma", JOptionPane.YES_NO_CANCEL_OPTION) == 0) {
-					LoginFrame.this.dispose();
-				}
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblX.setForeground(Color.RED);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblX.setForeground(Color.WHITE);
-			}
-		});
-		lblX.setForeground(Color.WHITE);
-		lblX.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		lblX.setHorizontalAlignment(SwingConstants.CENTER);
-		lblX.setBounds(584, 0, 16, 20);
-		TopPanel.add(lblX);
-		
 		JLabel MessaggioAccessoLabel = new JLabel("Accedi per proseguire");
-		MessaggioAccessoLabel.setBounds(211, 71, 196, 28);
+		MessaggioAccessoLabel.setBounds(201, 73, 196, 28);
 		MessaggioAccessoLabel.setBackground(new Color(0, 0, 0));
 		MessaggioAccessoLabel.setForeground(new Color(0, 0, 0));
 		MessaggioAccessoLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -184,6 +163,7 @@ public class LoginFrame extends JFrame {
 		password_panel.add(pwdPassword);
 		
 		JPanel login_panel = new JPanel();
+		login_panel.setForeground(new Color(102, 0, 0));
 		login_panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -219,7 +199,7 @@ public class LoginFrame extends JFrame {
 				login_panel.setBackground(new Color(30, 60, 60));
 			}
 		});
-		login_panel.setBackground(Color.ORANGE);
+		login_panel.setBackground(new Color(255, 165, 0));
 		login_panel.setBounds(201, 276, 211, 43);
 		LoginPane.add(login_panel);
 		login_panel.setLayout(null);
@@ -239,7 +219,7 @@ public class LoginFrame extends JFrame {
 		LoginPane.add(loginMessageLabel);
 		
 		JLabel background_label = new JLabel("");
-		background_label.setBounds(0, 35, 600, 365);
+		background_label.setBounds(0, 35, 600, 326);
 		background_label.setIcon(new ImageIcon(img));
 		LoginPane.add(background_label);
 	}
