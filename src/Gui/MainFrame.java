@@ -189,7 +189,7 @@ public class MainFrame extends JFrame {
 		detailsStudent_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		detailsStudent_label.setBounds(77, 11, 106, 25);
 		detailsStudent_panel.add(detailsStudent_label);
-		course_panel.setBounds(0, 401, 258, 137);
+		course_panel.setBounds(0,270,258,137);
 		
 		side_panel.add(course_panel);
 		course_panel.setLayout(null);
@@ -293,6 +293,9 @@ public class MainFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				mostrasubMenu(student_panel);
+				corsi_panel.setBounds(0,356,258,48);
+				if(!student_panel.isVisible())
+					corsi_panel.setBounds(0,225,258,47);
 				}
 			});
 		studenti_panel.setBackground(new Color(255, 215, 0));
@@ -315,7 +318,7 @@ public class MainFrame extends JFrame {
 		});
 		corsi_panel.setLayout(null);
 		corsi_panel.setBackground(new Color(255, 215, 0));
-		corsi_panel.setBounds(0, 356, 258, 48);
+		corsi_panel.setBounds(0,225,258,47);
 		corsi_panel.addMouseListener(new PanelButtonMouseAdapter(corsi_panel));
 		
 		side_panel.add(corsi_panel);
@@ -405,6 +408,8 @@ public class MainFrame extends JFrame {
 	private void nascondisubMenu() {
 		if(student_panel.isVisible()) {
 			student_panel.setVisible(false);
+			corsi_panel.setBounds(0,225,258,47);
+			
 		}
 		if(course_panel.isVisible()) {
 			course_panel.setVisible(false);

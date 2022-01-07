@@ -62,11 +62,11 @@ public class PanelAggiungiStudente extends JPanel {
 		add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Nome :");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblNewLabel.setBounds(22, 411, 50, 17);
-		add(lblNewLabel);
+		JLabel lblNome = new JLabel("Nome :");
+		lblNome.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNome.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblNome.setBounds(22, 411, 50, 17);
+		add(lblNome);
 		
 		JLabel lblCognome = new JLabel("Cognome :");
 		lblCognome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -82,7 +82,7 @@ public class PanelAggiungiStudente extends JPanel {
 		JLabel lblDataNascita = new JLabel("Data Nascita : ");
 		lblDataNascita.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblDataNascita.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblDataNascita.setBounds(10, 475, 109, 17);
+		lblDataNascita.setBounds(23, 475, 96, 17);
 		add(lblDataNascita);
 		
 		txtDate = new JTextField();
@@ -127,10 +127,22 @@ public class PanelAggiungiStudente extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Registrazione");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Yu Gothic UI", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(232, 11, 197, 28);
-		panel.add(lblNewLabel_1);
+		JLabel lblRegister = new JLabel("Registrazione");
+		lblRegister.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRegister.setFont(new Font("Yu Gothic UI", Font.BOLD, 15));
+		lblRegister.setBounds(232, 11, 197, 28);
+		panel.add(lblRegister);
+		
+		JButton insert_button = new JButton("Inserisci");
+		insert_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		insert_button.setBackground(new Color(255, 215, 0));
+		insert_button.setBounds(539, 518, 96, 29);
+		add(insert_button);
+		
+		JButton clear_button = new JButton("Pulisci");
+		clear_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		clear_button.setBackground(new Color(255, 215, 0));
+		clear_button.setBounds(427, 518, 89, 29);
+		add(clear_button);
 	}
 }
