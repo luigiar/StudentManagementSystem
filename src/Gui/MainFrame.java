@@ -93,7 +93,6 @@ public class MainFrame extends JFrame {
 
 
 	public MainFrame() {
-		setResizable(false);
 		setTitle("Home");
 		
 		customDesign();
@@ -295,9 +294,9 @@ public class MainFrame extends JFrame {
 				mostrasubMenu(student_panel);
 				corsi_panel.setBounds(0,356,258,48);
 				if(!student_panel.isVisible())
-					corsi_panel.setBounds(0,225,258,47);
-				}
-			});
+				corsi_panel.setBounds(0,225,258,47);
+			}
+		});
 		studenti_panel.setBackground(new Color(255, 215, 0));
 		studenti_panel.setForeground(new Color(255, 255, 255));
 		studenti_panel.setBounds(0, 179, 258, 48);

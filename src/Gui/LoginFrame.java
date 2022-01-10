@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.UIManager;
@@ -62,12 +63,14 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
-		
+
 		setForeground(Color.WHITE);
 		setBackground(Color.WHITE);
 		setResizable(false);
 		setTitle("Login");
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
 		setBounds(100, 100, 613, 400);
 		LoginPane = new JPanel();
 		LoginPane.setBackground(Color.WHITE);
