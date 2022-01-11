@@ -16,6 +16,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionEvent;
+import javax.swing.UIManager;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PanelAggiungiCorso extends JPanel {
 	private JTable table;
@@ -98,20 +101,34 @@ public class PanelAggiungiCorso extends JPanel {
 		add(lblAreaTematica);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setEditable(true);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Seleziona ---", "Area Umanistica", "Area Linguistica", "Area Scientifica"}));
-		comboBox.setBounds(235, 344, 156, 21);
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					if(comboBox.getSelectedItem().equals("Aggiungi Area")) {
+						String itemAdd  = JOptionPane.showInputDialog(null,"Inserisci l'area tematica da aggiungere");
+						if(itemAdd.equals("") || String.valueOf(itemAdd).isBlank()) {
+						    JOptionPane.showMessageDialog(null, "Inserimento non eseguito!");
+						}
+						else
+							comboBox.addItem(itemAdd);
+					
+						}
+					}
+		});
+
+		comboBox.setBackground(Color.WHITE);
+		comboBox.setToolTipText("");
+
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Aggiungi Area", "Area Umanistica", "Area Linguistica", "Area Scientifica"}));
+		comboBox.setBounds(235, 344, 139, 21);
 		add(comboBox);
 		
-		JButton btnNewButton = new JButton("Aggiungi");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Object item = comboBox.getSelectedItem();
-				comboBox.addItem(item);
-			}
-		});
-		btnNewButton.setBounds(401, 344, 89, 23);
-		add(btnNewButton);
+		JButton addArea_button = new JButton("Aggiungi");
+		addArea_button.setBackground(new Color(102, 204, 51));
+		addArea_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+
+
+		addArea_button.setBounds(384, 344, 96, 21);
+		add(addArea_button);
 
 
 	}

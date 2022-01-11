@@ -2,14 +2,20 @@ package Gui;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 public class PanelGestisciCorso extends JPanel {
 	private JTable table;
@@ -102,7 +108,44 @@ public class PanelGestisciCorso extends JPanel {
 		clear_button.setBackground(new Color(255, 255, 51));
 		clear_button.setBounds(371, 518, 81, 29);
 		add(clear_button);
+		
+		JLabel lblAreaTematica = new JLabel("Area Tematica :");
+		lblAreaTematica.setHorizontalAlignment(SwingConstants.LEFT);
+		lblAreaTematica.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblAreaTematica.setBounds(249, 361, 109, 17);
+		add(lblAreaTematica);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setToolTipText("");
+		comboBox.setBackground(Color.WHITE);
+		comboBox.setBounds(249, 376, 139, 21);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Aggiungi Area", "Area Umanistica", "Area Linguistica", "Area Scientifica"}));
+		add(comboBox);
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					if(comboBox.getSelectedItem().equals("Aggiungi Area")) {
+						String itemAdd  = JOptionPane.showInputDialog(null,"Inserisci l'area tematica da aggiungere");
+						if(itemAdd.equals("") || String.valueOf(itemAdd).isBlank()) {
+						    JOptionPane.showMessageDialog(null, "Inserimento non eseguito!");
+						}
+						else
+							comboBox.addItem(itemAdd);
+					
+						}
+					}
+		});
+		
+		JButton addArea_button = new JButton("Aggiungi");
+		addArea_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		addArea_button.setBackground(new Color(102, 204, 51));
+		addArea_button.setBounds(398, 375, 96, 21);
+		add(addArea_button);
+		
+		JButton addArea_button_1 = new JButton("Rimuovi");
+		addArea_button_1.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		addArea_button_1.setBackground(new Color(255, 51, 0));
+		addArea_button_1.setBounds(504, 375, 96, 21);
+		add(addArea_button_1);
 
 	}
-
 }
