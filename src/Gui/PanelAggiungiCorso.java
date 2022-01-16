@@ -23,7 +23,7 @@ import java.awt.event.MouseEvent;
 public class PanelAggiungiCorso extends JPanel {
 	private JTable table;
 	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textField_maxPartecipanti;
 
 	/**
 	 * Create the panel.
@@ -60,17 +60,6 @@ public class PanelAggiungiCorso extends JPanel {
 		textField.setColumns(10);
 		textField.setBounds(20, 345, 120, 20);
 		add(textField);
-		
-		JLabel lblOre = new JLabel("Ore : ");
-		lblOre.setHorizontalAlignment(SwingConstants.LEFT);
-		lblOre.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblOre.setBounds(20, 389, 50, 17);
-		add(lblOre);
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(20, 411, 120, 20);
-		add(textField_1);
 		
 		JLabel lblDescrizione = new JLabel("Descrizione :");
 		lblDescrizione.setHorizontalAlignment(SwingConstants.LEFT);
@@ -118,7 +107,7 @@ public class PanelAggiungiCorso extends JPanel {
 		comboBox.setBackground(Color.WHITE);
 		comboBox.setToolTipText("");
 
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Aggiungi Area", "Area Umanistica", "Area Linguistica", "Area Scientifica"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"---Seleziona Area", "Aggiungi Area", "Area Umanistica", "Area Linguistica", "Area Scientifica"}));
 		comboBox.setBounds(235, 344, 139, 21);
 		add(comboBox);
 		
@@ -129,6 +118,17 @@ public class PanelAggiungiCorso extends JPanel {
 
 		addArea_button.setBounds(384, 344, 96, 21);
 		add(addArea_button);
+		
+		JLabel lblMaxPartecipanti = new JLabel("Max. Partecipanti");
+		lblMaxPartecipanti.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMaxPartecipanti.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblMaxPartecipanti.setBounds(20, 376, 120, 17);
+		add(lblMaxPartecipanti);
+		
+		textField_maxPartecipanti = new JTextField();
+		textField_maxPartecipanti.setColumns(10);
+		textField_maxPartecipanti.setBounds(20, 404, 120, 20);
+		add(textField_maxPartecipanti);
 
 
 	}

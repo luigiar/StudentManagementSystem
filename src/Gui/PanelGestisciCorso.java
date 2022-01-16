@@ -20,7 +20,6 @@ import javax.swing.JComboBox;
 public class PanelGestisciCorso extends JPanel {
 	private JTable table;
 	private JTextField textField;
-	private JTextField textField_1;
 	private JTextField textField_2;
 
 	/**
@@ -29,7 +28,7 @@ public class PanelGestisciCorso extends JPanel {
 	public PanelGestisciCorso() {
 		setLayout(null);
 		setBounds(0, 0, 673, 581);
-		setBackground(new Color(255,215,0));
+		setBackground(new Color(255, 215, 0));
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -58,17 +57,6 @@ public class PanelGestisciCorso extends JPanel {
 		textField.setColumns(10);
 		textField.setBounds(20, 318, 113, 20);
 		add(textField);
-		
-		JLabel lblOre = new JLabel("Ore : ");
-		lblOre.setHorizontalAlignment(SwingConstants.LEFT);
-		lblOre.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblOre.setBounds(20, 359, 50, 17);
-		add(lblOre);
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(20, 376, 113, 20);
-		add(textField_1);
 		
 		JLabel lblDescrizione = new JLabel("Descrizione :");
 		lblDescrizione.setHorizontalAlignment(SwingConstants.LEFT);
@@ -112,14 +100,14 @@ public class PanelGestisciCorso extends JPanel {
 		JLabel lblAreaTematica = new JLabel("Area Tematica :");
 		lblAreaTematica.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAreaTematica.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblAreaTematica.setBounds(249, 361, 109, 17);
+		lblAreaTematica.setBounds(20, 360, 109, 17);
 		add(lblAreaTematica);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setToolTipText("");
 		comboBox.setBackground(Color.WHITE);
-		comboBox.setBounds(249, 376, 139, 21);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Aggiungi Area", "Area Umanistica", "Area Linguistica", "Area Scientifica"}));
+		comboBox.setBounds(20, 388, 139, 21);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"---Seleziona Area", "Aggiungi Area", "Area Umanistica", "Area Linguistica", "Area Scientifica"}));
 		add(comboBox);
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -128,9 +116,8 @@ public class PanelGestisciCorso extends JPanel {
 						if(itemAdd.equals("") || String.valueOf(itemAdd).isBlank()) {
 						    JOptionPane.showMessageDialog(null, "Inserimento non eseguito!");
 						}
-						else
-							comboBox.addItem(itemAdd);
-					
+						else 
+							comboBox.addItem(itemAdd);							
 						}
 					}
 		});
@@ -138,13 +125,13 @@ public class PanelGestisciCorso extends JPanel {
 		JButton addArea_button = new JButton("Aggiungi");
 		addArea_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
 		addArea_button.setBackground(new Color(102, 204, 51));
-		addArea_button.setBounds(398, 375, 96, 21);
+		addArea_button.setBounds(169, 387, 96, 21);
 		add(addArea_button);
 		
 		JButton addArea_button_1 = new JButton("Rimuovi");
 		addArea_button_1.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
 		addArea_button_1.setBackground(new Color(255, 51, 0));
-		addArea_button_1.setBounds(504, 375, 96, 21);
+		addArea_button_1.setBounds(275, 387, 96, 21);
 		add(addArea_button_1);
 
 	}
