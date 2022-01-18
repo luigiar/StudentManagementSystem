@@ -23,15 +23,12 @@ import javax.swing.JTextPane;
 public class GestisciLezioneJDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	Image rightArrow = new ImageIcon(this.getClass().getResource("/rightArrow.png")).getImage();
-	Image leftArrow = new ImageIcon(this.getClass().getResource("/leftArrow.png")).getImage();
-
+	private JTextField textFieldLezioneNum;
+	private JTextField textFieldDurataLezione;
+	private JTextField textField_DataInizio;
+	private JTextField textField_OraInizio;
+	private JTextField textField_Presenze;
+	private JTextField textField_Assenze;
 	
 	/**
 	 * Create the dialog.
@@ -66,10 +63,10 @@ public class GestisciLezioneJDialog extends JDialog {
 		lblLezionenumero.setBounds(10, 68, 128, 17);
 		contentPanel.add(lblLezionenumero);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(148, 67, 86, 20);
-		contentPanel.add(textField);
+		textFieldLezioneNum = new JTextField();
+		textFieldLezioneNum.setColumns(10);
+		textFieldLezioneNum.setBounds(148, 67, 86, 20);
+		contentPanel.add(textFieldLezioneNum);
 		
 		JLabel lblDurataLezione = new JLabel("Durata Lezione :");
 		lblDurataLezione.setHorizontalAlignment(SwingConstants.LEFT);
@@ -77,10 +74,10 @@ public class GestisciLezioneJDialog extends JDialog {
 		lblDurataLezione.setBounds(10, 111, 128, 17);
 		contentPanel.add(lblDurataLezione);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(148, 110, 86, 20);
-		contentPanel.add(textField_1);
+		textFieldDurataLezione = new JTextField();
+		textFieldDurataLezione.setColumns(10);
+		textFieldDurataLezione.setBounds(148, 110, 86, 20);
+		contentPanel.add(textFieldDurataLezione);
 		
 		JLabel lblDescrizione = new JLabel("Descrizione : ");
 		lblDescrizione.setHorizontalAlignment(SwingConstants.LEFT);
@@ -88,9 +85,9 @@ public class GestisciLezioneJDialog extends JDialog {
 		lblDescrizione.setBounds(10, 153, 108, 17);
 		contentPanel.add(lblDescrizione);
 		
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(128, 145, 184, 57);
-		contentPanel.add(textPane);
+		JTextPane textPaneDescrizione = new JTextPane();
+		textPaneDescrizione.setBounds(128, 145, 184, 57);
+		contentPanel.add(textPaneDescrizione);
 		
 		JLabel lblDataInizio = new JLabel("Data Inizio : ");
 		lblDataInizio.setHorizontalAlignment(SwingConstants.LEFT);
@@ -98,21 +95,21 @@ public class GestisciLezioneJDialog extends JDialog {
 		lblDataInizio.setBounds(10, 235, 93, 17);
 		contentPanel.add(lblDataInizio);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(148, 234, 86, 20);
-		contentPanel.add(textField_2);
+		textField_DataInizio = new JTextField();
+		textField_DataInizio.setColumns(10);
+		textField_DataInizio.setBounds(148, 234, 86, 20);
+		contentPanel.add(textField_DataInizio);
 		
 		JLabel lblOraInizio = new JLabel("Ora inizio :");
 		lblOraInizio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblOraInizio.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblOraInizio.setBounds(10, 279, 108, 17);
+		lblOraInizio.setBounds(10, 279, 93, 17);
 		contentPanel.add(lblOraInizio);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(148, 278, 86, 20);
-		contentPanel.add(textField_3);
+		textField_OraInizio = new JTextField();
+		textField_OraInizio.setColumns(10);
+		textField_OraInizio.setBounds(148, 278, 86, 20);
+		contentPanel.add(textField_OraInizio);
 		
 		JLabel lblPresenze = new JLabel("Presenze :");
 		lblPresenze.setHorizontalAlignment(SwingConstants.LEFT);
@@ -120,10 +117,10 @@ public class GestisciLezioneJDialog extends JDialog {
 		lblPresenze.setBounds(10, 319, 108, 17);
 		contentPanel.add(lblPresenze);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(148, 318, 86, 20);
-		contentPanel.add(textField_4);
+		textField_Presenze = new JTextField();
+		textField_Presenze.setColumns(10);
+		textField_Presenze.setBounds(148, 318, 86, 20);
+		contentPanel.add(textField_Presenze);
 		
 		JLabel lblAssenze = new JLabel("Assenze :");
 		lblAssenze.setHorizontalAlignment(SwingConstants.LEFT);
@@ -131,10 +128,10 @@ public class GestisciLezioneJDialog extends JDialog {
 		lblAssenze.setBounds(10, 357, 108, 17);
 		contentPanel.add(lblAssenze);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(148, 356, 86, 20);
-		contentPanel.add(textField_5);
+		textField_Assenze = new JTextField();
+		textField_Assenze.setColumns(10);
+		textField_Assenze.setBounds(148, 356, 86, 20);
+		contentPanel.add(textField_Assenze);
 		
 		
 		JButton btnNewButton = new JButton("Salva");
@@ -143,64 +140,7 @@ public class GestisciLezioneJDialog extends JDialog {
 		btnNewButton.setBounds(324, 415, 89, 23);
 		contentPanel.add(btnNewButton);
 		
-		JPanel panel_RightArrow = new JPanel();
-		panel_RightArrow.setBackground(new Color(255, 215, 0));
-		panel_RightArrow.setBounds(203, 403, 45, 36);
-		contentPanel.add(panel_RightArrow);
-		panel_RightArrow.setLayout(null);
-		panel_RightArrow.addMouseListener(new PanelButtonMouseAdapter(panel_RightArrow));
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(0, 0, 45, 36);
-		panel_RightArrow.add(lblNewLabel);
-		lblNewLabel.setIcon(new ImageIcon(rightArrow));
-		
-		JPanel panel_LeftArrow = new JPanel();
-		panel_LeftArrow.setBackground(new Color(255, 215, 0));
-		panel_LeftArrow.setBounds(148, 403, 45, 35);
-		contentPanel.add(panel_LeftArrow);
-		panel_LeftArrow.addMouseListener(new PanelButtonMouseAdapter(panel_LeftArrow));
-		panel_LeftArrow.setLayout(null);
-		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setBounds(10, 0, 36, 35);
-		panel_LeftArrow.add(lblNewLabel_1);
-		lblNewLabel_1.setIcon(new ImageIcon(leftArrow));
-		
 
-		
-	}
-		private class PanelButtonMouseAdapter extends MouseAdapter {
-		
-		JPanel panel;
-		public PanelButtonMouseAdapter(JPanel panel) {
-			this.panel = panel;
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			panel.setBackground(new Color(60, 179, 113));
-			super.mousePressed(e);
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			panel.setBackground(new Color(112, 128, 144));
-			super.mouseReleased(e);
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			panel.setBackground(new Color(112, 128, 144));
-			super.mouseEntered(e);
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			panel.setBackground(new Color(255, 215, 0));
-			super.mouseExited(e);
-		
-		}
 		
 	}
 }

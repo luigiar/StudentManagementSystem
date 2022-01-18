@@ -15,11 +15,12 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 public class PanelDettagliCorso extends JPanel {
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textField_OreTotali;
+	private JTextField textField_NumLezioni;
+	private JTextField textField_OreObbligatorie;
 	Image search = new ImageIcon(this.getClass().getResource("/searchImm.png")).getImage();
-	private JTextField textField_3;
+	private JTextField textField_DataInizio;
+	private JTextField textField;
 
 	/**
 	 * Create the panel.
@@ -58,11 +59,11 @@ public class PanelDettagliCorso extends JPanel {
 		lblOreTotali.setBounds(10, 134, 76, 17);
 		add(lblOreTotali);
 		
-		textField = new JTextField();
-		textField.setBackground(Color.WHITE);
-		textField.setBounds(132, 133, 116, 20);
-		add(textField);
-		textField.setColumns(10);
+		textField_OreTotali = new JTextField();
+		textField_OreTotali.setBackground(Color.WHITE);
+		textField_OreTotali.setBounds(132, 133, 116, 20);
+		add(textField_OreTotali);
+		textField_OreTotali.setColumns(10);
 		
 		JLabel lblNumeroLezioni = new JLabel("Numero Lezioni :");
 		lblNumeroLezioni.setHorizontalAlignment(SwingConstants.LEFT);
@@ -70,10 +71,10 @@ public class PanelDettagliCorso extends JPanel {
 		lblNumeroLezioni.setBounds(10, 186, 112, 17);
 		add(lblNumeroLezioni);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(132, 185, 116, 20);
-		add(textField_1);
-		textField_1.setColumns(10);
+		textField_NumLezioni = new JTextField();
+		textField_NumLezioni.setBounds(132, 185, 116, 20);
+		add(textField_NumLezioni);
+		textField_NumLezioni.setColumns(10);
 		
 		JLabel lblOreObbligatorie = new JLabel("Ore Obbligatorie :");
 		lblOreObbligatorie.setHorizontalAlignment(SwingConstants.LEFT);
@@ -81,10 +82,10 @@ public class PanelDettagliCorso extends JPanel {
 		lblOreObbligatorie.setBounds(10, 236, 112, 17);
 		add(lblOreObbligatorie);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(132, 235, 116, 20);
-		add(textField_2);
-		textField_2.setColumns(10);
+		textField_OreObbligatorie = new JTextField();
+		textField_OreObbligatorie.setBounds(132, 235, 116, 20);
+		add(textField_OreObbligatorie);
+		textField_OreObbligatorie.setColumns(10);
 		
 		JPanel panel_cercaCorso = new JPanel();
 		panel_cercaCorso.setBounds(0, 281, 122, 30);
@@ -92,12 +93,6 @@ public class PanelDettagliCorso extends JPanel {
 		add(panel_cercaCorso);
 		panel_cercaCorso.setLayout(null);
 		panel_cercaCorso.addMouseListener(new PanelButtonMouseAdapter(panel_cercaCorso));
-		panel_cercaCorso.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				CercaCorso searchCourse = new CercaCorso();
-				searchCourse.setVisible(true);
-			}
-		});
 		
 		JLabel lblCercaCorso = new JLabel("Cerca Corso");
 
@@ -126,22 +121,27 @@ public class PanelDettagliCorso extends JPanel {
 			
 		});
 		
-		JLabel lblNewLabel = new JLabel("...");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(-28, 0, 81, 14);
-		panel_GestisciLezione.add(lblNewLabel);
+		JLabel lblAggiungiLezioni = new JLabel("...");
+		lblAggiungiLezioni.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAggiungiLezioni.setBounds(-28, 0, 81, 14);
+		panel_GestisciLezione.add(lblAggiungiLezioni);
 		
 		
 		JLabel lblDataInizio = new JLabel("Data Inizio :");
 		lblDataInizio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDataInizio.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblDataInizio.setBounds(346, 84, 112, 17);
+		lblDataInizio.setBounds(346, 84, 84, 17);
 		add(lblDataInizio);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(435, 81, 116, 20);
-		add(textField_3);
+		textField_DataInizio = new JTextField();
+		textField_DataInizio.setColumns(10);
+		textField_DataInizio.setBounds(435, 81, 116, 20);
+		add(textField_DataInizio);
+		
+		textField = new JTextField();
+		textField.setBounds(132, 289, 116, 22);
+		add(textField);
+		textField.setColumns(10);
 
 	}
 private class PanelButtonMouseAdapter extends MouseAdapter {

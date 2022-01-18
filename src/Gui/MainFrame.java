@@ -50,7 +50,6 @@ public class MainFrame extends JFrame {
 	private final JPanel course_panel = new JPanel();
 	private final JLabel welcome_label = new JLabel("Benvenuto");
 	JPanel addStudent_panel = new JPanel();
-	JPanel detailsStudent_panel = new JPanel();
 	JPanel manageStudent_panel = new JPanel();
 	private final JPanel addCourse_panel = new JPanel();
 	private final JLabel addCourse_label = new JLabel("Aggiungi Corso");
@@ -130,9 +129,10 @@ public class MainFrame extends JFrame {
 		side_panel.setLayout(null);
 		
 		Image img = new ImageIcon(this.getClass().getResource("/logo1.png")).getImage();
+		student_panel.setBackground(new Color(255, 165, 0));
 		
 		
-		student_panel.setBounds(0, 223, 258, 137);
+		student_panel.setBounds(0, 223, 258, 92);
 		
 		side_panel.add(student_panel);
 		student_panel.setLayout(null);
@@ -170,24 +170,6 @@ public class MainFrame extends JFrame {
 		manageStudent_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		manageStudent_label.setBounds(64, 11, 124, 23);
 		manageStudent_panel.add(manageStudent_label);
-		
-		detailsStudent_panel.addMouseListener(new PanelButtonMouseAdapter(detailsStudent_panel) {
-			public void mouseClicked(MouseEvent e) {
-				menuSelected(panelDettagliStudente);
-				nascondisubMenu();
-			}
-		});
-		detailsStudent_panel.setBackground(new Color(255, 215, 0));
-		detailsStudent_panel.setBounds(0, 90, 258, 47);
-		student_panel.add(detailsStudent_panel);
-		detailsStudent_panel.setLayout(null);
-		
-		JLabel detailsStudent_label = new JLabel("Dettagli Studente");
-		detailsStudent_label.setBackground(Color.WHITE);
-		detailsStudent_label.setHorizontalAlignment(SwingConstants.CENTER);
-		detailsStudent_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		detailsStudent_label.setBounds(77, 11, 106, 25);
-		detailsStudent_panel.add(detailsStudent_label);
 		course_panel.setBounds(0,270,258,137);
 		
 		side_panel.add(course_panel);
@@ -292,7 +274,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				mostrasubMenu(student_panel);
-				corsi_panel.setBounds(0,356,258,48);
+				corsi_panel.setBounds(0,310,258,48);
 				if(!student_panel.isVisible())
 				corsi_panel.setBounds(0,225,258,47);
 			}
