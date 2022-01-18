@@ -9,9 +9,11 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
+import javax.swing.JRadioButtonMenuItem;
 
 public class PanelGestisciStudente extends JPanel {
 	private JTable table;
@@ -98,21 +100,19 @@ public class PanelGestisciStudente extends JPanel {
 		lblGenere.setBounds(20, 426, 75, 17);
 		add(lblGenere);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Uomo");
-		rdbtnNewRadioButton.setBackground(new Color(255, 215, 0));
-		rdbtnNewRadioButton.setBounds(20, 450, 65, 23);
-		add(rdbtnNewRadioButton);
+		JRadioButton rdbtn_uomo = new JRadioButton("Uomo");
+		rdbtn_uomo.setBackground(new Color(255, 215, 0));
+		rdbtn_uomo.setBounds(20, 450, 65, 23);
+		add(rdbtn_uomo);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Donna");
-		rdbtnNewRadioButton_1.setBackground(new Color(255, 215, 0));
-		rdbtnNewRadioButton_1.setBounds(20, 476, 68, 21);
-		add(rdbtnNewRadioButton_1);
+		JRadioButton rdbtn_donna = new JRadioButton("Donna");
+		rdbtn_donna.setBackground(new Color(255, 215, 0));
+		rdbtn_donna.setBounds(20, 476, 68, 21);
+		add(rdbtn_donna);
 		
-		JButton clear_button = new JButton("Pulisci");
-		clear_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		clear_button.setBackground(new Color(255, 255, 51));
-		clear_button.setBounds(337, 521, 89, 29);
-		add(clear_button);
+		ButtonGroup Group = new ButtonGroup();
+		Group.add(rdbtn_uomo);
+		Group.add(rdbtn_donna);
 		
 		JButton update_button = new JButton("Aggiorna");
 		update_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));

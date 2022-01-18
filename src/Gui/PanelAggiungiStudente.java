@@ -10,6 +10,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
@@ -111,16 +112,20 @@ public class PanelAggiungiStudente extends JPanel {
 		lblGenere.setBounds(215, 376, 68, 17);
 		add(lblGenere);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Uomo");
-		rdbtnNewRadioButton.setHorizontalAlignment(SwingConstants.LEFT);
-		rdbtnNewRadioButton.setBackground(new Color(255, 215, 0));
-		rdbtnNewRadioButton.setBounds(215, 403, 75, 23);
-		add(rdbtnNewRadioButton);
+		JRadioButton rdbtn_uomo = new JRadioButton("Uomo");
+		rdbtn_uomo.setHorizontalAlignment(SwingConstants.LEFT);
+		rdbtn_uomo.setBackground(new Color(255, 215, 0));
+		rdbtn_uomo.setBounds(225, 403, 75, 23);
+		add(rdbtn_uomo);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Donna");
-		rdbtnNewRadioButton_1.setBackground(new Color(255, 215, 0));
-		rdbtnNewRadioButton_1.setBounds(215, 429, 68, 21);
-		add(rdbtnNewRadioButton_1);
+		JRadioButton rdbtn_donna = new JRadioButton("Donna");
+		rdbtn_donna.setBackground(new Color(255, 215, 0));
+		rdbtn_donna.setBounds(224, 429, 76, 21);
+		add(rdbtn_donna);
+
+		ButtonGroup Group = new ButtonGroup();
+		Group.add(rdbtn_uomo);
+		Group.add(rdbtn_donna);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 165, 0));
@@ -139,11 +144,5 @@ public class PanelAggiungiStudente extends JPanel {
 		insert_button.setBackground(new Color(51, 153, 204));
 		insert_button.setBounds(539, 518, 96, 29);
 		add(insert_button);
-		
-		JButton clear_button = new JButton("Pulisci");
-		clear_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		clear_button.setBackground(new Color(255, 255, 51));
-		clear_button.setBounds(427, 518, 89, 29);
-		add(clear_button);
 	}
 }

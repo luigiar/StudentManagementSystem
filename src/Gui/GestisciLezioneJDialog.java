@@ -44,6 +44,7 @@ public class GestisciLezioneJDialog extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		setLocationRelativeTo(null);
 		
 		JPanel panel_GestioneLezioni = new JPanel();
 		panel_GestioneLezioni.setLayout(null);

@@ -66,7 +66,6 @@ public class MainFrame extends JFrame {
 	private main_panel panelHome; 
 	private PanelAggiungiStudente panelAggiungiStudente;
 	private PanelGestisciStudente panelGestisciStudente;
-	private PanelDettagliStudente panelDettagliStudente;
 	private PanelAggiungiCorso panelAggiungiCorso;
 	private PanelGestisciCorso panelGestisciCorso;
 	private PanelDettagliCorso panelDettagliCorso;
@@ -92,6 +91,7 @@ public class MainFrame extends JFrame {
 
 
 	public MainFrame() {
+		setResizable(false);
 		setTitle("Home");
 		
 		customDesign();
@@ -114,8 +114,6 @@ public class MainFrame extends JFrame {
 		panelAggiungiStudente.setBounds(0, 0, 648, 554);
 		panelGestisciStudente = new PanelGestisciStudente();
 		panelGestisciStudente.setBounds(0, 0, 648, 554);
-		panelDettagliStudente = new PanelDettagliStudente();
-		panelDettagliStudente.setBounds(0, 0, 648, 554);
 		panelAggiungiCorso = new PanelAggiungiCorso();
 		panelGestisciCorso = new PanelGestisciCorso();
 		panelDettagliCorso = new PanelDettagliCorso();
@@ -321,7 +319,6 @@ public class MainFrame extends JFrame {
 		mainContent_panel.add(panelHome);
 		mainContent_panel.add(panelAggiungiStudente);
 		mainContent_panel.add(panelGestisciStudente);
-		mainContent_panel.add(panelDettagliStudente);
 		mainContent_panel.add(panelAggiungiCorso);
 		mainContent_panel.add(panelGestisciCorso);
 		mainContent_panel.add(panelDettagliCorso);
@@ -339,7 +336,7 @@ public class MainFrame extends JFrame {
 		panelDettagliCorso.setVisible(false);
 		panelAggiungiStudente.setVisible(false);
 		panelGestisciStudente.setVisible(false);
-		panelDettagliStudente.setVisible(false);
+
 		
 		selectedPanel.setVisible(true);
 	}

@@ -56,34 +56,34 @@ public class PanelDettagliCorso extends JPanel {
 		JLabel lblOreTotali = new JLabel("Ore Totali :");
 		lblOreTotali.setHorizontalAlignment(SwingConstants.LEFT);
 		lblOreTotali.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblOreTotali.setBounds(10, 134, 76, 17);
+		lblOreTotali.setBounds(346, 134, 76, 17);
 		add(lblOreTotali);
 		
 		textField_OreTotali = new JTextField();
 		textField_OreTotali.setBackground(Color.WHITE);
-		textField_OreTotali.setBounds(132, 133, 116, 20);
+		textField_OreTotali.setBounds(435, 133, 116, 20);
 		add(textField_OreTotali);
 		textField_OreTotali.setColumns(10);
 		
 		JLabel lblNumeroLezioni = new JLabel("Numero Lezioni :");
 		lblNumeroLezioni.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNumeroLezioni.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblNumeroLezioni.setBounds(10, 186, 112, 17);
+		lblNumeroLezioni.setBounds(10, 134, 112, 17);
 		add(lblNumeroLezioni);
 		
 		textField_NumLezioni = new JTextField();
-		textField_NumLezioni.setBounds(132, 185, 116, 20);
+		textField_NumLezioni.setBounds(132, 133, 116, 20);
 		add(textField_NumLezioni);
 		textField_NumLezioni.setColumns(10);
 		
 		JLabel lblOreObbligatorie = new JLabel("Ore Obbligatorie :");
 		lblOreObbligatorie.setHorizontalAlignment(SwingConstants.LEFT);
 		lblOreObbligatorie.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblOreObbligatorie.setBounds(10, 236, 112, 17);
+		lblOreObbligatorie.setBounds(10, 197, 112, 17);
 		add(lblOreObbligatorie);
 		
 		textField_OreObbligatorie = new JTextField();
-		textField_OreObbligatorie.setBounds(132, 235, 116, 20);
+		textField_OreObbligatorie.setBounds(132, 196, 116, 20);
 		add(textField_OreObbligatorie);
 		textField_OreObbligatorie.setColumns(10);
 		
@@ -108,7 +108,7 @@ public class PanelDettagliCorso extends JPanel {
 		
 		
 		JPanel panel_GestisciLezione = new JPanel();
-		panel_GestisciLezione.setBounds(258, 186, 23, 17);
+		panel_GestisciLezione.setBounds(258, 134, 23, 17);
 		panel_GestisciLezione.setBackground(new Color(255, 165, 0));
 		add(panel_GestisciLezione);
 		panel_GestisciLezione.setLayout(null);
