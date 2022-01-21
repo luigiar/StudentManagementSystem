@@ -61,7 +61,6 @@ public class PanelAggiungiCorso extends JPanel {
 		table = new JTable();
 		table.setBounds(10, 221, 612, -209);
 		model = new DefaultTableModel() {
-
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				// TODO Auto-generated method stub
