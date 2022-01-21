@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.JSeparator;
 
 public class PanelDettagliCorso extends JPanel {
 	private JTextField textField_OreTotali;
@@ -142,6 +143,12 @@ public class PanelDettagliCorso extends JPanel {
 		textField.setBounds(132, 289, 116, 22);
 		add(textField);
 		textField.setColumns(10);
+		
+		JSeparator separator = new JSeparator();
+		separator.setForeground(new Color(255, 255, 0));
+		separator.setBackground(new Color(255, 255, 0));
+		separator.setBounds(0, 242, 673, 2);
+		add(separator);
 
 	}
 private class PanelButtonMouseAdapter extends MouseAdapter {

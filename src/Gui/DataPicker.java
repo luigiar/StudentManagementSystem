@@ -26,7 +26,7 @@ class DatePicker
                 //set modal true
                 d.setModal(true);
                 //define string
-                String[] header = { "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat" };
+                String[] header = { "Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom" };
                 //create JPanel object and set layout
                 JPanel p1 = new JPanel(new GridLayout(7, 7));
                 //set size
@@ -66,7 +66,7 @@ class DatePicker
                 JPanel p2 = new JPanel(new GridLayout(1, 3));
                 
                 //create object of button for previous month
-                JButton previous = new JButton("<< Previous");
+                JButton previous = new JButton("<< Precedente");
                 //add action command
                 previous.addActionListener(new ActionListener() 
                 {
@@ -81,7 +81,7 @@ class DatePicker
                 p2.add(previous);//add button
                 p2.add(l);//add label
                 //create object of button for next month
-                JButton next = new JButton("Next >>");
+                JButton next = new JButton("Successivo >>");
                 //add action command
                 next.addActionListener(new ActionListener()
                 {
@@ -124,7 +124,7 @@ class DatePicker
         	button[x].setText("" + day);
         	l.setText(sdf.format(cal.getTime()));
         	//set title
-        	d.setTitle("Date Picker");
+        	d.setTitle("Seleziona Data");
         }
 
         public String setPickedDate() 

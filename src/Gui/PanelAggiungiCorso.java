@@ -14,17 +14,22 @@ import javax.swing.JTextPane;
 import javax.swing.MutableComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JScrollPane;
 
 public class PanelAggiungiCorso extends JPanel {
-	private JTable table;
-	private JTextField textField;
+	private JTextField textField_nomeCorso;
 	private JTextField textField_maxPartecipanti;
-
+	DefaultTableModel model;
+	private JTable table;
+	private JComboBox comboBox;
 	/**
 	 * Create the panel.
 	 */
@@ -38,17 +43,26 @@ public class PanelAggiungiCorso extends JPanel {
 		panel.setBackground(new Color(255, 165, 0));
 		panel.setBounds(0, 0, 673, 57);
 		add(panel);
-		
+
+
 		JLabel lblNewCourse = new JLabel("Nuovo Corso");
 		lblNewCourse.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewCourse.setFont(new Font("Yu Gothic UI", Font.BOLD, 15));
 		lblNewCourse.setBounds(232, 11, 197, 28);
 		panel.add(lblNewCourse);
 		
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(10, 68, 632, 234);
+		add(scrollPane);
+		
 		table = new JTable();
-		table.setBackground(new Color(255, 215, 0));
-		table.setBounds(0, 302, 673, -245);
-		add(table);
+		table.setBounds(10, 221, 612, -209);
+		model = new DefaultTableModel();
+		Object[] colonne = {"Nome Corso", "Area tematica","Max. Partecipanti","Descrizione"};
+		Object[] riga = new Object[4];
+		model.setColumnIdentifiers(colonne);
+		table.setModel(model);
+		scrollPane.setViewportView(table);
 		
 		JLabel lblNomeCorso = new JLabel("Nome Corso :");
 		lblNomeCorso.setHorizontalAlignment(SwingConstants.LEFT);
@@ -56,10 +70,10 @@ public class PanelAggiungiCorso extends JPanel {
 		lblNomeCorso.setBounds(20, 318, 101, 17);
 		add(lblNomeCorso);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(20, 345, 120, 20);
-		add(textField);
+		textField_nomeCorso = new JTextField();
+		textField_nomeCorso.setColumns(10);
+		textField_nomeCorso.setBounds(20, 345, 120, 20);
+		add(textField_nomeCorso);
 		
 		JLabel lblDescrizione = new JLabel("Descrizione :");
 		lblDescrizione.setHorizontalAlignment(SwingConstants.LEFT);
@@ -67,11 +81,34 @@ public class PanelAggiungiCorso extends JPanel {
 		lblDescrizione.setBounds(20, 442, 101, 17);
 		add(lblDescrizione);
 		
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(20, 470, 341, 57);
-		add(textPane);
+		JTextPane textPane_descrizione = new JTextPane();
+		textPane_descrizione.setBounds(20, 470, 341, 57);
+		add(textPane_descrizione);
 		
 		JButton insert_button = new JButton("Inserisci");
+		insert_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(textField_nomeCorso.getText().equals("") || comboBox.getSelectedItem().equals("---Seleziona Area") || textField_maxPartecipanti.getText().equals("") || textPane_descrizione.getText().equals("") || comboBox.getSelectedItem().equals("Aggiungi Area")) {
+					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi!");
+				}
+				else
+				{
+					riga[0] = textField_nomeCorso.getText();
+					riga[1] = comboBox.getSelectedItem();
+					riga[2] = textField_maxPartecipanti.getText();
+					riga[3] = textPane_descrizione.getText(); 
+					model.addRow(riga);
+					
+					textField_nomeCorso.setText("");
+					comboBox.setSelectedIndex(0);
+					textField_maxPartecipanti.setText("");
+					textPane_descrizione.setText("");
+					JOptionPane.showMessageDialog(null, "Inserimento eseguito con successo");
+				}
+			
+				
+				}
+		});
 		insert_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		insert_button.setBackground(new Color(51, 153, 204));
 		insert_button.setBounds(546, 521, 96, 29);
@@ -89,7 +126,7 @@ public class PanelAggiungiCorso extends JPanel {
 		lblAreaTematica.setBounds(235, 320, 109, 17);
 		add(lblAreaTematica);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					if(comboBox.getSelectedItem().equals("Aggiungi Area")) {
@@ -129,6 +166,14 @@ public class PanelAggiungiCorso extends JPanel {
 		textField_maxPartecipanti.setColumns(10);
 		textField_maxPartecipanti.setBounds(20, 404, 120, 20);
 		add(textField_maxPartecipanti);
+		
+		
+
+		
+	
+	
+		
+		
 
 
 	}
