@@ -124,13 +124,21 @@ public class PanelAggiungiStudente extends JPanel {
 		add(scrollPane);
 		
 		table = new JTable();
+		table.setEnabled(false);
 		table.setBackground(new Color(230, 230, 250));
-		model = new DefaultTableModel();
+		model = new DefaultTableModel() {
+			
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		Object[] colonne = {"ID","Nome","Cognome","Genere","Data Nascita"};
 		Object[] riga = new Object[5];
 		model.setColumnIdentifiers(colonne);
+		
 		table.setModel(model);
 		scrollPane.setViewportView(table);
+		
 		
 		JButton insert_button = new JButton("Inserisci");
 		insert_button.addActionListener(new ActionListener() {
@@ -161,9 +169,7 @@ public class PanelAggiungiStudente extends JPanel {
 		insert_button.setBackground(new Color(51, 153, 204));
 		insert_button.setBounds(539, 518, 88, 30);
 		add(insert_button);
-		
-
-		
-		
 	}
+
+
 }

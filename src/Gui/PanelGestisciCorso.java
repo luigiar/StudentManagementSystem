@@ -16,6 +16,8 @@ import javax.swing.JTextPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class PanelGestisciCorso extends JPanel {
 	private JTable table;
@@ -63,10 +65,6 @@ public class PanelGestisciCorso extends JPanel {
 		lblDescrizione.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblDescrizione.setBounds(20, 434, 101, 17);
 		add(lblDescrizione);
-		
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(20, 462, 341, 57);
-		add(textPane);
 		
 		JLabel lblCorsoId = new JLabel(" Corso Id  :");
 		lblCorsoId.setHorizontalAlignment(SwingConstants.LEFT);
@@ -133,6 +131,14 @@ public class PanelGestisciCorso extends JPanel {
 		addArea_button_1.setBackground(new Color(255, 51, 0));
 		addArea_button_1.setBounds(275, 387, 96, 21);
 		add(addArea_button_1);
+		
+		JScrollPane scrollPane_descrizione = new JScrollPane();
+		scrollPane_descrizione.setBounds(20, 462, 245, 85);
+		add(scrollPane_descrizione);
+		
+		JTextArea textArea_descrizione = new JTextArea();
+		textArea_descrizione.setLineWrap(true);
+		scrollPane_descrizione.setViewportView(textArea_descrizione);
 
 	}
 }

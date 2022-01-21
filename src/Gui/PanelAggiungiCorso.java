@@ -18,11 +18,13 @@ import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class PanelAggiungiCorso extends JPanel {
 	private JTextField textField_nomeCorso;
@@ -30,6 +32,7 @@ public class PanelAggiungiCorso extends JPanel {
 	DefaultTableModel model;
 	private JTable table;
 	private JComboBox comboBox;
+	DefaultTableCellRenderer cellRender;
 	/**
 	 * Create the panel.
 	 */
@@ -57,12 +60,27 @@ public class PanelAggiungiCorso extends JPanel {
 		
 		table = new JTable();
 		table.setBounds(10, 221, 612, -209);
-		model = new DefaultTableModel();
+		model = new DefaultTableModel() {
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		};
 		Object[] colonne = {"Nome Corso", "Area tematica","Max. Partecipanti","Descrizione"};
 		Object[] riga = new Object[4];
 		model.setColumnIdentifiers(colonne);
 		table.setModel(model);
 		scrollPane.setViewportView(table);
+		
+		// set della grandezza delle colonne
+		table.getColumnModel().getColumn(3).setPreferredWidth(300);
+		cellRender = new DefaultTableCellRenderer();
+		cellRender.setHorizontalAlignment(JLabel.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
+		
+		
 		
 		JLabel lblNomeCorso = new JLabel("Nome Corso :");
 		lblNomeCorso.setHorizontalAlignment(SwingConstants.LEFT);
@@ -81,14 +99,19 @@ public class PanelAggiungiCorso extends JPanel {
 		lblDescrizione.setBounds(20, 442, 101, 17);
 		add(lblDescrizione);
 		
-		JTextPane textPane_descrizione = new JTextPane();
-		textPane_descrizione.setBounds(20, 470, 341, 57);
-		add(textPane_descrizione);
+		JScrollPane scrollPane_descrizione = new JScrollPane();
+		scrollPane_descrizione.setBounds(20, 470, 252, 66);
+		add(scrollPane_descrizione);
+		
+		JTextArea textArea_descrizione = new JTextArea();
+		scrollPane_descrizione.setViewportView(textArea_descrizione);
+		textArea_descrizione.setLineWrap(true);
+
 		
 		JButton insert_button = new JButton("Inserisci");
 		insert_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(textField_nomeCorso.getText().equals("") || comboBox.getSelectedItem().equals("---Seleziona Area") || textField_maxPartecipanti.getText().equals("") || textPane_descrizione.getText().equals("") || comboBox.getSelectedItem().equals("Aggiungi Area")) {
+				if(textField_nomeCorso.getText().equals("") || comboBox.getSelectedItem().equals("---Seleziona Area") || textField_maxPartecipanti.getText().equals("") || textArea_descrizione.getText().equals("") || comboBox.getSelectedItem().equals("Aggiungi Area")) {
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi!");
 				}
 				else
@@ -96,13 +119,13 @@ public class PanelAggiungiCorso extends JPanel {
 					riga[0] = textField_nomeCorso.getText();
 					riga[1] = comboBox.getSelectedItem();
 					riga[2] = textField_maxPartecipanti.getText();
-					riga[3] = textPane_descrizione.getText(); 
+					riga[3] = textArea_descrizione.getText(); 
 					model.addRow(riga);
 					
 					textField_nomeCorso.setText("");
 					comboBox.setSelectedIndex(0);
 					textField_maxPartecipanti.setText("");
-					textPane_descrizione.setText("");
+					textArea_descrizione.setText("");
 					JOptionPane.showMessageDialog(null, "Inserimento eseguito con successo");
 				}
 			
@@ -166,6 +189,8 @@ public class PanelAggiungiCorso extends JPanel {
 		textField_maxPartecipanti.setColumns(10);
 		textField_maxPartecipanti.setBounds(20, 404, 120, 20);
 		add(textField_maxPartecipanti);
+		
+
 		
 		
 
