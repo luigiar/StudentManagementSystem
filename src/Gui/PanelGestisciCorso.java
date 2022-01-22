@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -19,6 +20,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PanelGestisciCorso extends JPanel {
 	private JTextField textField_nomeCorso;
@@ -26,6 +29,9 @@ public class PanelGestisciCorso extends JPanel {
 	DefaultTableModel model;
 	private JTable table;
 	private JTextField textFieldPartecipanti;
+	private JTextArea textArea_descrizione;
+	private JComboBox comboBox_areaTematica;
+	DefaultTableCellRenderer cellRender;
 
 
 
@@ -54,6 +60,18 @@ public class PanelGestisciCorso extends JPanel {
 		add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int rigaSelected = table.getSelectedRow();
+				textField_corsoID.setText((model.getValueAt(rigaSelected, 0)).toString());
+				textField_nomeCorso.setText((model.getValueAt(rigaSelected, 1)).toString());
+				comboBox_areaTematica.setSelectedItem(model.getValueAt(rigaSelected, 2));
+				textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 3)).toString());
+				textArea_descrizione.setText((model.getValueAt(rigaSelected, 4)).toString());
+				
+			}
+		});
 		table.setBounds(10, 221, 612, -209);
 		model = new DefaultTableModel() {
 			@Override
@@ -68,6 +86,12 @@ public class PanelGestisciCorso extends JPanel {
 		table.setModel(model);
 		scrollPane.setViewportView(table);
 		
+		// set della grandezza delle colonne
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(4).setPreferredWidth(250);
+		cellRender = new DefaultTableCellRenderer();
+		cellRender.setHorizontalAlignment(JLabel.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
 		
 		JLabel lblNomeCorso = new JLabel("Nome Corso :");
 		lblNomeCorso.setHorizontalAlignment(SwingConstants.LEFT);
@@ -98,18 +122,66 @@ public class PanelGestisciCorso extends JPanel {
 		add(textField_corsoID);
 		
 		JButton delete_button = new JButton("Elimina");
+		delete_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int rigaPressed = table.getSelectedRow();
+				if(rigaPressed >= 0) {
+					model.removeRow(rigaPressed);
+					JOptionPane.showMessageDialog(null, "Corso eliminato correttamente");
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima una riga");
+				}
+			}
+		});
 		delete_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		delete_button.setBackground(new Color(255, 51, 0));
 		delete_button.setBounds(553, 518, 81, 29);
 		add(delete_button);
 		
 		JButton update_button = new JButton("Aggiorna");
+		update_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int rigaPressed = table.getSelectedRow();
+				if(rigaPressed >= 0) {
+				model.setValueAt(textField_corsoID.getText(), rigaPressed, 0);
+				model.setValueAt(textField_nomeCorso.getText(), rigaPressed, 1);
+				model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 2);
+				model.setValueAt(textFieldPartecipanti.getText(), rigaPressed, 3);
+				model.setValueAt(textArea_descrizione.getText(), rigaPressed, 4);
+				JOptionPane.showMessageDialog(null, "Aggiornamento effettuato");
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima una riga");
+				}
+			}
+		});
 		update_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
 		update_button.setBackground(new Color(255, 51, 51));
 		update_button.setBounds(462, 518, 81, 29);
 		add(update_button);
 		
 		JButton clear_button = new JButton("Pulisci");
+		// Prova per verificare funzionamento di Aggiorna
+		clear_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				riga[0] = "test ID";
+				riga[1] = textField_nomeCorso.getText();
+				riga[2] = comboBox_areaTematica.getSelectedItem();
+				riga[3] = textFieldPartecipanti.getText();
+				riga[4] = textArea_descrizione.getText(); 
+				model.addRow(riga);
+				
+				riga[0] = "";
+				textField_nomeCorso.setText("");
+				comboBox_areaTematica.setSelectedIndex(0);
+				textFieldPartecipanti.setText("");
+				textArea_descrizione.setText("");
+				
+			}
+		});
 		clear_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		clear_button.setBackground(new Color(255, 255, 51));
 		clear_button.setBounds(371, 518, 81, 29);
@@ -121,7 +193,7 @@ public class PanelGestisciCorso extends JPanel {
 		lblAreaTematica.setBounds(20, 360, 109, 17);
 		add(lblAreaTematica);
 		
-		JComboBox comboBox_areaTematica = new JComboBox();
+		comboBox_areaTematica = new JComboBox();
 		comboBox_areaTematica.setToolTipText("");
 		comboBox_areaTematica.setBackground(Color.WHITE);
 		comboBox_areaTematica.setBounds(20, 388, 139, 21);
@@ -156,7 +228,7 @@ public class PanelGestisciCorso extends JPanel {
 		scrollPane_descrizione.setBounds(20, 462, 245, 85);
 		add(scrollPane_descrizione);
 		
-		JTextArea textArea_descrizione = new JTextArea();
+		textArea_descrizione = new JTextArea();
 		textArea_descrizione.setLineWrap(true);
 		scrollPane_descrizione.setViewportView(textArea_descrizione);
 		

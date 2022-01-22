@@ -67,14 +67,15 @@ public class PanelAggiungiCorso extends JPanel {
 				return false;
 			}
 		};
-		Object[] colonne = {"Nome Corso", "Area tematica","Max. Partecipanti","Descrizione"};
-		Object[] riga = new Object[4];
+		Object[] colonne = {"Corso ID","Nome Corso", "Area tematica","Max. Partecipanti","Descrizione"};
+		Object[] riga = new Object[5];
 		model.setColumnIdentifiers(colonne);
 		table.setModel(model);
 		scrollPane.setViewportView(table);
 		
 		// set della grandezza delle colonne
-		table.getColumnModel().getColumn(3).setPreferredWidth(300);
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(4).setPreferredWidth(250);
 		cellRender = new DefaultTableCellRenderer();
 		cellRender.setHorizontalAlignment(JLabel.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
@@ -115,12 +116,14 @@ public class PanelAggiungiCorso extends JPanel {
 				}
 				else
 				{
-					riga[0] = textField_nomeCorso.getText();
-					riga[1] = comboBox.getSelectedItem();
-					riga[2] = textField_maxPartecipanti.getText();
-					riga[3] = textArea_descrizione.getText(); 
+					riga[0] = "test ID";
+					riga[1] = textField_nomeCorso.getText();
+					riga[2] = comboBox.getSelectedItem();
+					riga[3] = textField_maxPartecipanti.getText();
+					riga[4] = textArea_descrizione.getText(); 
 					model.addRow(riga);
 					
+					riga[0] = "";
 					textField_nomeCorso.setText("");
 					comboBox.setSelectedIndex(0);
 					textField_maxPartecipanti.setText("");
