@@ -174,6 +174,28 @@ public class PanelAggiungiCorso extends JPanel {
 		add(comboBox);
 		
 		JButton addArea_button = new JButton("Aggiungi");
+		addArea_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int rigaPressed = table.getSelectedRow();
+				if(rigaPressed >= 0) {
+					if(comboBox.getSelectedItem().toString().equals("---Seleziona Area") || comboBox.getSelectedItem().toString().equals("Aggiungi Area")) {
+						JOptionPane.showMessageDialog(null, "Inserimento non valido!");
+					}
+					else
+					{
+						String valoreCorrente = model.getValueAt(rigaPressed,2).toString();
+						model.setValueAt(comboBox.getSelectedItem(), rigaPressed, 2);
+						String valoreAggiunto = model.getValueAt(rigaPressed, 2).toString();
+						valoreCorrente = valoreCorrente + valoreAggiunto.indent(2);
+						model.setValueAt(valoreCorrente, rigaPressed, 2);
+						JOptionPane.showMessageDialog(null, "Area tematica aggiunta con successo");
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso");
+				}
+			}
+		});
 		addArea_button.setBackground(new Color(102, 204, 51));
 		addArea_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
 

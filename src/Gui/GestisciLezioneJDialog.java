@@ -7,6 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.Color;
@@ -86,9 +88,16 @@ public class GestisciLezioneJDialog extends JDialog {
 		lblDescrizione.setBounds(10, 153, 108, 17);
 		contentPanel.add(lblDescrizione);
 		
-		JTextPane textPaneDescrizione = new JTextPane();
-		textPaneDescrizione.setBounds(128, 145, 184, 57);
-		contentPanel.add(textPaneDescrizione);
+		
+		JScrollPane scrollPane_descrizione = new JScrollPane();
+		contentPanel.add(scrollPane_descrizione);
+		scrollPane_descrizione.setBounds(148, 150, 151, 73);
+		
+		JTextArea textArea_descrizione = new JTextArea();
+		textArea_descrizione.setBounds(148, 150, 151, 73);
+		scrollPane_descrizione.setViewportView(textArea_descrizione);
+		textArea_descrizione.setLineWrap(true);
+		
 		
 		JLabel lblDataInizio = new JLabel("Data Inizio : ");
 		lblDataInizio.setHorizontalAlignment(SwingConstants.LEFT);
@@ -140,7 +149,8 @@ public class GestisciLezioneJDialog extends JDialog {
 		btnNewButton.setBackground(new Color(255, 215, 0));
 		btnNewButton.setBounds(324, 415, 89, 23);
 		contentPanel.add(btnNewButton);
-		
+	
+	
 
 		
 	}

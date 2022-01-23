@@ -1,6 +1,7 @@
 package Gui;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 
 import java.awt.Color;
@@ -10,10 +11,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 
 public class PanelDettagliCorso extends JPanel {
 	private JTextField textField_OreTotali;
@@ -22,6 +26,9 @@ public class PanelDettagliCorso extends JPanel {
 	Image search = new ImageIcon(this.getClass().getResource("/searchImm.png")).getImage();
 	private JTextField textField_DataInizio;
 	private JTextField textField;
+	private JTable table;
+	private DefaultTableModel model;
+	private DefaultTableCellRenderer cellRender;
 
 	/**
 	 * Create the panel.
@@ -42,6 +49,31 @@ public class PanelDettagliCorso extends JPanel {
 		lblDettagliCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 15));
 		lblDettagliCorso.setBounds(223, 11, 197, 28);
 		panel.add(lblDettagliCorso);
+		
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(10, 325, 632, 226);
+		add(scrollPane);
+		
+		table = new JTable();
+		table.setBounds(10, 221, 612, -209);
+		model = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		};
+		Object[] colonne = {"Nome corso","Massimo studenti a lezione", "Minimo studenti a lezione","Riempimento medio"};
+		Object[] riga = new Object[5];
+		model.setColumnIdentifiers(colonne);
+		table.setModel(model);
+		scrollPane.setViewportView(table);
+		
+		// set della grandezza delle colonne
+		cellRender = new DefaultTableCellRenderer();
+		cellRender.setHorizontalAlignment(JLabel.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
+		
 		
 		JLabel lblSelezionaCorso = new JLabel("Seleziona Corso :");
 		lblSelezionaCorso.setHorizontalAlignment(SwingConstants.LEFT);
