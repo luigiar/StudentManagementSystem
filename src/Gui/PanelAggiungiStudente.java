@@ -143,7 +143,7 @@ public class PanelAggiungiStudente extends JPanel {
 		JButton insert_button = new JButton("Inserisci");
 		insert_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(textField_nome.getText().equals("") || textField_cognome.getText().equals("") || Group.isSelected(null) || txtDate.getText().equals("")){
+				if(textField_nome.getText().isBlank() || textField_cognome.getText().isBlank() || Group.isSelected(null) || txtDate.getText().isBlank()){
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi");
 				}
 				else 

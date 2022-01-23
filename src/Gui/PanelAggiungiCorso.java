@@ -111,7 +111,7 @@ public class PanelAggiungiCorso extends JPanel {
 		JButton insert_button = new JButton("Inserisci");
 		insert_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(textField_nomeCorso.getText().equals("") || comboBox.getSelectedItem().equals("---Seleziona Area") || textField_maxPartecipanti.getText().equals("") || textArea_descrizione.getText().equals("") || comboBox.getSelectedItem().equals("Aggiungi Area")) {
+				if(textField_nomeCorso.getText().isBlank() || comboBox.getSelectedItem().equals("---Seleziona Area") || textField_maxPartecipanti.getText().isBlank() || textArea_descrizione.getText().isBlank() || comboBox.getSelectedItem().equals("Aggiungi Area")) {
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi!");
 				}
 				else
