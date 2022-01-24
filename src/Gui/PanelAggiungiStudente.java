@@ -144,7 +144,7 @@ public class PanelAggiungiStudente extends JPanel {
 		insert_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(textField_nome.getText().isBlank() || textField_cognome.getText().isBlank() || Group.isSelected(null) || txtDate.getText().isBlank()){
-					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi");
+					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi","Errore",JOptionPane.ERROR_MESSAGE);
 				}
 				else 
 				{
@@ -160,7 +160,7 @@ public class PanelAggiungiStudente extends JPanel {
 					textField_cognome.setText("");
 					Group.clearSelection();
 					txtDate.setText("");
-					JOptionPane.showMessageDialog(null, "Inserimento effettuato");
+					JOptionPane.showMessageDialog(null, "Inserimento effettuato","Conferma",JOptionPane.INFORMATION_MESSAGE);
 				}
 			
 			}

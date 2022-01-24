@@ -126,12 +126,18 @@ public class PanelGestisciCorso extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int rigaPressed = table.getSelectedRow();
 				if(rigaPressed >= 0) {
-					model.removeRow(rigaPressed);
-					JOptionPane.showMessageDialog(null, "Corso eliminato correttamente");
+					int input = JOptionPane.showConfirmDialog(null, "Vuoi procedere?", "Seleziona un'opzione", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+					if(input == JOptionPane.YES_OPTION) {
+						model.removeRow(rigaPressed);
+						JOptionPane.showMessageDialog(null, "Corso eliminato correttamente", "Conferma", JOptionPane.INFORMATION_MESSAGE);
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Eliminazione non eseguita","Conferma", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima una riga");
+					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima una riga","Attenzione",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -154,7 +160,7 @@ public class PanelGestisciCorso extends JPanel {
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima una riga");
+					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima una riga","Attenzione",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -194,7 +200,7 @@ public class PanelGestisciCorso extends JPanel {
 		add(lblAreaTematica);
 		
 		comboBox_areaTematica = new JComboBox();
-		comboBox_areaTematica.setToolTipText("");
+		comboBox_areaTematica.setToolTipText("Seleziona un'area tematica per il corso");
 		comboBox_areaTematica.setBackground(Color.WHITE);
 		comboBox_areaTematica.setBounds(20, 388, 139, 21);
 		comboBox_areaTematica.setModel(new DefaultComboBoxModel(new String[] {"---Seleziona Area", "Aggiungi Area", "Area Umanistica", "Area Linguistica", "Area Scientifica"}));
@@ -204,7 +210,7 @@ public class PanelGestisciCorso extends JPanel {
 					if(comboBox_areaTematica.getSelectedItem().equals("Aggiungi Area")) {
 						String itemAdd  = JOptionPane.showInputDialog(null,"Inserisci l'area tematica da aggiungere");
 						if(itemAdd.equals("") || String.valueOf(itemAdd).isBlank()) {
-						    JOptionPane.showMessageDialog(null, "Inserimento non eseguito!");
+						    JOptionPane.showMessageDialog(null, "Inserimento non eseguito!","Attenzione",JOptionPane.WARNING_MESSAGE);
 						}
 						else 
 							comboBox_areaTematica.addItem(itemAdd);							

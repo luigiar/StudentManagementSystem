@@ -59,6 +59,7 @@ public class PanelAggiungiCorso extends JPanel {
 		add(scrollPane);
 		
 		table = new JTable();
+		table.setBackground(Color.WHITE);
 		table.setBounds(10, 221, 612, -209);
 		model = new DefaultTableModel() {
 			@Override
@@ -112,7 +113,7 @@ public class PanelAggiungiCorso extends JPanel {
 		insert_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(textField_nomeCorso.getText().isBlank() || comboBox.getSelectedItem().equals("---Seleziona Area") || textField_maxPartecipanti.getText().isBlank() || textArea_descrizione.getText().isBlank() || comboBox.getSelectedItem().equals("Aggiungi Area")) {
-					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi!");
+					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi!","Errore",JOptionPane.ERROR_MESSAGE);
 				}
 				else
 				{
@@ -128,7 +129,7 @@ public class PanelAggiungiCorso extends JPanel {
 					comboBox.setSelectedIndex(0);
 					textField_maxPartecipanti.setText("");
 					textArea_descrizione.setText("");
-					JOptionPane.showMessageDialog(null, "Inserimento eseguito con successo");
+					JOptionPane.showMessageDialog(null, "Inserimento eseguito con successo","Conferma", JOptionPane.INFORMATION_MESSAGE);
 				}
 			
 				
@@ -155,9 +156,9 @@ public class PanelAggiungiCorso extends JPanel {
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					if(comboBox.getSelectedItem().equals("Aggiungi Area")) {
-						String itemAdd  = JOptionPane.showInputDialog(null,"Inserisci l'area tematica da aggiungere");
+						String itemAdd  = JOptionPane.showInputDialog(null, "Inserisci l'area tematica da aggiungere");
 						if(itemAdd.equals("") || String.valueOf(itemAdd).isBlank()) {
-						    JOptionPane.showMessageDialog(null, "Inserimento non eseguito!");
+						    JOptionPane.showMessageDialog(null, "Inserimento non eseguito!","Attenzione", JOptionPane.WARNING_MESSAGE);
 						}
 						else
 							comboBox.addItem(itemAdd);
@@ -167,32 +168,34 @@ public class PanelAggiungiCorso extends JPanel {
 		});
 
 		comboBox.setBackground(Color.WHITE);
-		comboBox.setToolTipText("");
+		comboBox.setToolTipText("Seleziona un'area tematica per il corso");
 
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"---Seleziona Area", "Aggiungi Area", "Area Umanistica", "Area Linguistica", "Area Scientifica"}));
 		comboBox.setBounds(235, 344, 139, 21);
 		add(comboBox);
 		
 		JButton addArea_button = new JButton("Aggiungi");
+		addArea_button.setToolTipText("Aggiungi area");
 		addArea_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int rigaPressed = table.getSelectedRow();
 				if(rigaPressed >= 0) {
 					if(comboBox.getSelectedItem().toString().equals("---Seleziona Area") || comboBox.getSelectedItem().toString().equals("Aggiungi Area")) {
-						JOptionPane.showMessageDialog(null, "Inserimento non valido!");
+						JOptionPane.showMessageDialog(null, "Inserimento non valido!","Errore", JOptionPane.ERROR_MESSAGE);
 					}
 					else
 					{
 						String valoreCorrente = model.getValueAt(rigaPressed,2).toString();
 						model.setValueAt(comboBox.getSelectedItem(), rigaPressed, 2);
 						String valoreAggiunto = model.getValueAt(rigaPressed, 2).toString();
-						valoreCorrente = valoreCorrente + valoreAggiunto.indent(2);
+						valoreCorrente = valoreCorrente.concat(valoreAggiunto.indent(2)); 
 						model.setValueAt(valoreCorrente, rigaPressed, 2);
-						JOptionPane.showMessageDialog(null, "Area tematica aggiunta con successo");
+						JOptionPane.showMessageDialog(null, "Area tematica aggiunta con successo","Conferma",JOptionPane.INFORMATION_MESSAGE);
+						comboBox.setSelectedIndex(0);
 					}
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso");
+					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso","Attenzione",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});

@@ -146,7 +146,7 @@ public class GestisciLezioneJDialog extends JDialog {
 		
 		JButton btnNewButton = new JButton("Salva");
 		btnNewButton.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		btnNewButton.setBackground(new Color(255, 215, 0));
+		btnNewButton.setBackground(new Color(102, 204, 51));
 		btnNewButton.setBounds(324, 415, 89, 23);
 		contentPanel.add(btnNewButton);
 	

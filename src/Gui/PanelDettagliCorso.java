@@ -82,6 +82,7 @@ public class PanelDettagliCorso extends JPanel {
 		add(lblSelezionaCorso);
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.setToolTipText("Scegli un corso");
 		comboBox.setBackground(Color.WHITE);
 		comboBox.setBounds(132, 80, 116, 22);
 		add(comboBox);
