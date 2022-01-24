@@ -156,7 +156,7 @@ public class PanelGestisciCorso extends JPanel {
 				model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 2);
 				model.setValueAt(textFieldPartecipanti.getText(), rigaPressed, 3);
 				model.setValueAt(textArea_descrizione.getText(), rigaPressed, 4);
-				JOptionPane.showMessageDialog(null, "Aggiornamento effettuato");
+				JOptionPane.showMessageDialog(null, "Aggiornamento effettuato","Conferma",JOptionPane.INFORMATION_MESSAGE);
 				}
 				else
 				{
@@ -219,16 +219,59 @@ public class PanelGestisciCorso extends JPanel {
 		});
 		
 		JButton addArea_button = new JButton("Aggiungi");
+		addArea_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int rigaPressed = table.getSelectedRow();
+				if(rigaPressed >= 0) {
+					if(comboBox_areaTematica.getSelectedItem().toString().equals("---Seleziona Area") || comboBox_areaTematica.getSelectedItem().toString().equals("Aggiungi Area")) {
+						JOptionPane.showMessageDialog(null, "Inserimento non valido!","Errore", JOptionPane.ERROR_MESSAGE);
+					}
+					else
+					{
+						String valoreCorrente = model.getValueAt(rigaPressed,2).toString();
+						model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 2);
+						String valoreAggiunto = model.getValueAt(rigaPressed, 2).toString();
+						valoreCorrente = valoreCorrente.concat(valoreAggiunto.indent(2)); 
+						model.setValueAt(valoreCorrente, rigaPressed, 2);
+						JOptionPane.showMessageDialog(null, "Area tematica aggiunta con successo","Conferma",JOptionPane.INFORMATION_MESSAGE);
+						comboBox_areaTematica.setSelectedIndex(0);
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso","Attenzione",JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
 		addArea_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
 		addArea_button.setBackground(new Color(102, 204, 51));
 		addArea_button.setBounds(169, 387, 96, 21);
 		add(addArea_button);
 		
-		JButton removeArea_button_1 = new JButton("Rimuovi");
-		removeArea_button_1.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
-		removeArea_button_1.setBackground(new Color(255, 51, 0));
-		removeArea_button_1.setBounds(275, 387, 96, 21);
-		add(removeArea_button_1);
+		JButton editArea_button = new JButton("Modifica");
+		editArea_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int rigaPressed = table.getSelectedRow();
+				if(rigaPressed >= 0) {
+					String input = JOptionPane.showInputDialog(null, "Modifica l'area per questo corso",table.getValueAt(rigaPressed, 2));
+					if(!input.isBlank()) {
+					table.setValueAt(input, rigaPressed, 2);
+					JOptionPane.showMessageDialog(null, "Modifica effettuata","Conferma",JOptionPane.INFORMATION_MESSAGE);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Per favore, aggiungi un'area tematica al corso","Attenzione",JOptionPane.WARNING_MESSAGE);
+					}
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso","Attenzione",JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
+		editArea_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		editArea_button.setBackground(new Color(255, 127, 80));
+		editArea_button.setBounds(275, 387, 96, 21);
+		add(editArea_button);
 		
 		JScrollPane scrollPane_descrizione = new JScrollPane();
 		scrollPane_descrizione.setBounds(20, 462, 245, 85);

@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.MouseInfo;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -20,11 +21,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Point;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import java.awt.event.MouseMotionAdapter;
 
 public class PanelAggiungiCorso extends JPanel {
 	private JTextField textField_nomeCorso;
@@ -37,6 +40,7 @@ public class PanelAggiungiCorso extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelAggiungiCorso() {
+
 		setBackground(new Color(255, 215, 0));
 		setLayout(null);
 		setBounds(0, 0, 673, 581);
@@ -58,7 +62,16 @@ public class PanelAggiungiCorso extends JPanel {
 		scrollPane.setBounds(10, 68, 632, 234);
 		add(scrollPane);
 		
-		table = new JTable();
+//		table = new JTable();
+		TestCellRenderer cell = new TestCellRenderer();
+		table = new JTable(model) {
+            @Override
+            public Point getToolTipLocation(MouseEvent event) {
+                return new Point(getX(),getY());
+
+            }
+        };
+        table.setDefaultRenderer(Object.class, cell);
 		table.setBackground(Color.WHITE);
 		table.setBounds(10, 221, 612, -209);
 		model = new DefaultTableModel() {
@@ -107,7 +120,6 @@ public class PanelAggiungiCorso extends JPanel {
 		JTextArea textArea_descrizione = new JTextArea();
 		scrollPane_descrizione.setViewportView(textArea_descrizione);
 		textArea_descrizione.setLineWrap(true);
-
 		
 		JButton insert_button = new JButton("Inserisci");
 		insert_button.addActionListener(new ActionListener() {
@@ -124,6 +136,7 @@ public class PanelAggiungiCorso extends JPanel {
 					riga[4] = textArea_descrizione.getText(); 
 					model.addRow(riga);
 					
+					
 					riga[0] = "";
 					textField_nomeCorso.setText("");
 					comboBox.setSelectedIndex(0);
@@ -131,7 +144,7 @@ public class PanelAggiungiCorso extends JPanel {
 					textArea_descrizione.setText("");
 					JOptionPane.showMessageDialog(null, "Inserimento eseguito con successo","Conferma", JOptionPane.INFORMATION_MESSAGE);
 				}
-			
+	
 				
 				}
 		});
@@ -217,16 +230,6 @@ public class PanelAggiungiCorso extends JPanel {
 		textField_maxPartecipanti.setBounds(20, 404, 120, 20);
 		add(textField_maxPartecipanti);
 		
-
-		
-		
-
-		
-	
-	
-		
-		
-
-
 	}
+
 }
