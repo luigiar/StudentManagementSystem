@@ -137,7 +137,7 @@ public class PanelGestisciCorso extends JPanel {
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima una riga","Attenzione",JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso","Attenzione",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
