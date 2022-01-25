@@ -2,15 +2,18 @@ package Gui;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.Component;
 import java.awt.MouseInfo;
+import java.awt.Point;
 
 
 public class TestCellRenderer extends DefaultTableCellRenderer {
 	private JPanel panel;
 	private int x;
 	private int y;
+
 	
 	  public int getX() {
 		return x;
@@ -38,9 +41,9 @@ public class TestCellRenderer extends DefaultTableCellRenderer {
 
 	@Override
       public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-		x = MouseInfo.getPointerInfo().getLocation().x;
-		y = MouseInfo.getPointerInfo().getLocation().y;
-		 System.out.println(MouseInfo.getPointerInfo().getLocation());
+		  x = MouseInfo.getPointerInfo().getLocation().x;
+		  y = MouseInfo.getPointerInfo().getLocation().y;
+		  System.out.println(MouseInfo.getPointerInfo().getLocation());
           setToolTipText(value.toString());
           return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
           

@@ -8,7 +8,10 @@ import java.awt.Font;
 import java.awt.MouseInfo;
 import java.awt.event.ActionListener;
 import java.awt.Color;
+import java.awt.Event;
+
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -35,6 +38,7 @@ public class PanelAggiungiCorso extends JPanel {
 	DefaultTableModel model;
 	private JTable table;
 	private JComboBox comboBox;
+	private PanelGestisciCorso panelp;
 	DefaultTableCellRenderer cellRender;
 	/**
 	 * Create the panel.
@@ -62,16 +66,18 @@ public class PanelAggiungiCorso extends JPanel {
 		scrollPane.setBounds(10, 68, 632, 234);
 		add(scrollPane);
 		
-//		table = new JTable();
+		table = new JTable();
 		TestCellRenderer cell = new TestCellRenderer();
+		Point p = MouseInfo.getPointerInfo().getLocation();
+		SwingUtilities.convertPointFromScreen(p, table);
 		table = new JTable(model) {
-            @Override
-            public Point getToolTipLocation(MouseEvent event) {
-                return new Point(getX(),getY());
+			@Override
+			public Point getToolTipLocation(MouseEvent event) {
+               return new Point(p);
 
             }
-        };
-        table.setDefaultRenderer(Object.class, cell);
+       };
+       table.setDefaultRenderer(Object.class, cell);
 		table.setBackground(Color.WHITE);
 		table.setBounds(10, 221, 612, -209);
 		model = new DefaultTableModel() {
@@ -93,6 +99,7 @@ public class PanelAggiungiCorso extends JPanel {
 		cellRender = new DefaultTableCellRenderer();
 		cellRender.setHorizontalAlignment(JLabel.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
+//		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 		
 		
@@ -231,5 +238,5 @@ public class PanelAggiungiCorso extends JPanel {
 		add(textField_maxPartecipanti);
 		
 	}
-
+	
 }

@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.JButton;
 
 public class PanelDettagliCorso extends JPanel {
 	private JTextField textField_OreTotali;
@@ -63,7 +64,7 @@ public class PanelDettagliCorso extends JPanel {
 				return false;
 			}
 		};
-		Object[] colonne = {"Nome corso","Massimo studenti a lezione", "Minimo studenti a lezione","Riempimento medio"};
+		Object[] colonne = {"Nome corso","Data inizio","Num lezioni","Max studenti a lezione", "Min studenti a lezione","Riempimento medio"};
 		Object[] riga = new Object[5];
 		model.setColumnIdentifiers(colonne);
 		table.setModel(model);
@@ -73,7 +74,12 @@ public class PanelDettagliCorso extends JPanel {
 		cellRender = new DefaultTableCellRenderer();
 		cellRender.setHorizontalAlignment(JLabel.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
-		
+		table.getColumnModel().getColumn(0).setPreferredWidth(80);
+		table.getColumnModel().getColumn(1).setPreferredWidth(80);
+		table.getColumnModel().getColumn(2).setPreferredWidth(80);
+		table.getColumnModel().getColumn(3).setPreferredWidth(150);
+		table.getColumnModel().getColumn(4).setPreferredWidth(150);
+		table.getColumnModel().getColumn(5).setPreferredWidth(150);
 		
 		JLabel lblSelezionaCorso = new JLabel("Seleziona Corso :");
 		lblSelezionaCorso.setHorizontalAlignment(SwingConstants.LEFT);
@@ -182,6 +188,12 @@ public class PanelDettagliCorso extends JPanel {
 		separator.setBackground(new Color(255, 255, 0));
 		separator.setBounds(0, 242, 673, 2);
 		add(separator);
+		
+		JButton addArea_button = new JButton("Aggiungi");
+		addArea_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		addArea_button.setBackground(new Color(102, 204, 51));
+		addArea_button.setBounds(537, 210, 96, 21);
+		add(addArea_button);
 
 	}
 private class PanelButtonMouseAdapter extends MouseAdapter {

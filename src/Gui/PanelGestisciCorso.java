@@ -151,16 +151,22 @@ public class PanelGestisciCorso extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int rigaPressed = table.getSelectedRow();
 				if(rigaPressed >= 0) {
-				model.setValueAt(textField_corsoID.getText(), rigaPressed, 0);
-				model.setValueAt(textField_nomeCorso.getText(), rigaPressed, 1);
-				model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 2);
-				model.setValueAt(textFieldPartecipanti.getText(), rigaPressed, 3);
-				model.setValueAt(textArea_descrizione.getText(), rigaPressed, 4);
-				JOptionPane.showMessageDialog(null, "Aggiornamento effettuato","Conferma",JOptionPane.INFORMATION_MESSAGE);
+					if(textField_corsoID.getText().isBlank() || textField_nomeCorso.getText().isBlank() || comboBox_areaTematica.getSelectedItem().equals("---Seleziona Area") || comboBox_areaTematica.getSelectedItem().equals("Aggiungi Area") || textFieldPartecipanti.getText().isBlank() || textArea_descrizione.getText().isBlank()) {
+						JOptionPane.showMessageDialog(null, "Aggiornamento non valido!","Errore", JOptionPane.ERROR_MESSAGE);
+					}
+					else
+					{
+						model.setValueAt(textField_corsoID.getText(), rigaPressed, 0);
+						model.setValueAt(textField_nomeCorso.getText(), rigaPressed, 1);
+						model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 2);
+						model.setValueAt(textFieldPartecipanti.getText(), rigaPressed, 3);
+						model.setValueAt(textArea_descrizione.getText(), rigaPressed, 4);
+						JOptionPane.showMessageDialog(null, "Aggiornamento effettuato","Conferma",JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima una riga","Attenzione",JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso","Attenzione",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
