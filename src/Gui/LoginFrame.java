@@ -144,7 +144,7 @@ public class LoginFrame extends JFrame {
 			@Override
 			public void focusGained(FocusEvent e) {
 				if(pwdPassword.getText().equals("Password")) {
-					pwdPassword.setEchoChar('●');
+					pwdPassword.setEchoChar('*');
 					pwdPassword.setText("");
 				}
 				else
