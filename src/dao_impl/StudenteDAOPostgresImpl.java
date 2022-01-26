@@ -24,10 +24,9 @@ public class StudenteDAOPostgresImpl implements StudenteDAO {
 
 	@Override
 	public void inserisciStudente(Studente studente) throws SQLException {
-		inserisciStudenteP.setString(0, studente.getId());
-		inserisciStudenteP.setString(1, studente.getNome());
-		inserisciStudenteP.setString(2, studente.getCognome());
-		inserisciStudenteP.setString(3, studente.getDataNascita());
-		inserisciStudenteP.setString(4, studente.getGenere());
+		inserisciStudenteP.setString(2, studente.getNome());
+		inserisciStudenteP.setString(3, studente.getCognome());
+		inserisciStudenteP.setString(4, studente.getDataNascita());
+		inserisciStudenteP.setString(5, studente.getGenere());
 	}
 }

@@ -10,7 +10,6 @@ import java.awt.Point;
 
 
 public class TestCellRenderer extends DefaultTableCellRenderer {
-	private JPanel panel;
 	private int x;
 	private int y;
 
@@ -41,9 +40,6 @@ public class TestCellRenderer extends DefaultTableCellRenderer {
 
 	@Override
       public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-		  x = MouseInfo.getPointerInfo().getLocation().x;
-		  y = MouseInfo.getPointerInfo().getLocation().y;
-		  System.out.println(MouseInfo.getPointerInfo().getLocation());
           setToolTipText(value.toString());
           return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
           

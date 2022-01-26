@@ -10,18 +10,33 @@ public class Studente {
 	private String dataNascita;
 	private String genere;
 	
+	// Costruttori
+	public Studente(String id, String nome, String cognome, String dataNascita, String genere) {
+		id = this.id;
+		nome = this.nome;
+		cognome = this.cognome;
+		dataNascita = this.dataNascita;
+		genere = this.genere;
+	}
 	
+	public Studente(String nome, String cognome, String dataNascita, String genere) {
+		nome = this.nome;
+		cognome = this.cognome;
+		dataNascita = this.dataNascita;
+		genere = this.genere;
+	}
+	
+	public Studente() {
+		super();
+	}
+	
+	
+	//Getter e Setter
 	public String getGenere() {
 		return genere;
 	}
 	public void setGenere(String genere) {
 		this.genere = genere;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
 	}
 	public String getDataNascita() {
 		return dataNascita;

@@ -5,32 +5,24 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.awt.MouseInfo;
 import java.awt.event.ActionListener;
 import java.awt.Color;
-import java.awt.Event;
 
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.MutableComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionEvent;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Point;
 
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import java.awt.event.MouseMotionAdapter;
+
 
 public class PanelAggiungiCorso extends JPanel {
 	private JTextField textField_nomeCorso;
@@ -38,7 +30,6 @@ public class PanelAggiungiCorso extends JPanel {
 	DefaultTableModel model;
 	private JTable table;
 	private JComboBox comboBox;
-	private PanelGestisciCorso panelp;
 	DefaultTableCellRenderer cellRender;
 	/**
 	 * Create the panel.
@@ -66,18 +57,15 @@ public class PanelAggiungiCorso extends JPanel {
 		scrollPane.setBounds(10, 68, 632, 234);
 		add(scrollPane);
 		
-		table = new JTable();
 		TestCellRenderer cell = new TestCellRenderer();
-		Point p = MouseInfo.getPointerInfo().getLocation();
-		SwingUtilities.convertPointFromScreen(p, table);
 		table = new JTable(model) {
 			@Override
 			public Point getToolTipLocation(MouseEvent event) {
-               return new Point(p);
+               return new Point(scrollPane.getMousePosition().x,scrollPane.getMousePosition().y);
 
             }
        };
-       table.setDefaultRenderer(Object.class, cell);
+        table.setDefaultRenderer(Object.class, cell);
 		table.setBackground(Color.WHITE);
 		table.setBounds(10, 221, 612, -209);
 		model = new DefaultTableModel() {
@@ -99,8 +87,6 @@ public class PanelAggiungiCorso extends JPanel {
 		cellRender = new DefaultTableCellRenderer();
 		cellRender.setHorizontalAlignment(JLabel.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
-//		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		
 		
 		
 		JLabel lblNomeCorso = new JLabel("Nome Corso :");

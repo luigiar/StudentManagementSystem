@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,7 +15,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -59,19 +59,15 @@ public class PanelGestisciCorso extends JPanel {
 		scrollPane.setBounds(10, 68, 632, 215);
 		add(scrollPane);
 		
-		table = new JTable();
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int rigaSelected = table.getSelectedRow();
-				textField_corsoID.setText((model.getValueAt(rigaSelected, 0)).toString());
-				textField_nomeCorso.setText((model.getValueAt(rigaSelected, 1)).toString());
-				comboBox_areaTematica.setSelectedItem(model.getValueAt(rigaSelected, 2));
-				textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 3)).toString());
-				textArea_descrizione.setText((model.getValueAt(rigaSelected, 4)).toString());
-				
+		TestCellRenderer cell = new TestCellRenderer();	
+		table = new JTable(model) {
+		@Override
+		public Point getToolTipLocation(MouseEvent event) {
+			return new Point(scrollPane.getMousePosition().x,scrollPane.getMousePosition().y);
+		
 			}
-		});
+		};
+		table.setDefaultRenderer(Object.class, cell);
 		table.setBounds(10, 221, 612, -209);
 		model = new DefaultTableModel() {
 			@Override
@@ -80,6 +76,7 @@ public class PanelGestisciCorso extends JPanel {
 				return false;
 			}
 		};
+		
 		Object[] colonne = {"Corso ID","Nome Corso", "Area tematica","Max. Partecipanti","Descrizione"};
 		Object[] riga = new Object[5];
 		model.setColumnIdentifiers(colonne);
@@ -92,6 +89,20 @@ public class PanelGestisciCorso extends JPanel {
 		cellRender = new DefaultTableCellRenderer();
 		cellRender.setHorizontalAlignment(JLabel.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
+		
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int rigaSelected = table.getSelectedRow();
+				textField_corsoID.setText((model.getValueAt(rigaSelected, 0)).toString());
+				textField_nomeCorso.setText((model.getValueAt(rigaSelected, 1)).toString());
+				comboBox_areaTematica.setSelectedItem(model.getValueAt(rigaSelected, 2));
+				textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 3)).toString());
+				textArea_descrizione.setText((model.getValueAt(rigaSelected, 4)).toString());
+				
+			}
+		});
+		
 		
 		JLabel lblNomeCorso = new JLabel("Nome Corso :");
 		lblNomeCorso.setHorizontalAlignment(SwingConstants.LEFT);
