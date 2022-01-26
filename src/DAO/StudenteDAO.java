@@ -14,5 +14,9 @@ public interface StudenteDAO {
 
 	void inserisciStudente(Studente studente) throws SQLException;
 	
+	void aggiornaStudente(Studente studente) throws SQLException;
+	
+	void eliminaStudente(Studente studente) throws SQLException;
+	
 
 }

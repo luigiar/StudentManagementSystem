@@ -5,7 +5,7 @@ public class Corso {
 
 	private String nome;
 	private String descrizione; 
-	private ArrayList<Studente> partecipanti = new ArrayList<>(100);
+	private ArrayList<Studente> maxPartecipanti = new ArrayList<>(100);
 	private String CodiceCorso;
 	private ArrayList<Lezione> numeroLezioni = new ArrayList<>(20);
 	private ArrayList<AreeTematiche> tipo = new ArrayList<>();

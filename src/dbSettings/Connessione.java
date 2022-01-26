@@ -9,7 +9,7 @@ public class Connessione {
 	private String IP = "localhost";
 	private String PORT = "5432";
 	private String URL = "jdbc:postgresql://"+IP+":"+PORT+"/DBProject";
-	
+
 	private Connessione() throws SQLException {
 		// Carica il drive ed ottiene una connessione
 		try {
@@ -17,13 +17,13 @@ public class Connessione {
 			connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
 			System.out.println("Connessione Effettuata ");
 		} catch (ClassNotFoundException e) {
-		System.out.println("Creazione del Database fallita");
+			System.out.println("Creazione del Database fallita");
 		}
-		
+
 	}
-		
+
 	public Connection getConnection() { return connection; }
-	
+
 	public static Connessione getInstance() throws SQLException {
 		if(instance == null) 
 		{
@@ -31,14 +31,14 @@ public class Connessione {
 		}
 		else
 			if(instance.getConnection().isClosed())
-		{
-			instance = new Connessione();
-		}
+			{
+				instance = new Connessione();
+			}
 		return instance;
 	}
-		
-		
-		
-		
-	}
+
+
+
+
+}
 

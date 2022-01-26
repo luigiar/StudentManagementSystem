@@ -1,12 +1,10 @@
 package Gui;
 
-import javax.swing.JPanel;
+
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.Component;
-import java.awt.MouseInfo;
-import java.awt.Point;
+
 
 
 public class TestCellRenderer extends DefaultTableCellRenderer {
