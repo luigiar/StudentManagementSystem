@@ -19,13 +19,6 @@ public class Studente {
 		genere = this.genere;
 	}
 	
-	public Studente(String nome, String cognome, String dataNascita, String genere) {
-		nome = this.nome;
-		cognome = this.cognome;
-		dataNascita = this.dataNascita;
-		genere = this.genere;
-	}
-	
 	public Studente() {
 		super();
 	}
@@ -60,7 +53,6 @@ public class Studente {
 	public String getId() {
 		return id;
 	}
-
 	public void setId(String id) {
 		this.id = id;
 	}

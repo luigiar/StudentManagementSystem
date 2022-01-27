@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import Entità.Studente;
 
@@ -12,11 +13,13 @@ import dbSettings.Connessione;
 
 public interface StudenteDAO {
 
-	void inserisciStudente(Studente studente) throws SQLException;
+	public void inserisciStudente(Studente studente) throws SQLException;
 	
-	void aggiornaStudente(Studente studente) throws SQLException;
+	public void aggiornaStudente(Studente studente) throws SQLException;
 	
-	void eliminaStudente(Studente studente) throws SQLException;
+	public void eliminaStudente(Studente studente) throws SQLException;
 	
-
+	public ArrayList<Studente> leggiStudenti(ArrayList<Studente> s) throws SQLException;
+	
+	
 }

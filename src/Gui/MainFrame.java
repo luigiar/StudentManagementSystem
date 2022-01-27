@@ -1,43 +1,24 @@
 package Gui;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.FlowLayout;
 import java.awt.Color;
 
-import javax.swing.Icon;
+
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.SwingUtilities;
 import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JScrollBar;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.border.LineBorder;
-import java.awt.event.MouseMotionAdapter;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
+
 
 public class MainFrame extends JFrame {
 
