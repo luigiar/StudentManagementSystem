@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import Controller.Controller;
 
 
 public class MainFrame extends JFrame {
@@ -25,6 +26,8 @@ public class MainFrame extends JFrame {
 	private JPanel contentPane;
 	private final JLabel logo_label = new JLabel("");
 	JPanel side_panel = new JPanel();
+
+	
 	
 
 	private final JPanel student_panel = new JPanel();
@@ -53,29 +56,14 @@ public class MainFrame extends JFrame {
 	private PanelDettagliCorso panelDettagliCorso;
 	private final JPanel corsi_panel = new JPanel();
 	private final JLabel corsi_label = new JLabel("Corsi");
+	private Controller theController;
 
 
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainFrame frame = new MainFrame();
-					frame.setVisible(true);
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-
-
-	public MainFrame() {
+	public MainFrame(Controller c) {
+		
+		theController = c;
 		setResizable(false);
 		setTitle("Home");
-		
 		customDesign();
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -229,7 +217,7 @@ public class MainFrame extends JFrame {
 		signOut_panel.addMouseListener(new PanelButtonMouseAdapter(signOut_panel) {
 			public void mouseClicked(MouseEvent e) {
 				if(JOptionPane.showConfirmDialog(null, "Sei sicuro di voler uscire dall'applicazione?") == 0) {
-				LoginFrame loginFrame = new LoginFrame();
+				LoginFrame loginFrame = new LoginFrame(c);
 				loginFrame.setVisible(true);
 				MainFrame.this.dispose();
 				}
@@ -306,8 +294,6 @@ public class MainFrame extends JFrame {
 		mainContent_panel.add(panelDettagliCorso);
 		
 		menuSelected(panelHome);
-		
-		
 		
 	}
 	

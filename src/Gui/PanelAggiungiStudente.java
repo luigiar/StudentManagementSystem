@@ -7,9 +7,15 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.ModuleLayer.Controller;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import DAO.StudenteDAO;
+import Entità.Studente;
+import dao_impl.StudenteDAOImpl;
+
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.ButtonGroup;
@@ -21,16 +27,19 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JScrollPane;
 
 public class PanelAggiungiStudente extends JPanel {
+	private Controller theController;
 	private JTextField textField_nome;
 	private JTextField textField_cognome;
 	private JTextField txtDate;
 	private JTable table;
 	DefaultTableModel model;
 
+
 	/**
 	 * Create the panel.
 	 */
 	public PanelAggiungiStudente() {
+
 		setBackground(new Color(255, 215, 0));
 		setLayout(null);
 		setSize(673, 581);
@@ -161,7 +170,6 @@ public class PanelAggiungiStudente extends JPanel {
 					JOptionPane.showMessageDialog(null, "Inserimento effettuato", "Conferma",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
-
 			}
 		});
 		insert_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
@@ -169,5 +177,4 @@ public class PanelAggiungiStudente extends JPanel {
 		insert_button.setBounds(539, 518, 88, 30);
 		add(insert_button);
 	}
-
 }

@@ -2,16 +2,18 @@ package Entità;
 
 import java.sql.Date;
 
+import Gui.PanelAggiungiStudente;
+
 public class Studente {
 	
-	private String id;
+	private Integer id;
 	private String nome;
 	private String cognome;
 	private String dataNascita;
 	private String genere;
 	
 	// Costruttori
-	public Studente(String id, String nome, String cognome, String dataNascita, String genere) {
+	public Studente(Integer id, String nome, String cognome, String dataNascita, String genere) {
 		id = this.id;
 		nome = this.nome;
 		cognome = this.cognome;
@@ -50,12 +52,13 @@ public class Studente {
 		this.cognome = cognome;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
+	
 }
 	
 

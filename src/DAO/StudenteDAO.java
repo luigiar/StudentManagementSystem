@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import Entità.Studente;
+import Gui.PanelAggiungiStudente;
 
 import java.sql.*;
 import dbSettings.Connessione;
@@ -19,7 +20,7 @@ public interface StudenteDAO {
 	
 	public void eliminaStudente(Studente studente) throws SQLException;
 	
-	public ArrayList<Studente> leggiStudenti(ArrayList<Studente> s) throws SQLException;
+	public ArrayList<Studente> leggiStudenti() throws SQLException;
 	
 	
 }

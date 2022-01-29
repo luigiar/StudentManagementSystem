@@ -3,7 +3,7 @@ package dbSettings;
 import java.sql.*;
 
 public class Connessione {
-	private static Connessione instance;
+	private static Connessione instance; // 1.dichiarazione di una var di tipo della classe stessa, statico e privato
 	private Connection connection = null;
 	private String USERNAME = "postgres";
 	private String PASSWORD = "fasterbunny";
@@ -11,7 +11,7 @@ public class Connessione {
 	private String PORT = "5432";
 	private String URL = "jdbc:postgresql://" + IP + ":" + PORT + "/DBProject";
 
-	private Connessione() throws SQLException {
+	private Connessione() throws SQLException { 
 		// Carica il drive ed ottiene una connessione
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -24,11 +24,11 @@ public class Connessione {
 	}
 
 	// restituita l'istanza si può fare la return della connection
-	public Connection getConnection() {
+	public Connection getConnection() { //2. costruttore che non accetta par e privato
 		return connection;
 	}
 
-	public static Connessione getInstance() throws SQLException {
+	public static Connessione getInstance() throws SQLException { //3. definire metodo principale getInstance, statico e ritorna oggetto tipo intance
 		if (instance == null) {
 			// creazione oggetto Connessione, se non esiste
 			instance = new Connessione();
