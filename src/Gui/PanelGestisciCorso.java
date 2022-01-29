@@ -25,7 +25,6 @@ import java.awt.event.MouseEvent;
 
 public class PanelGestisciCorso extends JPanel {
 	private JTextField textField_nomeCorso;
-	private JTextField textField_corsoID;
 	DefaultTableModel model;
 	private JTable table;
 	private JTextField textFieldPartecipanti;
@@ -92,7 +91,6 @@ public class PanelGestisciCorso extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int rigaSelected = table.getSelectedRow();
-				textField_corsoID.setText((model.getValueAt(rigaSelected, 0)).toString());
 				textField_nomeCorso.setText((model.getValueAt(rigaSelected, 1)).toString());
 				comboBox_areaTematica.setSelectedItem(model.getValueAt(rigaSelected, 2));
 				textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 3)).toString());
@@ -117,17 +115,6 @@ public class PanelGestisciCorso extends JPanel {
 		lblDescrizione.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblDescrizione.setBounds(20, 434, 101, 17);
 		add(lblDescrizione);
-
-		JLabel lblCorsoId = new JLabel(" Corso Id  :");
-		lblCorsoId.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCorsoId.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblCorsoId.setBounds(249, 290, 101, 17);
-		add(lblCorsoId);
-
-		textField_corsoID = new JTextField();
-		textField_corsoID.setColumns(10);
-		textField_corsoID.setBounds(249, 318, 120, 20);
-		add(textField_corsoID);
 
 		JButton delete_button = new JButton("Elimina");
 		delete_button.addActionListener(new ActionListener() {
@@ -160,14 +147,13 @@ public class PanelGestisciCorso extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int rigaPressed = table.getSelectedRow();
 				if (rigaPressed >= 0) {
-					if (textField_corsoID.getText().isBlank() || textField_nomeCorso.getText().isBlank()
+					if (textField_nomeCorso.getText().isBlank()
 							|| comboBox_areaTematica.getSelectedItem().equals("---Seleziona Area")
 							|| comboBox_areaTematica.getSelectedItem().equals("Aggiungi Area")
 							|| textFieldPartecipanti.getText().isBlank() || textArea_descrizione.getText().isBlank()) {
 						JOptionPane.showMessageDialog(null, "Aggiornamento non valido!", "Errore",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
-						model.setValueAt(textField_corsoID.getText(), rigaPressed, 0);
 						model.setValueAt(textField_nomeCorso.getText(), rigaPressed, 1);
 						model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 2);
 						model.setValueAt(textFieldPartecipanti.getText(), rigaPressed, 3);
@@ -303,12 +289,12 @@ public class PanelGestisciCorso extends JPanel {
 		JLabel lblMaxPartecipanti = new JLabel("Max. Partecipanti");
 		lblMaxPartecipanti.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMaxPartecipanti.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblMaxPartecipanti.setBounds(462, 292, 120, 17);
+		lblMaxPartecipanti.setBounds(229, 290, 120, 17);
 		add(lblMaxPartecipanti);
 
 		textFieldPartecipanti = new JTextField();
 		textFieldPartecipanti.setColumns(10);
-		textFieldPartecipanti.setBounds(462, 318, 120, 20);
+		textFieldPartecipanti.setBounds(229, 318, 120, 20);
 		add(textFieldPartecipanti);
 
 	}
