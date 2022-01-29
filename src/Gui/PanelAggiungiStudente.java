@@ -23,7 +23,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import java.awt.GridLayout;
-import net.miginfocom.swing.MigLayout;
 import javax.swing.JScrollPane;
 
 public class PanelAggiungiStudente extends JPanel {
