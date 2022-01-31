@@ -14,7 +14,7 @@ import dbSettings.Connessione;
 
 public interface StudenteDAO {
 
-	public void inserisciStudente(Studente studente) throws SQLException;
+	public void inserisciStudente(String nome, String cognome, String dataNascita, String genere) throws SQLException;
 	
 	public void aggiornaStudente(Studente studente) throws SQLException;
 	

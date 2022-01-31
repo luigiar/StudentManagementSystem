@@ -7,7 +7,10 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.ModuleLayer.Controller;
+import Controller.Controller;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -33,12 +36,12 @@ public class PanelAggiungiStudente extends JPanel {
 	private JTable table;
 	DefaultTableModel model;
 
-
 	/**
 	 * Create the panel.
 	 */
-	public PanelAggiungiStudente() {
+	public PanelAggiungiStudente(Controller c) {
 
+		theController = c;
 		setBackground(new Color(255, 215, 0));
 		setLayout(null);
 		setSize(673, 581);
@@ -154,20 +157,26 @@ public class PanelAggiungiStudente extends JPanel {
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi", "Errore",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					riga[0] = "id prova";
+
 					riga[1] = textField_nome.getText();
 					riga[2] = textField_cognome.getText();
 					riga[3] = Group.getSelection().getActionCommand();
 					riga[4] = txtDate.getText();
 					model.addRow(riga);
 
+					String name = textField_nome.getText();
+					String surname = textField_cognome.getText();
+					String date = txtDate.getText();
+					String genere = Group.getSelection().getActionCommand();
+
+					c.insertStudent(name, surname, date, genere);
+
 					riga[0] = "";
 					textField_nome.setText("");
 					textField_cognome.setText("");
 					Group.clearSelection();
 					txtDate.setText("");
-					JOptionPane.showMessageDialog(null, "Inserimento effettuato", "Conferma",
-							JOptionPane.INFORMATION_MESSAGE);
+
 				}
 			}
 		});
