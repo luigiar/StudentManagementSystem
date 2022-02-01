@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.table.DefaultTableModel;
+
 import DAO.StudenteDAO;
 import Entità.Studente;
 import dbSettings.Connessione;
@@ -24,7 +26,7 @@ public class StudenteDAOImpl implements StudenteDAO {
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
 		try {
-			String inserimentoSQL = "INSERT INTO studente VALUES(?, ?, ?, ?)";
+			String inserimentoSQL = "INSERT INTO studente(nome,cognome,data_nascita, genere) VALUES(?, ?, ?, ?)";
 			// Convertendo data.util in data.sql
 			Date date = simpleDateFormat.parse(dataNascita);
 			java.sql.Date dataSQL = new java.sql.Date(date.getTime());
@@ -71,24 +73,31 @@ public class StudenteDAOImpl implements StudenteDAO {
 	}
 
 	public ArrayList<Studente> leggiStudenti() throws SQLException {
-		ArrayList<Studente> result = new ArrayList<Studente>();
-		Connection conn = null;
+		ArrayList<Studente> studenti = new ArrayList<Studente>();
+		Connessione connect = Connessione.getInstance();
+		conn = connect.getConnection();
+		
+		System.out.println("Connessione eseguita");
+		
 		Statement st = null;
 		try {
+			System.out.println("Mostrando elementi tabella... ");
 			st = conn.createStatement();
 
-			String sql = "SELECT * FROM STUDENTE";
+			String sql = "SELECT * FROM studente";
 			ResultSet rs = st.executeQuery(sql);
-
+			
 			while (rs.next()) {
-				Studente s = new Studente();
-				s.setNome(rs.getString(1));
-				s.setCognome(rs.getString(2));
-				s.setDataNascita(rs.getString(3));
-				s.setGenere(rs.getString(4));
-				result.add(s);
+			Studente s = new Studente();
+			s.setId(rs.getInt(1));
+			s.setNome(rs.getString(2));
+			s.setCognome(rs.getString(3));
+			s.setDataNascita(rs.getString(4));
+			s.setGenere(rs.getString(5));
+			studenti.add(s);
 			}
-			return result;
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,7 +114,7 @@ public class StudenteDAOImpl implements StudenteDAO {
 				se.printStackTrace();
 			}
 		}
-		return result;
+		return studenti;
 
 	}
 

@@ -21,6 +21,7 @@ import dao_impl.StudenteDAOImpl;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.AncestorListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,8 +34,9 @@ public class PanelAggiungiStudente extends JPanel {
 	private JTextField textField_nome;
 	private JTextField textField_cognome;
 	private JTextField txtDate;
-	private JTable table;
+    JTable table;
 	DefaultTableModel model;
+
 
 	/**
 	 * Create the panel.
@@ -45,6 +47,7 @@ public class PanelAggiungiStudente extends JPanel {
 		setBackground(new Color(255, 215, 0));
 		setLayout(null);
 		setSize(673, 581);
+		
 
 		textField_nome = new JTextField();
 		textField_nome.setBounds(10, 331, 101, 20);
@@ -142,13 +145,18 @@ public class PanelAggiungiStudente extends JPanel {
 				return false;
 			}
 		};
-		Object[] colonne = { "ID", "Nome", "Cognome", "Genere", "Data Nascita" };
+		Object[] colonne = { "ID", "Nome", "Cognome", "Data Nascita", "Genere" };
 		Object[] riga = new Object[5];
+		try {
+			c.displayStudent();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		model.setColumnIdentifiers(colonne);
-
 		table.setModel(model);
 		scrollPane.setViewportView(table);
-
+	
 		JButton insert_button = new JButton("Inserisci");
 		insert_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -168,7 +176,7 @@ public class PanelAggiungiStudente extends JPanel {
 					String surname = textField_cognome.getText();
 					String date = txtDate.getText();
 					String genere = Group.getSelection().getActionCommand();
-
+					
 					c.insertStudent(name, surname, date, genere);
 
 					riga[0] = "";
