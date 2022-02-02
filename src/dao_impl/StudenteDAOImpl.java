@@ -76,34 +76,33 @@ public class StudenteDAOImpl implements StudenteDAO {
 		ArrayList<Studente> studenti = new ArrayList<Studente>();
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
-		
+
 		System.out.println("Connessione eseguita");
-		
-		Statement st = null;
+
+		Statement mostraStudentiST = null;
 		try {
 			System.out.println("Mostrando elementi tabella... ");
-			st = conn.createStatement();
+			mostraStudentiST = conn.createStatement();
 
-			String sql = "SELECT * FROM studente";
-			ResultSet rs = st.executeQuery(sql);
-			
-			while (rs.next()) {
-			Studente s = new Studente();
-			s.setId(rs.getInt(1));
-			s.setNome(rs.getString(2));
-			s.setCognome(rs.getString(3));
-			s.setDataNascita(rs.getString(4));
-			s.setGenere(rs.getString(5));
-			studenti.add(s);
+			String selezionaStudentiSQL = "SELECT * FROM studente";
+			ResultSet result = mostraStudentiST.executeQuery(selezionaStudentiSQL);
+
+			while (result.next()) {
+				Studente s = new Studente();
+				s.setId(result.getInt(1));
+				s.setNome(result.getString(2));
+				s.setCognome(result.getString(3));
+				s.setDataNascita(result.getString(4));
+				s.setGenere(result.getString(5));
+				studenti.add(s);
 			}
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
-				if (st != null)
+				if (mostraStudentiST != null)
 					conn.close();
 			} catch (SQLException se) {
 			}
@@ -116,6 +115,37 @@ public class StudenteDAOImpl implements StudenteDAO {
 		}
 		return studenti;
 
+	}
+
+	@Override
+	public int getLastID(int id) throws SQLException {
+		Connessione connect = Connessione.getInstance();
+		conn = connect.getConnection();
+		Statement mostraID = null;
+
+		try {
+			mostraID = conn.createStatement();
+
+			String mostraIDSql = "SELECT MAX(id) AS LastID FROM studente";
+			ResultSet risultato = mostraID.executeQuery(mostraIDSql);
+			while (risultato.next()) {
+				id = risultato.getInt(1);
+			}
+		} catch (SQLException e) {
+
+		}
+		try {
+			if (mostraID != null)
+				conn.close();
+		} catch (SQLException se) {
+		}
+		try {
+			if (conn != null)
+				conn.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return id;
 	}
 
 }

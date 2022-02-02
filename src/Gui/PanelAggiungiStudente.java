@@ -9,24 +9,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Controller.Controller;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
-import DAO.StudenteDAO;
-import Entità.Studente;
-import dao_impl.StudenteDAOImpl;
-
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.AncestorListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
-import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 
 public class PanelAggiungiStudente extends JPanel {
@@ -34,9 +25,9 @@ public class PanelAggiungiStudente extends JPanel {
 	private JTextField textField_nome;
 	private JTextField textField_cognome;
 	private JTextField txtDate;
-    JTable table;
 	DefaultTableModel model;
-
+	private JTable table;
+	private ButtonGroup Group;
 
 	/**
 	 * Create the panel.
@@ -47,7 +38,6 @@ public class PanelAggiungiStudente extends JPanel {
 		setBackground(new Color(255, 215, 0));
 		setLayout(null);
 		setSize(673, 581);
-		
 
 		textField_nome = new JTextField();
 		textField_nome.setBounds(10, 331, 101, 20);
@@ -115,7 +105,7 @@ public class PanelAggiungiStudente extends JPanel {
 		rdbtn_donna.setBounds(224, 429, 76, 21);
 		add(rdbtn_donna);
 
-		ButtonGroup Group = new ButtonGroup();
+		Group = new ButtonGroup();
 		Group.add(rdbtn_uomo);
 		Group.add(rdbtn_donna);
 
@@ -145,18 +135,15 @@ public class PanelAggiungiStudente extends JPanel {
 				return false;
 			}
 		};
-		Object[] colonne = { "ID", "Nome", "Cognome", "Data Nascita", "Genere" };
-		Object[] riga = new Object[5];
+
+		scrollPane.setViewportView(table);
 		try {
-			c.displayStudent();
+			c.displayStudent(table);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		model.setColumnIdentifiers(colonne);
-		table.setModel(model);
-		scrollPane.setViewportView(table);
-	
+
 		JButton insert_button = new JButton("Inserisci");
 		insert_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -166,25 +153,21 @@ public class PanelAggiungiStudente extends JPanel {
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 
-					riga[1] = textField_nome.getText();
-					riga[2] = textField_cognome.getText();
-					riga[3] = Group.getSelection().getActionCommand();
-					riga[4] = txtDate.getText();
-					model.addRow(riga);
-
 					String name = textField_nome.getText();
 					String surname = textField_cognome.getText();
 					String date = txtDate.getText();
 					String genere = Group.getSelection().getActionCommand();
-					
+
 					c.insertStudent(name, surname, date, genere);
 
-					riga[0] = "";
-					textField_nome.setText("");
-					textField_cognome.setText("");
-					Group.clearSelection();
-					txtDate.setText("");
+					try {
+						c.addStudentToTableView(table, textField_nome, textField_cognome, txtDate, Group);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
+					clearTextField();
 				}
 			}
 		});
@@ -192,5 +175,12 @@ public class PanelAggiungiStudente extends JPanel {
 		insert_button.setBackground(new Color(51, 153, 204));
 		insert_button.setBounds(539, 518, 88, 30);
 		add(insert_button);
+	}
+
+	public void clearTextField() {
+		textField_nome.setText("");
+		textField_cognome.setText("");
+		Group.clearSelection();
+		txtDate.setText("");
 	}
 }

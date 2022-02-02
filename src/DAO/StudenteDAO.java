@@ -22,5 +22,7 @@ public interface StudenteDAO {
 	
 	public ArrayList<Studente> leggiStudenti() throws SQLException;
 	
+	public int getLastID(int id) throws SQLException;
+	
 	
 }
