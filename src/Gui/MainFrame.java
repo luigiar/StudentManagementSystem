@@ -84,8 +84,8 @@ public class MainFrame extends JFrame {
 		panelAggiungiStudente.setBounds(0, 0, 648, 554);
 		panelGestisciStudente = new PanelGestisciStudente();
 		panelGestisciStudente.setBounds(0, 0, 648, 554);
-		panelAggiungiCorso = new PanelAggiungiCorso();
-		panelGestisciCorso = new PanelGestisciCorso();
+		panelAggiungiCorso = new PanelAggiungiCorso(c);
+		panelGestisciCorso = new PanelGestisciCorso(c);
 		panelDettagliCorso = new PanelDettagliCorso();
 		side_panel.setAutoscrolls(true);
 		side_panel.setBorder(null);

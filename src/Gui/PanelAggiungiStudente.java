@@ -137,12 +137,7 @@ public class PanelAggiungiStudente extends JPanel {
 		};
 
 		scrollPane.setViewportView(table);
-		try {
-			c.displayStudent(table);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		c.displayStudent(table);
 
 		JButton insert_button = new JButton("Inserisci");
 		insert_button.addActionListener(new ActionListener() {
@@ -153,19 +148,10 @@ public class PanelAggiungiStudente extends JPanel {
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 
-					String name = textField_nome.getText();
-					String surname = textField_cognome.getText();
-					String date = txtDate.getText();
-					String genere = Group.getSelection().getActionCommand();
+					c.insertStudent(textField_nome.getText(), textField_cognome.getText(), txtDate.getText(),
+							Group.getSelection().getActionCommand());
 
-					c.insertStudent(name, surname, date, genere);
-
-					try {
-						c.addStudentToTableView(table, textField_nome, textField_cognome, txtDate, Group);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					c.addStudentToTableView(table, textField_nome, textField_cognome, txtDate, Group);
 
 					clearTextField();
 				}
@@ -173,7 +159,7 @@ public class PanelAggiungiStudente extends JPanel {
 		});
 		insert_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		insert_button.setBackground(new Color(51, 153, 204));
-		insert_button.setBounds(539, 518, 88, 30);
+		insert_button.setBounds(531, 492, 88, 30);
 		add(insert_button);
 	}
 

@@ -1,9 +1,134 @@
 package dao_impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 import DAO.CorsoDAO;
+import Entità.Corso;
+import dbSettings.Connessione;
 
 public class CorsoDAOImpl implements CorsoDAO {
 
-	
-	
+	Connection conn = null;
+	PreparedStatement inserisciCorsoStm;
+
+	@Override
+	public void inserisciCorso(String nome, String descrizione, String massimoPartecipanti, String areaTematica)
+			throws SQLException {
+		Connessione connect = Connessione.getInstance();
+		conn = connect.getConnection();
+
+		try {
+			String inserimentoSql = "INSERT INTO corso(nome,descrizione,max_partecipanti,aree_tematiche) VALUES (?, ?, ? ,?)";
+			// conversione valori
+			int numeroMaxPartecipanti = Integer.parseInt(massimoPartecipanti);
+
+			inserisciCorsoStm = conn.prepareStatement(inserimentoSql);
+			System.out.println("inserendo corsi nella tabella");
+			inserisciCorsoStm.setString(1, nome);
+			inserisciCorsoStm.setString(2, descrizione);
+			inserisciCorsoStm.setInt(3, numeroMaxPartecipanti);
+			inserisciCorsoStm.setString(4, areaTematica);
+			inserisciCorsoStm.executeUpdate();
+			System.out.println("Corsi Inseriti correttamente");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// blocco per chiudere risorse
+			try {
+				if (inserisciCorsoStm != null)
+					conn.close();
+			} catch (SQLException se) {
+				// non fa nulla
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+
+	}
+
+	@Override
+	public ArrayList<Corso> leggiCorsi() throws SQLException {
+		ArrayList<Corso> corsi = new ArrayList<Corso>();
+		Connessione connect = Connessione.getInstance();
+		conn = connect.getConnection();
+
+		Statement mostraCorsi = null;
+
+		try {
+			mostraCorsi = conn.createStatement();
+
+			String selezionaCorsiSql = "SELECT id,nome,descrizione,max_partecipanti,aree_tematiche FROM corso";
+			ResultSet risultato = mostraCorsi.executeQuery(selezionaCorsiSql);
+
+			while (risultato.next()) {
+				Corso c = new Corso();
+				c.setCodiceCorso(risultato.getInt(1));
+				c.setNome(risultato.getString(2));
+				c.setDescrizione(risultato.getString(3));
+				c.setMaxPartecipanti(risultato.getInt(4));
+				c.setAreeTematiche(risultato.getString(5));
+				corsi.add(c);
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (mostraCorsi != null)
+					conn.close();
+			} catch (SQLException se) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+
+		return corsi;
+	}
+
+	@Override
+	public int getLastID(int id) throws SQLException {
+		Connessione connect = Connessione.getInstance();
+		conn = connect.getConnection();
+
+		Statement mostraID = null;
+		try {
+			mostraID = conn.createStatement();
+			String mostraIDSql = "SELECT MAX(id) AS LastID FROM corso";
+			ResultSet risultato = mostraID.executeQuery(mostraIDSql);
+			while (risultato.next()) {
+				id = risultato.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if (mostraID != null)
+				conn.close();
+		} catch (SQLException se) {
+		}
+		try {
+			if (conn != null)
+				conn.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return id;
+	}
+
 }

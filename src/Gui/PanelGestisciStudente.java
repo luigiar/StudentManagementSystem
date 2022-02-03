@@ -2,33 +2,54 @@ package Gui;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PanelGestisciStudente extends JPanel {
 	private JTable table;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textFieldNome;
+	private JTextField txtCogniome;
 	private JTextField txtDate;
 	private JTextField txtId;
+	DefaultTableModel model;
+	private PanelAggiornaStudente panelAggiornaStudente;
+	DefaultTableCellRenderer cellRender;
+	Image indietro = new ImageIcon(this.getClass().getResource("/Freccia_Icon.png")).getImage();
 
 	/**
 	 * Create the panel.
 	 */
 	public PanelGestisciStudente() {
-		setBackground(new Color(255, 215, 0));
+		setBackground(Color.WHITE);
 		setLayout(null);
 		setBounds(0, 0, 673, 581);
+		
+		JPanel panel_gestisciStudente = new JPanel();
+		panelAggiornaStudente = new PanelAggiornaStudente();
+		JButton date_button = new JButton("New button");
+		JButton delete_button = new JButton("Elimina");
+		JButton update_button = new JButton("Aggiorna");
+		
+	//	add(panelAggiornaStudente);
+	//	panelAggiornaStudente.setVisible(false);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -42,48 +63,121 @@ public class PanelGestisciStudente extends JPanel {
 		lblGestioneStudenti.setBounds(223, 11, 197, 28);
 		panel.add(lblGestioneStudenti);
 		
+		JLabel lblAggiornaStudente = new JLabel("Aggiorna Studente");
+		lblAggiornaStudente.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAggiornaStudente.setFont(new Font("Yu Gothic UI", Font.BOLD, 15));
+		lblAggiornaStudente.setBounds(223, 11, 197, 28);
+		panel.add(lblAggiornaStudente);
+		
+		JPanel panel_indietro = new JPanel();
+		panel_indietro.setBackground(new Color(245, 245, 245));
+		panel_indietro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				panelAggiornaStudente.setVisible(false);
+				
+				panel_gestisciStudente.setVisible(true);
+				
+				lblAggiornaStudente.setVisible(false);
+				lblGestioneStudenti.setVisible(true);
+				panel_indietro.setVisible(false);
+
+			}
+		});
+		panel_indietro.setBounds(39, 18, 74, 19);
+		panel.add(panel_indietro);
+		panel_indietro.setLayout(null);
+		panel_indietro.setVisible(false);
+		
+		JLabel lblNewLabel = new JLabel("Indietro");
+		lblNewLabel.setBounds(20, 3, 56, 14);
+		panel_indietro.add(lblNewLabel);
+		
+		JLabel lblFreccia = new JLabel("");
+		lblFreccia.setBounds(0, 3, 18, 14);
+		lblFreccia.setIcon(new ImageIcon(indietro));
+		panel_indietro.add(lblFreccia);
+		
+		
+		panel_gestisciStudente.setBackground(new Color(255, 215, 0));
+		panel_gestisciStudente.setBounds(0, 56, 673, 525);
+		panel_gestisciStudente.setLayout(null);
+		add(panel_gestisciStudente);
+		
+		
+		lblAggiornaStudente.setVisible(false);
+		panel_gestisciStudente.setLayout(null);
+		
+
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBackground(new Color(255, 255, 255));
+		scrollPane.setBounds(10, 61, 632, 231);
+		panel_gestisciStudente.add(scrollPane);
+		
 		table = new JTable();
-		table.setBackground(new Color(255, 215, 0));
-		table.setBounds(10, 323, 653, -266);
-		add(table);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int rigaSelected = table.getSelectedRow();
+				textFieldNome.setText((model.getValueAt(rigaSelected, 0)).toString());
+				txtCogniome.setText((model.getValueAt(rigaSelected, 1)).toString());
+				txtDate.setText((model.getValueAt(rigaSelected, 2)).toString());
+				txtId.setText((model.getValueAt(rigaSelected, 3)).toString());
+			}
+		});
+		table.setEnabled(false);
+		table.setBackground(new Color(230, 230, 250));
+		model = new DefaultTableModel() {
+			
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		Object[] colonne = {"ID","Nome","Cognome","Data Nascita","Genere"};
+		Object[] riga = new Object[5];
+		model.setColumnIdentifiers(colonne);
+		
+		table.setModel(model);
+		scrollPane.setViewportView(table);
 		
 		JLabel lblNome = new JLabel("Nome :");
 		lblNome.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNome.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblNome.setBounds(10, 327, 50, 17);
-		add(lblNome);
+		lblNome.setBounds(33, 370, 50, 17);
+		panel_gestisciStudente.add(lblNome);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(20, 345, 101, 20);
-		add(textField);
+		textFieldNome = new JTextField();
+		textFieldNome.setColumns(10);
+		textFieldNome.setBounds(33, 394, 101, 20);
+		panel_gestisciStudente.add(textFieldNome);
 		
 		JLabel lblCognome = new JLabel("Cognome :");
 		lblCognome.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCognome.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblCognome.setBounds(10, 376, 75, 17);
-		add(lblCognome);
+		lblCognome.setBounds(33, 438, 75, 17);
+		panel_gestisciStudente.add(lblCognome);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(20, 395, 101, 20);
-		add(textField_1);
+		txtCogniome = new JTextField();
+		txtCogniome.setColumns(10);
+		txtCogniome.setBounds(33, 466, 101, 20);
+		panel_gestisciStudente.add(txtCogniome);
 		
 		JLabel lblDataNascita = new JLabel("Data Nascita : ");
 		lblDataNascita.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblDataNascita.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblDataNascita.setBounds(247, 327, 89, 17);
-		add(lblDataNascita);
+		lblDataNascita.setBounds(236, 370, 89, 17);
+		panel_gestisciStudente.add(lblDataNascita);
 		
 		txtDate = new JTextField();
 		txtDate.setColumns(10);
-		txtDate.setBounds(247, 345, 119, 20);
-		add(txtDate);
+		txtDate.setBounds(236, 394, 119, 20);
+		panel_gestisciStudente.add(txtDate);
 		
-		JButton date_button = new JButton("New button");
+		
 		date_button.setBackground(new Color(255, 215, 0));
-		date_button.setBounds(376, 344, 27, 23);
-		add(date_button);
+		date_button.setBounds(365, 393, 27, 23);
+		panel_gestisciStudente.add(date_button);
 		date_button.addActionListener(new ActionListener()
 		{
 			@Override
@@ -94,48 +188,89 @@ public class PanelGestisciStudente extends JPanel {
 	
 		});
 		
-		JLabel lblGenere = new JLabel("Genere :");
-		lblGenere.setHorizontalAlignment(SwingConstants.LEFT);
-		lblGenere.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblGenere.setBounds(20, 426, 75, 17);
-		add(lblGenere);
 		
-		JRadioButton rdbtn_uomo = new JRadioButton("Uomo");
-		rdbtn_uomo.setBackground(new Color(255, 215, 0));
-		rdbtn_uomo.setBounds(20, 450, 65, 23);
-		add(rdbtn_uomo);
-		
-		JRadioButton rdbtn_donna = new JRadioButton("Donna");
-		rdbtn_donna.setBackground(new Color(255, 215, 0));
-		rdbtn_donna.setBounds(20, 476, 68, 21);
-		add(rdbtn_donna);
-		
-		ButtonGroup Group = new ButtonGroup();
-		Group.add(rdbtn_uomo);
-		Group.add(rdbtn_donna);
-		
-		JButton update_button = new JButton("Aggiorna");
+		update_button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(textFieldNome.getText().equals("admin") && txtCogniome.getText().equals("admin")
+						&& txtDate.getText().equals("25-01-2022")&& txtId.getText().equals("abc123")) {
+					
+					add(panelAggiornaStudente);
+					
+				setAggiorna(panelAggiornaStudente);
+				
+				panel_gestisciStudente.setVisible(false);
+				
+				lblAggiornaStudente.setVisible(true);
+				lblGestioneStudenti.setVisible(false);
+				panel_indietro.setVisible(true);
+				
+				}
+				else if(textFieldNome.getText().equals("") || txtCogniome.getText().equals("")
+						|| txtDate.getText().equals("")|| txtId.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, " Inserire tutti i campi ");
+				}
+				else {
+					
+					JOptionPane.showMessageDialog(null, "Inserimento non valido ");
+				}
+				
+			
+			
+				
+				
+			}
+		});
 		update_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		update_button.setBackground(new Color(255, 51, 51));
-		update_button.setBounds(436, 521, 89, 29);
-		add(update_button);
+		update_button.setBounds(434, 461, 89, 29);
+		panel_gestisciStudente.add(update_button);
 		
-		JButton delete_button = new JButton("Elimina");
+		
 		delete_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		delete_button.setBackground(new Color(255, 51, 0));
-		delete_button.setBounds(535, 521, 89, 29);
-		add(delete_button);
+		delete_button.setBounds(533, 461, 89, 29);
+		panel_gestisciStudente.add(delete_button);
 		
 		JLabel numberID = new JLabel("Studente Id :");
 		numberID.setHorizontalAlignment(SwingConstants.LEFT);
 		numberID.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		numberID.setBounds(247, 376, 101, 17);
-		add(numberID);
+		numberID.setBounds(236, 438, 101, 17);
+		panel_gestisciStudente.add(numberID);
 		
 		txtId = new JTextField();
-		txtId.setBounds(247, 395, 119, 20);
-		add(txtId);
+		txtId.setBounds(236, 466, 119, 20);
+		panel_gestisciStudente.add(txtId);
 		txtId.setColumns(10);
-
+		
+		JButton btnNewButton = new JButton("Insertiscioi");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				riga[0] = txtId.getText();
+				riga[1] = textFieldNome.getText();
+				riga[2] = txtCogniome.getText();
+				riga[3] = txtDate.getText();
+				model.addRow(riga);
+				
+				riga[0] = "";
+				textFieldNome.setText("");
+				txtCogniome.setText("");
+				txtDate.setText("");
+				txtId.setText("");
+		}
+	});
+		btnNewButton.setBounds(434, 427, 89, 23);
+		panel_gestisciStudente.add(btnNewButton);
+		
 	}
+	
+	public void setAggiorna(JPanel aggiornaPanel) {
+		panelAggiornaStudente.setVisible(false);
+		
+		
+		aggiornaPanel.setVisible(true);
+		
+}
+	
 }

@@ -13,6 +13,9 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import Controller.Controller;
+
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
@@ -22,6 +25,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ListSelectionModel;
 
 public class PanelGestisciCorso extends JPanel {
 	private JTextField textField_nomeCorso;
@@ -31,11 +35,12 @@ public class PanelGestisciCorso extends JPanel {
 	private JTextArea textArea_descrizione;
 	private JComboBox comboBox_areaTematica;
 	DefaultTableCellRenderer cellRender;
-
+	private Controller theController;
 	/**
 	 * Create the panel.
 	 */
-	public PanelGestisciCorso() {
+	public PanelGestisciCorso(Controller c) {
+		theController = c;
 		setLayout(null);
 		setBounds(0, 0, 673, 581);
 		setBackground(new Color(255, 215, 0));
@@ -73,29 +78,25 @@ public class PanelGestisciCorso extends JPanel {
 				return false;
 			}
 		};
-
-		Object[] colonne = { "Corso ID", "Nome Corso", "Area tematica", "Max. Partecipanti", "Descrizione" };
-		Object[] riga = new Object[5];
-		model.setColumnIdentifiers(colonne);
-		table.setModel(model);
+		
+		c.displayCourse(table);
 		scrollPane.setViewportView(table);
-
-		// set della grandezza delle colonne
-		table.getColumnModel().getColumn(0).setPreferredWidth(50);
-		table.getColumnModel().getColumn(4).setPreferredWidth(250);
-		cellRender = new DefaultTableCellRenderer();
-		cellRender.setHorizontalAlignment(JLabel.CENTER);
-		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
+		setGrandezzaColonneTable();
 
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int rigaSelected = table.getSelectedRow();
+				//da rivedere 
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				Object[] colonne = { "Corso ID", "Nome Corso", "Max Partecipanti", "Area Tematica", "Descrizione" };
+				model.setColumnIdentifiers(colonne);
+				Object[] riga = new Object[5];
 				textField_nomeCorso.setText((model.getValueAt(rigaSelected, 1)).toString());
-				comboBox_areaTematica.setSelectedItem(model.getValueAt(rigaSelected, 2));
-				textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 3)).toString());
+				textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 2)).toString());
+				comboBox_areaTematica.setSelectedItem(model.getValueAt(rigaSelected, 3));
 				textArea_descrizione.setText((model.getValueAt(rigaSelected, 4)).toString());
-
+				setGrandezzaColonneTable();
 			}
 		});
 
@@ -175,20 +176,8 @@ public class PanelGestisciCorso extends JPanel {
 		JButton clear_button = new JButton("Pulisci");
 		// Prova per verificare funzionamento di Aggiorna
 		clear_button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				riga[0] = "test ID";
-				riga[1] = textField_nomeCorso.getText();
-				riga[2] = comboBox_areaTematica.getSelectedItem();
-				riga[3] = textFieldPartecipanti.getText();
-				riga[4] = textArea_descrizione.getText();
-				model.addRow(riga);
-
-				riga[0] = "";
-				textField_nomeCorso.setText("");
-				comboBox_areaTematica.setSelectedIndex(0);
-				textFieldPartecipanti.setText("");
-				textArea_descrizione.setText("");
-
+			public void actionPerformed(ActionEvent e) {				
+				clearTextField();
 			}
 		});
 		clear_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
@@ -297,5 +286,19 @@ public class PanelGestisciCorso extends JPanel {
 		textFieldPartecipanti.setBounds(229, 318, 120, 20);
 		add(textFieldPartecipanti);
 
+	}
+	public void clearTextField() {
+		textField_nomeCorso.setText("");
+		comboBox_areaTematica.setSelectedIndex(0);
+		textFieldPartecipanti.setText("");
+		textArea_descrizione.setText("");
+	}
+
+	public void setGrandezzaColonneTable() {
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(4).setPreferredWidth(250);
+		cellRender = new DefaultTableCellRenderer();
+		cellRender.setHorizontalAlignment(JLabel.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
 	}
 }

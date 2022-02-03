@@ -37,7 +37,7 @@ public class StudenteDAOImpl implements StudenteDAO {
 			inserisciStudenteStmt.setString(2, cognome);
 			inserisciStudenteStmt.setDate(3, (java.sql.Date) dataSQL);
 			inserisciStudenteStmt.setString(4, genere);
-			inserisciStudenteStmt.execute();
+			inserisciStudenteStmt.executeUpdate();
 			System.out.println("Dati Inseriti correttamente");
 
 		} catch (SQLException e) {
@@ -76,8 +76,6 @@ public class StudenteDAOImpl implements StudenteDAO {
 		ArrayList<Studente> studenti = new ArrayList<Studente>();
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
-
-		System.out.println("Connessione eseguita");
 
 		Statement mostraStudentiST = null;
 		try {

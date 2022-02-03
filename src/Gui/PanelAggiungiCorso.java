@@ -17,6 +17,9 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import Controller.Controller;
+
 import java.awt.Point;
 
 import java.awt.event.MouseEvent;
@@ -29,13 +32,15 @@ public class PanelAggiungiCorso extends JPanel {
 	DefaultTableModel model;
 	private JTable table;
 	private JComboBox comboBox;
+	private JTextArea textArea_descrizione;
 	DefaultTableCellRenderer cellRender;
+	private Controller theController;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelAggiungiCorso() {
-
+	public PanelAggiungiCorso(Controller c) {
+		theController = c;
 		setBackground(new Color(255, 215, 0));
 		setLayout(null);
 		setBounds(0, 0, 673, 581);
@@ -57,13 +62,14 @@ public class PanelAggiungiCorso extends JPanel {
 		add(scrollPane);
 
 		TestCellRenderer cell = new TestCellRenderer();
-		table = new JTable(model) {
+		table = new JTable() {
 			@Override
 			public Point getToolTipLocation(MouseEvent event) {
 				return new Point(scrollPane.getMousePosition().x, scrollPane.getMousePosition().y);
 
 			}
 		};
+		table.setEnabled(false);
 		table.setDefaultRenderer(Object.class, cell);
 		table.setBackground(Color.WHITE);
 		table.setBounds(10, 221, 612, -209);
@@ -74,19 +80,11 @@ public class PanelAggiungiCorso extends JPanel {
 				return false;
 			}
 		};
-		Object[] colonne = { "Corso ID", "Nome Corso", "Area tematica", "Max. Partecipanti", "Descrizione" };
-		Object[] riga = new Object[5];
-		model.setColumnIdentifiers(colonne);
-		table.setModel(model);
+		c.displayCourse(table);
 		scrollPane.setViewportView(table);
+		setGrandezzaColonneTable();
 
-		// set della grandezza delle colonne
-		table.getColumnModel().getColumn(0).setPreferredWidth(50);
-		table.getColumnModel().getColumn(4).setPreferredWidth(250);
-		cellRender = new DefaultTableCellRenderer();
-		cellRender.setHorizontalAlignment(JLabel.CENTER);
-		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
-
+		
 		JLabel lblNomeCorso = new JLabel("Nome Corso :");
 		lblNomeCorso.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNomeCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
@@ -108,7 +106,7 @@ public class PanelAggiungiCorso extends JPanel {
 		scrollPane_descrizione.setBounds(20, 470, 252, 66);
 		add(scrollPane_descrizione);
 
-		JTextArea textArea_descrizione = new JTextArea();
+		textArea_descrizione = new JTextArea();
 		scrollPane_descrizione.setViewportView(textArea_descrizione);
 		textArea_descrizione.setLineWrap(true);
 
@@ -121,20 +119,17 @@ public class PanelAggiungiCorso extends JPanel {
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi!", "Errore",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					riga[0] = "test ID";
-					riga[1] = textField_nomeCorso.getText();
-					riga[2] = comboBox.getSelectedItem();
-					riga[3] = textField_maxPartecipanti.getText();
-					riga[4] = textArea_descrizione.getText();
-					model.addRow(riga);
 
-					riga[0] = "";
-					textField_nomeCorso.setText("");
-					comboBox.setSelectedIndex(0);
-					textField_maxPartecipanti.setText("");
-					textArea_descrizione.setText("");
-					JOptionPane.showMessageDialog(null, "Inserimento eseguito con successo", "Conferma",
-							JOptionPane.INFORMATION_MESSAGE);
+					c.insertCourse(textField_nomeCorso.getText(), textArea_descrizione.getText(),
+							textField_maxPartecipanti.getText(), comboBox.getSelectedItem().toString());
+
+					c.addCourseToTableView(table, textField_nomeCorso, textField_maxPartecipanti, comboBox,
+							textArea_descrizione);
+
+					setGrandezzaColonneTable();
+
+					clearTextField();
+
 				}
 
 			}
@@ -222,6 +217,21 @@ public class PanelAggiungiCorso extends JPanel {
 		textField_maxPartecipanti.setBounds(20, 404, 120, 20);
 		add(textField_maxPartecipanti);
 
+	}
+
+	public void clearTextField() {
+		textField_nomeCorso.setText("");
+		comboBox.setSelectedIndex(0);
+		textField_maxPartecipanti.setText("");
+		textArea_descrizione.setText("");
+	}
+
+	public void setGrandezzaColonneTable() {
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(4).setPreferredWidth(250);
+		cellRender = new DefaultTableCellRenderer();
+		cellRender.setHorizontalAlignment(JLabel.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
 	}
 
 }
