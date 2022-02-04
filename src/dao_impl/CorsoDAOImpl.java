@@ -14,7 +14,7 @@ import dbSettings.Connessione;
 public class CorsoDAOImpl implements CorsoDAO {
 
 	Connection conn = null;
-	PreparedStatement inserisciCorsoStm;
+	PreparedStatement inserisciCorsoStm, aggiornaCorsoStm;
 	Statement deleteCourseST = null;
 
 	@Override
@@ -71,7 +71,6 @@ public class CorsoDAOImpl implements CorsoDAO {
 
 			String selezionaCorsiSql = "SELECT id,nome,descrizione,max_partecipanti,aree_tematiche FROM corso";
 			ResultSet risultato = mostraCorsi.executeQuery(selezionaCorsiSql);
-			
 
 			while (risultato.next()) {
 				Corso c = new Corso();
@@ -136,21 +135,21 @@ public class CorsoDAOImpl implements CorsoDAO {
 
 	@Override
 	public void eliminaCorso(int id) throws SQLException {
-		
+
 		Connessione connection = Connessione.getInstance();
 		conn = connection.getConnection();
 		System.out.println("connessione delete eseguita");
-		
+
 		try {
 			String eliminazioneSql = "DELETE FROM corso WHERE id = " + id;
-			
+
 			System.out.println("eliminando corsi...");
 			deleteCourseST = conn.createStatement();
-			
+
 			deleteCourseST.executeUpdate(eliminazioneSql);
 			System.out.println("corso eliminato!");
-			
-		}catch(SQLException e) {
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			// blocco per chiudere risorse
@@ -167,8 +166,48 @@ public class CorsoDAOImpl implements CorsoDAO {
 				se.printStackTrace();
 			}
 		}
-		
-		
+
+	}
+
+	@Override
+	public void aggiornaCorso(int id, String nome, String descrizione, String maxPartecipanti, String areeTematiche) throws SQLException {
+		Connessione connect = Connessione.getInstance();
+		conn = connect.getConnection();
+
+		String updateSql = "UPDATE corso SET nome = ?, descrizione = ?, max_partecipanti = ?, aree_tematiche = ? WHERE id = "
+				+id;
+				
+		try {
+			int numeroPartecipantiMax = Integer.parseInt(maxPartecipanti);
+			aggiornaCorsoStm = conn.prepareStatement(updateSql);
+			System.out.println("Aggiornamento corso...");
+			aggiornaCorsoStm.setString(1, nome);
+			aggiornaCorsoStm.setString(2, descrizione);
+			aggiornaCorsoStm.setInt(3, numeroPartecipantiMax);
+			aggiornaCorsoStm.setString(4, areeTematiche);
+
+
+			aggiornaCorsoStm.executeUpdate();
+			System.out.println("Corso aggiornato correttamente");
+			aggiornaCorsoStm.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// blocco per chiudere risorse
+			try {
+				if (inserisciCorsoStm != null)
+					conn.close();
+			} catch (SQLException se) {
+				// non fa nulla
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
 	}
 
 }

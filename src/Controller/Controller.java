@@ -28,7 +28,7 @@ public class Controller {
 	MainFrame hm;
 	StudenteDAO student = new StudenteDAOImpl();
 	CorsoDAO course = new CorsoDAOImpl();
-	JTable table = new JTable();
+//	JTable table = new JTable();
 
 	public static void main(String[] args) {
 
@@ -177,6 +177,20 @@ public class Controller {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void updateCourse(JTable table,String nome, String descrizione,String maxPartecipanti, String areaTematica) {
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		try {
+			
+			int rigaSelected = table.getSelectedRow();
+			int theID = (int) model.getValueAt(rigaSelected, 0);
+			System.out.println(theID);
+			course.aggiornaCorso(theID,nome,descrizione,maxPartecipanti,areaTematica);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

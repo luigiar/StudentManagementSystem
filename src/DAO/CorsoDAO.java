@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Entità.Corso;
+import Entità.Studente;
 
 public interface CorsoDAO {
 
@@ -14,5 +15,7 @@ public interface CorsoDAO {
 	public int getLastID(int id) throws SQLException;
 	
 	public void eliminaCorso(int id) throws SQLException;
+	
+	public void aggiornaCorso(int id, String nome, String descrizione, String massimoPartecipanti, String areaTematica) throws SQLException;
 	
 }

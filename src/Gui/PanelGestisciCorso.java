@@ -157,6 +157,9 @@ public class PanelGestisciCorso extends JPanel {
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						DefaultTableModel model = (DefaultTableModel) table.getModel();
+						
+						c.updateCourse(table, textField_nomeCorso.getText(),textArea_descrizione.getText(), textFieldPartecipanti.getText(), comboBox_areaTematica.getSelectedItem().toString());
+						
 						model.setValueAt(textField_nomeCorso.getText(), rigaPressed, 1);
 						model.setValueAt(textFieldPartecipanti.getText(), rigaPressed, 2);
 						model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 3);
