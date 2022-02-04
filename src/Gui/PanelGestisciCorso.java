@@ -36,6 +36,7 @@ public class PanelGestisciCorso extends JPanel {
 	private JComboBox comboBox_areaTematica;
 	DefaultTableCellRenderer cellRender;
 	private Controller theController;
+
 	/**
 	 * Create the panel.
 	 */
@@ -78,7 +79,7 @@ public class PanelGestisciCorso extends JPanel {
 				return false;
 			}
 		};
-		
+
 		c.displayCourse(table);
 		scrollPane.setViewportView(table);
 		setGrandezzaColonneTable();
@@ -87,7 +88,7 @@ public class PanelGestisciCorso extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int rigaSelected = table.getSelectedRow();
-				//da rivedere 
+				// da rivedere
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				textField_nomeCorso.setText((model.getValueAt(rigaSelected, 1)).toString());
 				textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 2)).toString());
@@ -156,8 +157,8 @@ public class PanelGestisciCorso extends JPanel {
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						model.setValueAt(textField_nomeCorso.getText(), rigaPressed, 1);
-						model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 2);
-						model.setValueAt(textFieldPartecipanti.getText(), rigaPressed, 3);
+						model.setValueAt(textFieldPartecipanti.getText(), rigaPressed, 2);
+						model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 3);
 						model.setValueAt(textArea_descrizione.getText(), rigaPressed, 4);
 						JOptionPane.showMessageDialog(null, "Aggiornamento effettuato", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
@@ -175,7 +176,7 @@ public class PanelGestisciCorso extends JPanel {
 
 		JButton clear_button = new JButton("Pulisci");
 		clear_button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
+			public void actionPerformed(ActionEvent e) {
 				clearTextField();
 			}
 		});
@@ -220,11 +221,12 @@ public class PanelGestisciCorso extends JPanel {
 						JOptionPane.showMessageDialog(null, "Inserimento non valido!", "Errore",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
-						String valoreCorrente = model.getValueAt(rigaPressed, 2).toString();
-						model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 2);
-						String valoreAggiunto = model.getValueAt(rigaPressed, 2).toString();
+						DefaultTableModel model = (DefaultTableModel) table.getModel();
+						String valoreCorrente = model.getValueAt(rigaPressed, 3).toString();
+						model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 3);
+						String valoreAggiunto = model.getValueAt(rigaPressed, 3).toString();
 						valoreCorrente = valoreCorrente.concat(valoreAggiunto.indent(2));
-						model.setValueAt(valoreCorrente, rigaPressed, 2);
+						model.setValueAt(valoreCorrente, rigaPressed, 3);
 						JOptionPane.showMessageDialog(null, "Area tematica aggiunta con successo", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
 						comboBox_areaTematica.setSelectedIndex(0);
@@ -246,9 +248,13 @@ public class PanelGestisciCorso extends JPanel {
 				int rigaPressed = table.getSelectedRow();
 				if (rigaPressed >= 0) {
 					String input = JOptionPane.showInputDialog(null, "Modifica l'area per questo corso",
-							table.getValueAt(rigaPressed, 2));
+							table.getValueAt(rigaPressed, 3));
+					if(input == null) {
+						JOptionPane.showMessageDialog(null, "Modifica annullata", "Conferma",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else
 					if (!input.isBlank()) {
-						table.setValueAt(input, rigaPressed, 2);
+						table.setValueAt(input, rigaPressed, 3);
 						JOptionPane.showMessageDialog(null, "Modifica effettuata", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
@@ -286,6 +292,7 @@ public class PanelGestisciCorso extends JPanel {
 		add(textFieldPartecipanti);
 
 	}
+
 	public void clearTextField() {
 		textField_nomeCorso.setText("");
 		comboBox_areaTematica.setSelectedIndex(0);

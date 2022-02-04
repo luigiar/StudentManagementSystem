@@ -71,15 +71,9 @@ public class PanelAggiungiCorso extends JPanel {
 		};
 		table.setEnabled(false);
 		table.setDefaultRenderer(Object.class, cell);
-		table.setBackground(new Color(230,230,250));
+		table.setBackground(new Color(255,255,255));
 		table.setBounds(10, 221, 612, -209);
-		model = new DefaultTableModel() {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-		};
+
 		c.displayCourse(table);
 		scrollPane.setViewportView(table);
 		setGrandezzaColonneTable();
