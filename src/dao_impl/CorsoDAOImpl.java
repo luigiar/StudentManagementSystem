@@ -15,13 +15,14 @@ public class CorsoDAOImpl implements CorsoDAO {
 
 	Connection conn = null;
 	PreparedStatement inserisciCorsoStm;
+	Statement deleteCourseST = null;
 
 	@Override
 	public void inserisciCorso(String nome, String descrizione, String massimoPartecipanti, String areaTematica)
 			throws SQLException {
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
-
+		System.out.println("connessione insert corso eseguita");
 		try {
 			String inserimentoSql = "INSERT INTO corso(nome,descrizione,max_partecipanti,aree_tematiche) VALUES (?, ?, ? ,?)";
 			// conversione valori
@@ -65,10 +66,12 @@ public class CorsoDAOImpl implements CorsoDAO {
 		Statement mostraCorsi = null;
 
 		try {
+			System.out.println("Mostrando elementi tabella corsi... ");
 			mostraCorsi = conn.createStatement();
 
 			String selezionaCorsiSql = "SELECT id,nome,descrizione,max_partecipanti,aree_tematiche FROM corso";
 			ResultSet risultato = mostraCorsi.executeQuery(selezionaCorsiSql);
+			
 
 			while (risultato.next()) {
 				Corso c = new Corso();
@@ -129,6 +132,43 @@ public class CorsoDAOImpl implements CorsoDAO {
 			se.printStackTrace();
 		}
 		return id;
+	}
+
+	@Override
+	public void eliminaCorso(int id) throws SQLException {
+		
+		Connessione connection = Connessione.getInstance();
+		conn = connection.getConnection();
+		System.out.println("connessione delete eseguita");
+		
+		try {
+			String eliminazioneSql = "DELETE FROM corso WHERE id = " + id;
+			
+			System.out.println("eliminando corsi...");
+			deleteCourseST = conn.createStatement();
+			
+			deleteCourseST.executeUpdate(eliminazioneSql);
+			System.out.println("corso eliminato!");
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// blocco per chiudere risorse
+			try {
+				if (inserisciCorsoStm != null)
+					conn.close();
+			} catch (SQLException se) {
+				// non fa nulla
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+		
+		
 	}
 
 }

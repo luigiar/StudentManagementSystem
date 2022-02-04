@@ -95,8 +95,6 @@ public class Controller {
 			ButtonGroup genere) {
 		int id = 0;
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		Object[] colonne = { "ID", "Nome", "Cognome", "Data Nascita", "Genere" };
-		model.setColumnIdentifiers(colonne);
 		Object[] riga = new Object[5];
 
 		try {
@@ -153,10 +151,7 @@ public class Controller {
 		try {
 			int id = 0;
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			Object[] colonne = { "Corso ID", "Nome Corso", "Max Partecipanti", "Area Tematica", "Descrizione" };
-			model.setColumnIdentifiers(colonne);
 			Object[] riga = new Object[5];
-
 
 			riga[0] = course.getLastID(id);
 			riga[1] = nome.getText();
@@ -169,6 +164,19 @@ public class Controller {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void deleteCourse(JTable table) {
+		int row = table.getSelectedRow();
+		String deleteCell = table.getValueAt(row, 0).toString();
+	    int theID = Integer.parseInt(deleteCell);
+	    System.out.println(theID);
+		try {
+			course.eliminaCorso(theID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

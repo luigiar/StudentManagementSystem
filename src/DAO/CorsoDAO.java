@@ -13,4 +13,6 @@ public interface CorsoDAO {
 	
 	public int getLastID(int id) throws SQLException;
 	
+	public void eliminaCorso(int id) throws SQLException;
+	
 }

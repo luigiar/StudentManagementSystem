@@ -79,7 +79,7 @@ public class StudenteDAOImpl implements StudenteDAO {
 
 		Statement mostraStudentiST = null;
 		try {
-			System.out.println("Mostrando elementi tabella... ");
+			System.out.println("Mostrando elementi tabella studenti... ");
 			mostraStudentiST = conn.createStatement();
 
 			String selezionaStudentiSQL = "SELECT * FROM studente";

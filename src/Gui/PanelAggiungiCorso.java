@@ -71,7 +71,7 @@ public class PanelAggiungiCorso extends JPanel {
 		};
 		table.setEnabled(false);
 		table.setDefaultRenderer(Object.class, cell);
-		table.setBackground(Color.WHITE);
+		table.setBackground(new Color(230,230,250));
 		table.setBounds(10, 221, 612, -209);
 		model = new DefaultTableModel() {
 			@Override

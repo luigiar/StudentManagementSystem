@@ -89,9 +89,6 @@ public class PanelGestisciCorso extends JPanel {
 				int rigaSelected = table.getSelectedRow();
 				//da rivedere 
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				Object[] colonne = { "Corso ID", "Nome Corso", "Max Partecipanti", "Area Tematica", "Descrizione" };
-				model.setColumnIdentifiers(colonne);
-				Object[] riga = new Object[5];
 				textField_nomeCorso.setText((model.getValueAt(rigaSelected, 1)).toString());
 				textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 2)).toString());
 				comboBox_areaTematica.setSelectedItem(model.getValueAt(rigaSelected, 3));
@@ -125,7 +122,10 @@ public class PanelGestisciCorso extends JPanel {
 					int input = JOptionPane.showConfirmDialog(null, "Vuoi procedere?", "Seleziona un'opzione",
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if (input == JOptionPane.YES_OPTION) {
+						DefaultTableModel model = (DefaultTableModel) table.getModel();
+						c.deleteCourse(table);
 						model.removeRow(rigaPressed);
+						setGrandezzaColonneTable();
 						JOptionPane.showMessageDialog(null, "Corso eliminato correttamente", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
@@ -174,7 +174,6 @@ public class PanelGestisciCorso extends JPanel {
 		add(update_button);
 
 		JButton clear_button = new JButton("Pulisci");
-		// Prova per verificare funzionamento di Aggiorna
 		clear_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				clearTextField();
