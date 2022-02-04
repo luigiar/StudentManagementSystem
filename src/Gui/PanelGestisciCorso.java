@@ -130,7 +130,7 @@ public class PanelGestisciCorso extends JPanel {
 						JOptionPane.showMessageDialog(null, "Corso eliminato correttamente", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
-						JOptionPane.showMessageDialog(null, "Eliminazione non eseguita", "Conferma",
+						JOptionPane.showMessageDialog(null, "Eliminazione annullata", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
 				} else {
@@ -156,6 +156,7 @@ public class PanelGestisciCorso extends JPanel {
 						JOptionPane.showMessageDialog(null, "Aggiornamento non valido!", "Errore",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
+						DefaultTableModel model = (DefaultTableModel) table.getModel();
 						model.setValueAt(textField_nomeCorso.getText(), rigaPressed, 1);
 						model.setValueAt(textFieldPartecipanti.getText(), rigaPressed, 2);
 						model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 3);
@@ -202,7 +203,10 @@ public class PanelGestisciCorso extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (comboBox_areaTematica.getSelectedItem().equals("Aggiungi Area")) {
 					String itemAdd = JOptionPane.showInputDialog(null, "Inserisci l'area tematica da aggiungere");
-					if (itemAdd.equals("") || String.valueOf(itemAdd).isBlank()) {
+					if (itemAdd == null) {
+						JOptionPane.showMessageDialog(null, "Inserimento non eseguito!", "Attenzione",
+								JOptionPane.WARNING_MESSAGE);
+					} else if (itemAdd.equals("") || String.valueOf(itemAdd).isBlank()) {
 						JOptionPane.showMessageDialog(null, "Inserimento non eseguito!", "Attenzione",
 								JOptionPane.WARNING_MESSAGE);
 					} else
@@ -249,11 +253,10 @@ public class PanelGestisciCorso extends JPanel {
 				if (rigaPressed >= 0) {
 					String input = JOptionPane.showInputDialog(null, "Modifica l'area per questo corso",
 							table.getValueAt(rigaPressed, 3));
-					if(input == null) {
+					if (input == null) {
 						JOptionPane.showMessageDialog(null, "Modifica annullata", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
-					} else
-					if (!input.isBlank()) {
+					} else if (!input.isBlank()) {
 						table.setValueAt(input, rigaPressed, 3);
 						JOptionPane.showMessageDialog(null, "Modifica effettuata", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
