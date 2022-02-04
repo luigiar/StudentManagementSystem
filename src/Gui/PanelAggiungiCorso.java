@@ -71,14 +71,13 @@ public class PanelAggiungiCorso extends JPanel {
 		};
 		table.setEnabled(false);
 		table.setDefaultRenderer(Object.class, cell);
-		table.setBackground(new Color(255,255,255));
+		table.setBackground(new Color(255, 255, 255));
 		table.setBounds(10, 221, 612, -209);
 
 		c.displayCourse(table);
 		scrollPane.setViewportView(table);
 		setGrandezzaColonneTable();
 
-		
 		JLabel lblNomeCorso = new JLabel("Nome Corso :");
 		lblNomeCorso.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNomeCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
@@ -150,7 +149,11 @@ public class PanelAggiungiCorso extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (comboBox.getSelectedItem().equals("Aggiungi Area")) {
 					String itemAdd = JOptionPane.showInputDialog(null, "Inserisci l'area tematica da aggiungere");
-					if (itemAdd.equals("") || String.valueOf(itemAdd).isBlank()) {
+					if (itemAdd == null) {
+						JOptionPane.showMessageDialog(null, "Inserimento non eseguito!", "Attenzione",
+								JOptionPane.WARNING_MESSAGE);
+						
+					} else if (itemAdd.equals("") || String.valueOf(itemAdd).isBlank()) {
 						JOptionPane.showMessageDialog(null, "Inserimento non eseguito!", "Attenzione",
 								JOptionPane.WARNING_MESSAGE);
 					} else
