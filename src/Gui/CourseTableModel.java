@@ -13,6 +13,13 @@ public class CourseTableModel extends AbstractTableModel {
 	private String[] colonne = { "Corso ID", "Nome Corso", "Max Partecipanti", "Area Tematica", "Descrizione" };
 	
 	
+	public CourseTableModel() {
+		
+	}
+	public CourseTableModel(List<Corso> corsi) {
+		this.corsi = corsi;
+	}
+	
 	@Override
 	public String getColumnName(int column) {
 		return colonne[column];
@@ -48,4 +55,16 @@ public class CourseTableModel extends AbstractTableModel {
 		return null;
 	}
 
+	public void add(Corso c) {
+		corsi.add(c);
+		fireTableRowsInserted(getRowCount(),getRowCount());
+		
+	}
+
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 }

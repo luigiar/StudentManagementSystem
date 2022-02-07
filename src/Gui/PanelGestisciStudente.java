@@ -177,17 +177,7 @@ public class PanelGestisciStudente extends JPanel {
 		
 		date_button.setBackground(new Color(255, 215, 0));
 		date_button.setBounds(365, 393, 27, 23);
-		panel_gestisciStudente.add(date_button);
-		date_button.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				final JFrame f = new JFrame();
-				txtDate.setText(new DatePicker(f).setPickedDate());
-			}
-	
-		});
-		
+		panel_gestisciStudente.add(date_button);		
 		
 		update_button.addMouseListener(new MouseAdapter() {
 			@Override

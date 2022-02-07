@@ -36,6 +36,7 @@ public class PanelGestisciCorso extends JPanel {
 	private JComboBox comboBox_areaTematica;
 	DefaultTableCellRenderer cellRender;
 	private Controller theController;
+	CourseTableModel modelCourse;
 
 	/**
 	 * Create the panel.
@@ -63,16 +64,16 @@ public class PanelGestisciCorso extends JPanel {
 		add(scrollPane);
 
 		TestCellRenderer cell = new TestCellRenderer();
-		table = new JTable(model) {
-			@Override
+		table = new JTable() {
 			public Point getToolTipLocation(MouseEvent event) {
 				return new Point(scrollPane.getMousePosition().x, scrollPane.getMousePosition().y);
 
 			}
 		};
 		table.setDefaultRenderer(Object.class, cell);
+		table.setBackground(new Color(230, 230, 250));
 		table.setBounds(10, 221, 612, -209);
-		model = new DefaultTableModel() {
+		table = new JTable() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				// TODO Auto-generated method stub
@@ -157,9 +158,10 @@ public class PanelGestisciCorso extends JPanel {
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						DefaultTableModel model = (DefaultTableModel) table.getModel();
-						
-						c.updateCourse(table, textField_nomeCorso.getText(),textArea_descrizione.getText(), textFieldPartecipanti.getText(), comboBox_areaTematica.getSelectedItem().toString());
-						
+
+						c.updateCourse(table, textField_nomeCorso.getText(), textArea_descrizione.getText(),
+								textFieldPartecipanti.getText(), comboBox_areaTematica.getSelectedItem().toString());
+
 						model.setValueAt(textField_nomeCorso.getText(), rigaPressed, 1);
 						model.setValueAt(textFieldPartecipanti.getText(), rigaPressed, 2);
 						model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 3);

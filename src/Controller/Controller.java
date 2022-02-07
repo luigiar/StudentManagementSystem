@@ -1,6 +1,9 @@
 package Controller;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.ButtonGroup;
@@ -10,6 +13,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import com.toedter.calendar.JDateChooser;
 
 import DAO.CorsoDAO;
 import DAO.StudenteDAO;
@@ -91,17 +96,18 @@ public class Controller {
 
 	}
 
-	public void addStudentToTableView(JTable table, JTextField nome, JTextField cognome, JTextField data,
+	public void addStudentToTableView(JTable table, JTextField nome, JTextField cognome, JDateChooser data,
 			ButtonGroup genere) {
 		int id = 0;
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		Object[] riga = new Object[5];
+		String date = ((JTextField)data.getDateEditor().getUiComponent()).getText();
 
 		try {
 			riga[0] = student.getLastID(id);
 			riga[1] = nome.getText();
 			riga[2] = cognome.getText();
-			riga[3] = data.getText();
+			riga[3] = date;
 			riga[4] = genere.getSelection().getActionCommand();
 
 			model.addRow(riga);
@@ -113,7 +119,6 @@ public class Controller {
 
 	public void insertCourse(String name, String description, String maxStudents, String themeArea) {
 		course = new CorsoDAOImpl();
-
 		try {
 			course.inserisciCorso(name, description, maxStudents, themeArea);
 			JOptionPane.showMessageDialog(null, "Inserimento effettuato", "Conferma", JOptionPane.INFORMATION_MESSAGE);
@@ -160,7 +165,6 @@ public class Controller {
 			riga[4] = descrizione.getText();
 
 			model.addRow(riga);
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -169,28 +173,50 @@ public class Controller {
 	public void deleteCourse(JTable table) {
 		int row = table.getSelectedRow();
 		String deleteCell = table.getValueAt(row, 0).toString();
-	    int theID = Integer.parseInt(deleteCell);
-	    System.out.println(theID);
+		int theID = Integer.parseInt(deleteCell);
+		System.out.println(theID);
 		try {
 			course.eliminaCorso(theID);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
-	
-	public void updateCourse(JTable table,String nome, String descrizione,String maxPartecipanti, String areaTematica) {
+
+	public void updateCourse(JTable table, String nome, String descrizione, String maxPartecipanti,String areaTematica) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		try {
-			
 			int rigaSelected = table.getSelectedRow();
 			int theID = (int) model.getValueAt(rigaSelected, 0);
 			System.out.println(theID);
-			course.aggiornaCorso(theID,nome,descrizione,maxPartecipanti,areaTematica);
+			course.aggiornaCorso(theID, nome, descrizione, maxPartecipanti, areaTematica);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+//	public void refreshTable(JTable table) {
+//		DefaultTableModel model = (DefaultTableModel) table.getModel();
+//		Connection conn = null;
+//		Connessione connection = null;
+//		try {
+//			connection = Connessione.getInstance();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		conn = connection.getConnection();
+//		String query = "SELECT id, nome, descrizione, max_partecipanti, aree_tematiche FROM corso";
+//		try {
+//			PreparedStatement preparedStatement = conn.prepareStatement(query);
+//			ResultSet result = preparedStatement.executeQuery();
+//			while(result.next()){
+//				DbUltils.
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 }

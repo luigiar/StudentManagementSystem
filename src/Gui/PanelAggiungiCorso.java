@@ -71,7 +71,7 @@ public class PanelAggiungiCorso extends JPanel {
 		};
 		table.setEnabled(false);
 		table.setDefaultRenderer(Object.class, cell);
-		table.setBackground(new Color(255, 255, 255));
+		table.setBackground(new Color(230, 230, 250));
 		table.setBounds(10, 221, 612, -209);
 
 		c.displayCourse(table);
@@ -112,7 +112,7 @@ public class PanelAggiungiCorso extends JPanel {
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi!", "Errore",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-
+					
 					c.insertCourse(textField_nomeCorso.getText(), textArea_descrizione.getText(),
 							textField_maxPartecipanti.getText(), comboBox.getSelectedItem().toString());
 
@@ -120,7 +120,6 @@ public class PanelAggiungiCorso extends JPanel {
 							textArea_descrizione);
 
 					setGrandezzaColonneTable();
-
 					clearTextField();
 
 				}

@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Controller.Controller;
+
+import java.sql.Date;
 import java.sql.SQLException;
 import java.awt.Color;
 import javax.swing.JTable;
@@ -19,12 +21,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.components.JSpinField;
 
 public class PanelAggiungiStudente extends JPanel {
 	private Controller theController;
 	private JTextField textField_nome;
 	private JTextField textField_cognome;
-	private JTextField txtDate;
+	private JDateChooser dateChooser;
 	DefaultTableModel model;
 	private JTable table;
 	private ButtonGroup Group;
@@ -66,25 +70,11 @@ public class PanelAggiungiStudente extends JPanel {
 		lblDataNascita.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblDataNascita.setBounds(215, 303, 96, 17);
 		add(lblDataNascita);
-
-		txtDate = new JTextField();
-		txtDate.setColumns(10);
-		txtDate.setBounds(215, 331, 101, 20);
-		add(txtDate);
-
-		JButton date_button = new JButton("New button");
-		date_button.setBackground(new Color(255, 215, 0));
-
-		date_button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				final JFrame f = new JFrame();
-				txtDate.setText(new DatePicker(f).setPickedDate());
-			}
-
-		});
-		date_button.setBounds(326, 330, 27, 23);
-		add(date_button);
+		
+	    dateChooser = new JDateChooser();
+		dateChooser.setBounds(215, 331, 126, 20);
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		add(dateChooser);
 
 		JLabel lblGenere = new JLabel("Genere :");
 		lblGenere.setHorizontalAlignment(SwingConstants.LEFT);
@@ -143,15 +133,17 @@ public class PanelAggiungiStudente extends JPanel {
 		insert_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (textField_nome.getText().isBlank() || textField_cognome.getText().isBlank()
-						|| Group.isSelected(null) || txtDate.getText().isBlank()) {
+						|| Group.isSelected(null) || dateChooser.getDateFormatString().isBlank()) {
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi", "Errore",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-
-					c.insertStudent(textField_nome.getText(), textField_cognome.getText(), txtDate.getText(),
+					
+					String dateString = ((JTextField)dateChooser.getDateEditor().getUiComponent()).getText();
+					
+					c.insertStudent(textField_nome.getText(), textField_cognome.getText(), dateString ,
 							Group.getSelection().getActionCommand());
 
-					c.addStudentToTableView(table, textField_nome, textField_cognome, txtDate, Group);
+					c.addStudentToTableView(table, textField_nome, textField_cognome, dateChooser, Group);
 
 					clearTextField();
 				}
@@ -161,12 +153,13 @@ public class PanelAggiungiStudente extends JPanel {
 		insert_button.setBackground(new Color(51, 153, 204));
 		insert_button.setBounds(531, 492, 88, 30);
 		add(insert_button);
+		
 	}
 
 	public void clearTextField() {
 		textField_nome.setText("");
 		textField_cognome.setText("");
 		Group.clearSelection();
-		txtDate.setText("");
+		dateChooser.setCalendar(null);;
 	}
 }
