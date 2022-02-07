@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 import com.toedter.components.JSpinField;
 
 public class PanelAggiungiStudente extends JPanel {
@@ -74,6 +75,9 @@ public class PanelAggiungiStudente extends JPanel {
 	    dateChooser = new JDateChooser();
 		dateChooser.setBounds(215, 331, 126, 20);
 		dateChooser.setDateFormatString("yyyy-MM-dd");
+		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateChooser.getDateEditor();
+		editor.setEditable(false);
+		
 		add(dateChooser);
 
 		JLabel lblGenere = new JLabel("Genere :");
@@ -133,7 +137,7 @@ public class PanelAggiungiStudente extends JPanel {
 		insert_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (textField_nome.getText().isBlank() || textField_cognome.getText().isBlank()
-						|| Group.isSelected(null) || dateChooser.getDateFormatString().isBlank()) {
+						|| Group.isSelected(null) || editor.getText().isBlank()) {
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi", "Errore",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
