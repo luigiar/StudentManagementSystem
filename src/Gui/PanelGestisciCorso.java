@@ -71,7 +71,6 @@ public class PanelGestisciCorso extends JPanel {
 			}
 		};
 		table.setDefaultRenderer(Object.class, cell);
-		table.setBackground(new Color(230, 230, 250));
 		table.setBounds(10, 221, 612, -209);
 		table = new JTable() {
 			@Override
@@ -80,7 +79,8 @@ public class PanelGestisciCorso extends JPanel {
 				return false;
 			}
 		};
-
+		
+		table.setBackground(new Color(230, 230, 250));
 		c.displayCourse(table);
 		scrollPane.setViewportView(table);
 		setGrandezzaColonneTable();

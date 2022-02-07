@@ -73,6 +73,7 @@ public class PanelAggiungiStudente extends JPanel {
 		add(lblDataNascita);
 		
 	    dateChooser = new JDateChooser();
+	    dateChooser.getCalendarButton().setToolTipText("Imposta una data");
 		dateChooser.setBounds(215, 331, 126, 20);
 		dateChooser.setDateFormatString("yyyy-MM-dd");
 		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateChooser.getDateEditor();
