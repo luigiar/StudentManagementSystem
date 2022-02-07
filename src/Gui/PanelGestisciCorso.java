@@ -90,7 +90,7 @@ public class PanelGestisciCorso extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				int rigaSelected = table.getSelectedRow();
 				// da rivedere
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				CourseTableModel model = (CourseTableModel) table.getModel();
 				textField_nomeCorso.setText((model.getValueAt(rigaSelected, 1)).toString());
 				textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 2)).toString());
 				comboBox_areaTematica.setSelectedItem(model.getValueAt(rigaSelected, 3));

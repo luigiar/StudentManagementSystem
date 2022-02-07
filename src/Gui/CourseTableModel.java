@@ -16,7 +16,7 @@ public class CourseTableModel extends AbstractTableModel {
 	public CourseTableModel() {
 		
 	}
-	public CourseTableModel(List<Corso> corsi) {
+	public CourseTableModel(ArrayList<Corso> corsi) {
 		this.corsi = corsi;
 	}
 	
@@ -55,10 +55,10 @@ public class CourseTableModel extends AbstractTableModel {
 		return null;
 	}
 
-	public void add(Corso c) {
-		corsi.add(c);
-		fireTableRowsInserted(getRowCount(),getRowCount());
-		
+	public void add(Corso riga) {
+		corsi.add(riga);
+//		fireTableRowsInserted(corsi.size() - 1, corsi.size() - 1);
+		fireTableDataChanged();
 	}
 
 	@Override

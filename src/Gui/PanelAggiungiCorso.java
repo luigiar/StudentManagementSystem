@@ -35,6 +35,7 @@ public class PanelAggiungiCorso extends JPanel {
 	private JTextArea textArea_descrizione;
 	DefaultTableCellRenderer cellRender;
 	private Controller theController;
+	CourseTableModel modelCourse;
 
 	/**
 	 * Create the panel.
@@ -69,7 +70,6 @@ public class PanelAggiungiCorso extends JPanel {
 
 			}
 		};
-		table.setEnabled(false);
 		table.setDefaultRenderer(Object.class, cell);
 		table.setBackground(new Color(230, 230, 250));
 		table.setBounds(10, 221, 612, -209);
@@ -116,7 +116,7 @@ public class PanelAggiungiCorso extends JPanel {
 					c.insertCourse(textField_nomeCorso.getText(), textArea_descrizione.getText(),
 							textField_maxPartecipanti.getText(), comboBox.getSelectedItem().toString());
 
-					c.addCourseToTableView(table, textField_nomeCorso, textField_maxPartecipanti, comboBox,
+					c.addCourseToTableView(table,textField_nomeCorso, textField_maxPartecipanti, comboBox,
 							textArea_descrizione);
 
 					setGrandezzaColonneTable();

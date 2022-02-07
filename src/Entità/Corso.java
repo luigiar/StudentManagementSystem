@@ -27,6 +27,13 @@ public class Corso {
 	public Corso() {
 
 	}
+	public Corso(int codiceCorso, String nome, String descrizione, int maxPartecipanti, String areeTematiche) {
+		this.codiceCorso = codiceCorso;
+		this.nome = nome;
+		this.descrizione = descrizione;
+		this.maxPartecipanti = maxPartecipanti;
+		this.areeTematiche = areeTematiche;
+	}
 
 	// Getter e setter
 	public String getNome() {

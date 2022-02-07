@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -20,6 +22,7 @@ import DAO.CorsoDAO;
 import DAO.StudenteDAO;
 import Entità.Corso;
 import Entità.Studente;
+import Gui.CourseTableModel;
 import Gui.LoginFrame;
 import Gui.MainFrame;
 import dao_impl.CorsoDAOImpl;
@@ -33,7 +36,7 @@ public class Controller {
 	MainFrame hm;
 	StudenteDAO student = new StudenteDAOImpl();
 	CorsoDAO course = new CorsoDAOImpl();
-//	JTable table = new JTable();
+	private CourseTableModel model;
 
 	public static void main(String[] args) {
 
@@ -131,40 +134,22 @@ public class Controller {
 
 	public void displayCourse(JTable table) {
 		try {
-			ArrayList<Corso> corsi = course.leggiCorsi();
-			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			Object[] colonne = { "Corso ID", "Nome Corso", "Max Partecipanti", "Area Tematica", "Descrizione" };
-			model.setColumnIdentifiers(colonne);
-			Object[] riga;
-			for (int i = 0; i < corsi.size(); i++) {
-				riga = new Object[5];
-				riga[0] = corsi.get(i).getCodiceCorso();
-				riga[1] = corsi.get(i).getNome();
-				riga[2] = corsi.get(i).getMaxPartecipanti();
-				riga[3] = corsi.get(i).getAreeTematiche();
-				riga[4] = corsi.get(i).getDescrizione();
-				model.addRow(riga);
-			}
+			model = new CourseTableModel(course.leggiCorsi());
+			table.setModel(model);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void addCourseToTableView(JTable table, JTextField nome, JTextField maxPartecipanti, JComboBox areaTematica,
+	public void addCourseToTableView(JTable table,JTextField nome, JTextField maxPartecipanti, JComboBox areaTematica,
 			JTextArea descrizione) {
 		try {
+			table.setModel(model);
 			int id = 0;
-			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			Object[] riga = new Object[5];
-
-			riga[0] = course.getLastID(id);
-			riga[1] = nome.getText();
-			riga[2] = maxPartecipanti.getText();
-			riga[3] = areaTematica.getSelectedItem().toString();
-			riga[4] = descrizione.getText();
-
-			model.addRow(riga);
+			id = course.getLastID(id);
+			int maxPart = Integer.parseInt(maxPartecipanti.getText());
+			Corso c = new Corso(id,nome.getText(),descrizione.getText(),maxPart,areaTematica.getSelectedItem().toString());
+			model.add(c);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -183,7 +168,7 @@ public class Controller {
 	}
 
 	public void updateCourse(JTable table, String nome, String descrizione, String maxPartecipanti,String areaTematica) {
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		CourseTableModel model = (CourseTableModel) table.getModel();
 		try {
 			int rigaSelected = table.getSelectedRow();
 			int theID = (int) model.getValueAt(rigaSelected, 0);
@@ -195,28 +180,4 @@ public class Controller {
 		}
 	}
 	
-//	public void refreshTable(JTable table) {
-//		DefaultTableModel model = (DefaultTableModel) table.getModel();
-//		Connection conn = null;
-//		Connessione connection = null;
-//		try {
-//			connection = Connessione.getInstance();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		conn = connection.getConnection();
-//		String query = "SELECT id, nome, descrizione, max_partecipanti, aree_tematiche FROM corso";
-//		try {
-//			PreparedStatement preparedStatement = conn.prepareStatement(query);
-//			ResultSet result = preparedStatement.executeQuery();
-//			while(result.next()){
-//				DbUltils.
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-
 }
