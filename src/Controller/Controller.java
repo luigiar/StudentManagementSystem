@@ -165,19 +165,23 @@ public class Controller {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		model.remove(row);
 	}
 
-	public void updateCourse(JTable table, String nome, String descrizione, String maxPartecipanti,String areaTematica) {
-		CourseTableModel model = (CourseTableModel) table.getModel();
+	public void updateCourse(JTable table, String nome, String maxPartecipanti,String areaTematica, String descrizione) {
 		try {
+
 			int rigaSelected = table.getSelectedRow();
 			int theID = (int) model.getValueAt(rigaSelected, 0);
-			System.out.println(theID);
-			course.aggiornaCorso(theID, nome, descrizione, maxPartecipanti, areaTematica);
+			course.aggiornaCorso(theID, nome, maxPartecipanti, areaTematica, descrizione);
+			
+			model.setValueAt(nome, rigaSelected, 1);
+			model.setValueAt(maxPartecipanti, rigaSelected, 2);
+			model.setValueAt(areaTematica, rigaSelected, 3);
+			model.setValueAt(descrizione, rigaSelected, 4);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
 }

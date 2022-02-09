@@ -143,9 +143,7 @@ public class PanelAggiungiStudente extends JPanel {
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 					
-					String dateString = ((JTextField)dateChooser.getDateEditor().getUiComponent()).getText();
-					
-					c.insertStudent(textField_nome.getText(), textField_cognome.getText(), dateString ,
+					c.insertStudent(textField_nome.getText(), textField_cognome.getText(), editor.getText() ,
 							Group.getSelection().getActionCommand());
 
 					c.addStudentToTableView(table, textField_nome, textField_cognome, dateChooser, Group);
@@ -165,6 +163,6 @@ public class PanelAggiungiStudente extends JPanel {
 		textField_nome.setText("");
 		textField_cognome.setText("");
 		Group.clearSelection();
-		dateChooser.setCalendar(null);;
+		dateChooser.setCalendar(null);
 	}
 }

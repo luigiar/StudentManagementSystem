@@ -64,11 +64,11 @@ public class PanelAggiungiCorso extends JPanel {
 
 		TestCellRenderer cell = new TestCellRenderer();
 		table = new JTable() {
-			@Override
-			public Point getToolTipLocation(MouseEvent event) {
-				return new Point(scrollPane.getMousePosition().x, scrollPane.getMousePosition().y);
-
-			}
+//			@Override
+//			public Point getToolTipLocation(MouseEvent event) {
+//				return new Point(scrollPane.getMousePosition().x, scrollPane.getMousePosition().y);
+//
+//			}
 		};
 		table.setDefaultRenderer(Object.class, cell);
 		table.setBackground(new Color(230, 230, 250));

@@ -170,11 +170,11 @@ public class CorsoDAOImpl implements CorsoDAO {
 	}
 
 	@Override
-	public void aggiornaCorso(int id, String nome, String descrizione, String maxPartecipanti, String areeTematiche) throws SQLException {
+	public void aggiornaCorso(int id, String nome, String maxPartecipanti, String areeTematiche, String descrizione) throws SQLException {
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
 
-		String updateSql = "UPDATE corso SET nome = ?, descrizione = ?, max_partecipanti = ?, aree_tematiche = ? WHERE id = "
+		String updateSql = "UPDATE corso SET nome = ?, max_partecipanti = ?, aree_tematiche = ?, descrizione = ? WHERE id = "
 				+id;
 				
 		try {
@@ -182,9 +182,9 @@ public class CorsoDAOImpl implements CorsoDAO {
 			aggiornaCorsoStm = conn.prepareStatement(updateSql);
 			System.out.println("Aggiornamento corso...");
 			aggiornaCorsoStm.setString(1, nome);
-			aggiornaCorsoStm.setString(2, descrizione);
-			aggiornaCorsoStm.setInt(3, numeroPartecipantiMax);
-			aggiornaCorsoStm.setString(4, areeTematiche);
+			aggiornaCorsoStm.setInt(2, numeroPartecipantiMax);
+			aggiornaCorsoStm.setString(3, areeTematiche);
+			aggiornaCorsoStm.setString(4, descrizione);
 
 
 			aggiornaCorsoStm.executeUpdate();
