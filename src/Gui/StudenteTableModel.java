@@ -56,7 +56,6 @@ public class StudenteTableModel extends  AbstractTableModel{
 
 	public void add(Studente riga) {
 		studenti.add(riga);
-
 		fireTableRowsInserted(getRowCount(), getColumnCount());
 	}
 

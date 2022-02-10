@@ -6,19 +6,19 @@ import Gui.PanelAggiungiStudente;
 
 public class Studente {
 	
-	private Integer id;
+	private int id;
 	private String nome;
 	private String cognome;
 	private String dataNascita;
 	private String genere;
 	
 	// Costruttori
-	public Studente(Integer id, String nome, String cognome, String dataNascita, String genere) {
-		id = this.id;
-		nome = this.nome;
-		cognome = this.cognome;
-		dataNascita = this.dataNascita;
-		genere = this.genere;
+	public Studente(int id, String nome, String cognome, String dataNascita, String genere) {
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dataNascita = dataNascita;
+		this.genere = genere;
 	}
 	
 	public Studente() {

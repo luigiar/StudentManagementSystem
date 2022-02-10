@@ -120,7 +120,6 @@ public class PanelAggiungiStudente extends JPanel {
 		add(scrollPane);
 
 		table = new JTable();
-
 		table.setBackground(new Color(230, 230, 250));
 		scrollPane.setViewportView(table);
 		c.displayStudent(table);

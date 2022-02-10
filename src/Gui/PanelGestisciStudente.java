@@ -97,11 +97,8 @@ public class PanelGestisciStudente extends JPanel {
 		panel_indietro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				panelAggiornaStudente.setVisible(false);
-
 				panel_gestisciStudente.setVisible(true);
-
 				lblAggiornaStudente.setVisible(false);
 				lblGestioneStudenti.setVisible(true);
 				panel_indietro.setVisible(false);
@@ -136,9 +133,7 @@ public class PanelGestisciStudente extends JPanel {
 		panel_gestisciStudente.add(scrollPane);
 
 		table = new JTable();
-
 		c.displayStudent(table);
-
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
