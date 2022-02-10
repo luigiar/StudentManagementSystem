@@ -55,8 +55,8 @@ public class CourseTableModel extends AbstractTableModel {
 	}
 
 	public void add(Corso riga) {
-		corsi.add(riga);
-		fireTableRowsInserted(getRowCount(), getColumnCount());
+		this.corsi.add(riga);
+		this.fireTableRowsInserted(getRowCount(), getColumnCount());
 	}
 
 	@Override
@@ -68,20 +68,14 @@ public class CourseTableModel extends AbstractTableModel {
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		switch (columnIndex) {
-		case 0:
-			break;
 		case 1:
 			corsi.get(rowIndex).setNome(aValue.toString());
-
 			break;
 		case 2:
-			int maxNumPartecipanti = Integer.parseInt(aValue.toString());
-			corsi.get(rowIndex).setMaxPartecipanti(maxNumPartecipanti);
+			corsi.get(rowIndex).setMaxPartecipanti(Integer.parseInt(aValue.toString()));
 			break;
 		case 3:
-
 			corsi.get(rowIndex).setAreeTematiche(aValue.toString());
-
 			break;
 		case 4:
 			corsi.get(rowIndex).setDescrizione(aValue.toString());
@@ -91,8 +85,8 @@ public class CourseTableModel extends AbstractTableModel {
 	}
 	
 	public void remove(int riga) {
-		 corsi.remove(riga);
-		fireTableRowsDeleted(getRowCount(), getColumnCount());
+		 this.corsi.remove(riga);
+		 this.fireTableRowsDeleted(getRowCount(), getColumnCount());
 	}
 
 }

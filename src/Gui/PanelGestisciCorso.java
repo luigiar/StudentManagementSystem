@@ -152,6 +152,7 @@ public class PanelGestisciCorso extends JPanel {
 						c.updateCourse(table,textField_nomeCorso.getText(), textFieldPartecipanti.getText(),
 								comboBox_areaTematica.getSelectedItem().toString(), textArea_descrizione.getText());
 						
+						
 						clearTextField();
 						
 
@@ -219,7 +220,7 @@ public class PanelGestisciCorso extends JPanel {
 						JOptionPane.showMessageDialog(null, "Inserimento non valido!", "Errore",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
-						DefaultTableModel model = (DefaultTableModel) table.getModel();
+						CourseTableModel model = (CourseTableModel) table.getModel();
 						String valoreCorrente = model.getValueAt(rigaPressed, 3).toString();
 						model.setValueAt(comboBox_areaTematica.getSelectedItem(), rigaPressed, 3);
 						String valoreAggiunto = model.getValueAt(rigaPressed, 3).toString();

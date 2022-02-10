@@ -12,6 +12,9 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import Controller.Controller;
+
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
@@ -22,35 +25,54 @@ import javax.swing.JScrollPane;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import com.toedter.calendar.JDateChooser;
-import com.toedter.calendar.JTextFieldDateEditor;
 
 public class PanelGestisciStudente extends JPanel {
+	private Controller theController;
 	private JTable table;
 	private JTextField textFieldNome;
 	private JTextField txtCogniome;
+	private JTextField txtDate;
 	private JTextField txtId;
 	DefaultTableModel model;
 	private PanelAggiornaStudente panelAggiornaStudente;
-	private JDateChooser dateChooser;
 	DefaultTableCellRenderer cellRender;
 	Image indietro = new ImageIcon(this.getClass().getResource("/Freccia_Icon.png")).getImage();
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelGestisciStudente() {
+	public PanelGestisciStudente(Controller c) {
+
+		theController = c;
 		setBackground(Color.WHITE);
 		setLayout(null);
 		setBounds(0, 0, 673, 581);
 
 		JPanel panel_gestisciStudente = new JPanel();
 		panelAggiornaStudente = new PanelAggiornaStudente();
-		JButton delete_button = new JButton("Elimina");
 		JButton update_button = new JButton("Aggiorna");
-
-		// add(panelAggiornaStudente);
-		// panelAggiornaStudente.setVisible(false);
+		JButton delete_button = new JButton("Elimina");
+//		delete_button.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				
+//					int rigaPressed = table.getSelectedRow();
+//					if (rigaPressed >= 0) {
+//						int input = JOptionPane.showConfirmDialog(null, "Vuoi procedere?", "Seleziona un'opzione",
+//								JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+//						if (input == JOptionPane.YES_OPTION) {
+//							model.removeRow(rigaPressed);
+//							JOptionPane.showMessageDialog(null, "Corso eliminato correttamente", "Conferma",
+//									JOptionPane.INFORMATION_MESSAGE);
+//						} else {
+//							J0OptionPane.showMessageDialog(null, "Eliminazione non eseguita", "Conferma",
+//									JOptionPane.INFORMATION_MESSAGE);
+//						}
+//					} else {
+//						JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso", "Attenzione",
+//								JOptionPane.WARNING_MESSAGE);
+//					}
+//			}
+//		});
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -90,13 +112,6 @@ public class PanelGestisciStudente extends JPanel {
 		panel.add(panel_indietro);
 		panel_indietro.setLayout(null);
 		panel_indietro.setVisible(false);
-		
-		dateChooser = new JDateChooser();
-		dateChooser.setBounds(236, 394, 119, 20);
-		dateChooser.setDateFormatString("yyyy-MM-dd");
-		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateChooser.getDateEditor();
-		editor.setEditable(false);
-		panel_gestisciStudente.add(dateChooser);
 
 		JLabel lblNewLabel = new JLabel("Indietro");
 		lblNewLabel.setBounds(20, 3, 56, 14);
@@ -121,29 +136,22 @@ public class PanelGestisciStudente extends JPanel {
 		panel_gestisciStudente.add(scrollPane);
 
 		table = new JTable();
+
+		c.displayStudent(table);
+
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				StudenteTableModel model = (StudenteTableModel) table.getModel();
 				int rigaSelected = table.getSelectedRow();
-				textFieldNome.setText((model.getValueAt(rigaSelected, 0)).toString());
-				txtCogniome.setText((model.getValueAt(rigaSelected, 1)).toString());
-				editor.setText((model.getValueAt(rigaSelected, 2)).toString());
-				txtId.setText((model.getValueAt(rigaSelected, 3)).toString());
+				txtId.setText((model.getValueAt(rigaSelected, 0)).toString());
+				textFieldNome.setText((model.getValueAt(rigaSelected, 1)).toString());
+				txtCogniome.setText((model.getValueAt(rigaSelected, 2)).toString());
+				txtDate.setText((model.getValueAt(rigaSelected, 3)).toString());
+
 			}
 		});
-		table.setEnabled(false);
 		table.setBackground(new Color(230, 230, 250));
-		model = new DefaultTableModel() {
-
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-		Object[] colonne = { "ID", "Nome", "Cognome", "Data Nascita", "Genere" };
-		Object[] riga = new Object[5];
-		model.setColumnIdentifiers(colonne);
-
-		table.setModel(model);
 		scrollPane.setViewportView(table);
 
 		JLabel lblNome = new JLabel("Nome :");
@@ -153,6 +161,7 @@ public class PanelGestisciStudente extends JPanel {
 		panel_gestisciStudente.add(lblNome);
 
 		textFieldNome = new JTextField();
+		textFieldNome.setEditable(false);
 		textFieldNome.setColumns(10);
 		textFieldNome.setBounds(33, 394, 101, 20);
 		panel_gestisciStudente.add(textFieldNome);
@@ -164,10 +173,10 @@ public class PanelGestisciStudente extends JPanel {
 		panel_gestisciStudente.add(lblCognome);
 
 		txtCogniome = new JTextField();
+		txtCogniome.setEditable(false);
 		txtCogniome.setColumns(10);
 		txtCogniome.setBounds(33, 466, 101, 20);
 		panel_gestisciStudente.add(txtCogniome);
-
 
 		JLabel lblDataNascita = new JLabel("Data Nascita : ");
 		lblDataNascita.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -175,26 +184,32 @@ public class PanelGestisciStudente extends JPanel {
 		lblDataNascita.setBounds(236, 370, 89, 17);
 		panel_gestisciStudente.add(lblDataNascita);
 
+		txtDate = new JTextField();
+		txtDate.setEditable(false);
+		txtDate.setColumns(10);
+		txtDate.setBounds(236, 394, 119, 20);
+		panel_gestisciStudente.add(txtDate);
+
 		update_button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				add(panelAggiornaStudente);
-
-				setAggiorna(panelAggiornaStudente);
-
-				panel_gestisciStudente.setVisible(false);
-
-				lblAggiornaStudente.setVisible(true);
-				lblGestioneStudenti.setVisible(false);
-				panel_indietro.setVisible(true);
-
 				if (textFieldNome.getText().equals("") || txtCogniome.getText().equals("")
-						|| editor.getText().equals("") || txtId.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, " Inserire tutti i campi ");
+						|| txtDate.getText().equals("") || txtId.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Selezionare studente dalla tabella!", "Attenzione!",
+							JOptionPane.WARNING_MESSAGE);
+
 				} else {
 
-					JOptionPane.showMessageDialog(null, "Inserimento non valido ");
+					add(panelAggiornaStudente);
+
+					setAggiorna(panelAggiornaStudente);
+
+					panel_gestisciStudente.setVisible(false);
+					lblAggiornaStudente.setVisible(true);
+					lblGestioneStudenti.setVisible(false);
+					panel_indietro.setVisible(true);
+
 				}
 
 			}
@@ -216,29 +231,10 @@ public class PanelGestisciStudente extends JPanel {
 		panel_gestisciStudente.add(numberID);
 
 		txtId = new JTextField();
+		txtId.setEditable(false);
 		txtId.setBounds(236, 466, 119, 20);
 		panel_gestisciStudente.add(txtId);
 		txtId.setColumns(10);
-
-		JButton btnNewButton = new JButton("Insertiscioi");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				riga[0] = txtId.getText();
-				riga[1] = textFieldNome.getText();
-				riga[2] = txtCogniome.getText();
-				model.addRow(riga);
-
-				riga[0] = "";
-				textFieldNome.setText("");
-				txtCogniome.setText("");
-				dateChooser.setCalendar(null);
-				;
-				txtId.setText("");
-			}
-		});
-		btnNewButton.setBounds(434, 427, 89, 23);
-		panel_gestisciStudente.add(btnNewButton);
 
 	}
 
@@ -248,4 +244,5 @@ public class PanelGestisciStudente extends JPanel {
 		aggiornaPanel.setVisible(true);
 
 	}
+
 }

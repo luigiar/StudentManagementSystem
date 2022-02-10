@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 
 import DAO.CorsoDAO;
 import DAO.StudenteDAO;
@@ -25,6 +26,7 @@ import Entità.Studente;
 import Gui.CourseTableModel;
 import Gui.LoginFrame;
 import Gui.MainFrame;
+import Gui.StudenteTableModel;
 import dao_impl.CorsoDAOImpl;
 import dao_impl.StudenteDAOImpl;
 import dbSettings.Connessione;
@@ -37,6 +39,7 @@ public class Controller {
 	StudenteDAO student = new StudenteDAOImpl();
 	CorsoDAO course = new CorsoDAOImpl();
 	private CourseTableModel model;
+	private StudenteTableModel modelStud;
 
 	public static void main(String[] args) {
 
@@ -79,41 +82,23 @@ public class Controller {
 
 	public void displayStudent(JTable table) {
 		try {
-			ArrayList<Studente> studenti = student.leggiStudenti();
-			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			Object[] colonne = { "ID", "Nome", "Cognome", "Data Nascita", "Genere" };
-			model.setColumnIdentifiers(colonne);
-			Object[] riga;
-			for (int i = 0; i < studenti.size(); i++) {
-				riga = new Object[5];
-				riga[0] = studenti.get(i).getId();
-				riga[1] = studenti.get(i).getNome();
-				riga[2] = studenti.get(i).getCognome();
-				riga[3] = studenti.get(i).getDataNascita();
-				riga[4] = studenti.get(i).getGenere();
-				model.addRow(riga);
-			}
+			modelStud = new StudenteTableModel(student.leggiStudenti());
+			table.setModel(modelStud);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
-	public void addStudentToTableView(JTable table, JTextField nome, JTextField cognome, JDateChooser data,
+	public void addStudentToTableView(JTable table, JTextField nome, JTextField cognome, JTextFieldDateEditor data,
 			ButtonGroup genere) {
-		int id = 0;
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		Object[] riga = new Object[5];
-		String date = ((JTextField)data.getDateEditor().getUiComponent()).getText();
-
 		try {
-			riga[0] = student.getLastID(id);
-			riga[1] = nome.getText();
-			riga[2] = cognome.getText();
-			riga[3] = date;
-			riga[4] = genere.getSelection().getActionCommand();
-
-			model.addRow(riga);
+			table.setModel(modelStud);
+			int id = 0;
+			id = student.getLastID(id);
+			Studente s = new Studente(id, nome.getText(), cognome.getText(), data.getText().toString(),
+					genere.getSelection().getActionCommand());
+			modelStud.add(s);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -141,14 +126,15 @@ public class Controller {
 		}
 	}
 
-	public void addCourseToTableView(JTable table,JTextField nome, JTextField maxPartecipanti, JComboBox areaTematica,
+	public void addCourseToTableView(JTable table, JTextField nome, JTextField maxPartecipanti, JComboBox areaTematica,
 			JTextArea descrizione) {
 		try {
 			table.setModel(model);
 			int id = 0;
 			id = course.getLastID(id);
 			int maxPart = Integer.parseInt(maxPartecipanti.getText());
-			Corso c = new Corso(id,nome.getText(),descrizione.getText(),maxPart,areaTematica.getSelectedItem().toString());
+			Corso c = new Corso(id, nome.getText(), descrizione.getText(), maxPart,
+					areaTematica.getSelectedItem().toString());
 			model.add(c);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -168,17 +154,18 @@ public class Controller {
 		model.remove(row);
 	}
 
-	public void updateCourse(JTable table, String nome, String maxPartecipanti,String areaTematica, String descrizione) {
+	public void updateCourse(JTable table, String nome, String maxPartecipanti, String areaTematica,
+			String descrizione) {
 		try {
-
 			int rigaSelected = table.getSelectedRow();
 			int theID = (int) model.getValueAt(rigaSelected, 0);
 			course.aggiornaCorso(theID, nome, maxPartecipanti, areaTematica, descrizione);
-			
+
 			model.setValueAt(nome, rigaSelected, 1);
 			model.setValueAt(maxPartecipanti, rigaSelected, 2);
 			model.setValueAt(areaTematica, rigaSelected, 3);
 			model.setValueAt(descrizione, rigaSelected, 4);
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

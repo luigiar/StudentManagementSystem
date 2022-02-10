@@ -25,6 +25,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import java.awt.event.MouseAdapter;
 
 public class PanelAggiungiCorso extends JPanel {
 	private JTextField textField_nomeCorso;
@@ -70,6 +71,7 @@ public class PanelAggiungiCorso extends JPanel {
 //
 //			}
 		};
+
 		table.setDefaultRenderer(Object.class, cell);
 		table.setBackground(new Color(230, 230, 250));
 		table.setBounds(10, 221, 612, -209);

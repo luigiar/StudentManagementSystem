@@ -82,7 +82,7 @@ public class MainFrame extends JFrame {
 		panelHome.setBounds(0, 0, 648, 554);
 		panelAggiungiStudente = new PanelAggiungiStudente(c);
 		panelAggiungiStudente.setBounds(0, 0, 648, 554);
-		panelGestisciStudente = new PanelGestisciStudente();
+		panelGestisciStudente = new PanelGestisciStudente(c);
 		panelGestisciStudente.setBounds(0, 0, 648, 554);
 		panelAggiungiCorso = new PanelAggiungiCorso(c);
 		panelGestisciCorso = new PanelGestisciCorso(c);

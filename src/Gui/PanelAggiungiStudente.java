@@ -8,8 +8,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Controller.Controller;
-
-import java.sql.Date;
 import java.sql.SQLException;
 import java.awt.Color;
 import javax.swing.JTable;
@@ -23,16 +21,17 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
-import com.toedter.components.JSpinField;
+
+import java.awt.BorderLayout;
 
 public class PanelAggiungiStudente extends JPanel {
 	private Controller theController;
 	private JTextField textField_nome;
 	private JTextField textField_cognome;
-	private JDateChooser dateChooser;
 	DefaultTableModel model;
 	private JTable table;
 	private ButtonGroup Group;
+	private JDateChooser dateChooser;
 
 	/**
 	 * Create the panel.
@@ -73,13 +72,12 @@ public class PanelAggiungiStudente extends JPanel {
 		add(lblDataNascita);
 		
 	    dateChooser = new JDateChooser();
-	    dateChooser.getCalendarButton().setToolTipText("Imposta una data");
-		dateChooser.setBounds(215, 331, 126, 20);
+		dateChooser.setBounds(215, 331, 128, 20);
+		add(dateChooser);
 		dateChooser.setDateFormatString("yyyy-MM-dd");
 		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateChooser.getDateEditor();
 		editor.setEditable(false);
-		
-		add(dateChooser);
+
 
 		JLabel lblGenere = new JLabel("Genere :");
 		lblGenere.setHorizontalAlignment(SwingConstants.LEFT);
@@ -122,15 +120,8 @@ public class PanelAggiungiStudente extends JPanel {
 		add(scrollPane);
 
 		table = new JTable();
-		table.setEnabled(false);
+
 		table.setBackground(new Color(230, 230, 250));
-		model = new DefaultTableModel() {
-
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-
 		scrollPane.setViewportView(table);
 		c.displayStudent(table);
 
@@ -142,11 +133,11 @@ public class PanelAggiungiStudente extends JPanel {
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi", "Errore",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					
-					c.insertStudent(textField_nome.getText(), textField_cognome.getText(), editor.getText() ,
+
+					c.insertStudent(textField_nome.getText(), textField_cognome.getText(), editor.getText(),
 							Group.getSelection().getActionCommand());
 
-					c.addStudentToTableView(table, textField_nome, textField_cognome, dateChooser, Group);
+					c.addStudentToTableView(table, textField_nome, textField_cognome, editor, Group);
 
 					clearTextField();
 				}
@@ -156,7 +147,6 @@ public class PanelAggiungiStudente extends JPanel {
 		insert_button.setBackground(new Color(51, 153, 204));
 		insert_button.setBounds(531, 492, 88, 30);
 		add(insert_button);
-		
 	}
 
 	public void clearTextField() {
