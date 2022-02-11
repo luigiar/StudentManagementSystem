@@ -104,6 +104,19 @@ public class Controller {
 		}
 
 	}
+	
+	public void deleteStudent(JTable table) {
+		int row = table.getSelectedRow();
+		String deleteCell = table.getValueAt(row, 0).toString();
+		int theID = Integer.parseInt(deleteCell);
+		
+		try {
+			student.eliminaStudente(theID);
+		} catch(SQLException e){
+			
+			e.printStackTrace();
+		}
+	}
 
 	public void insertCourse(String name, String description, String maxStudents, String themeArea) {
 		course = new CorsoDAOImpl();
@@ -145,7 +158,6 @@ public class Controller {
 		int row = table.getSelectedRow();
 		String deleteCell = table.getValueAt(row, 0).toString();
 		int theID = Integer.parseInt(deleteCell);
-		System.out.println(theID);
 		try {
 			course.eliminaCorso(theID);
 		} catch (SQLException e) {
@@ -153,6 +165,7 @@ public class Controller {
 		}
 		model.remove(row);
 	}
+	
 
 	public void updateCourse(JTable table, String nome, String maxPartecipanti, String areaTematica,
 			String descrizione) {
@@ -160,15 +173,15 @@ public class Controller {
 			int rigaSelected = table.getSelectedRow();
 			int theID = (int) model.getValueAt(rigaSelected, 0);
 			course.aggiornaCorso(theID, nome, maxPartecipanti, areaTematica, descrizione);
-
+			
 			model.setValueAt(nome, rigaSelected, 1);
 			model.setValueAt(maxPartecipanti, rigaSelected, 2);
 			model.setValueAt(areaTematica, rigaSelected, 3);
 			model.setValueAt(descrizione, rigaSelected, 4);
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 }

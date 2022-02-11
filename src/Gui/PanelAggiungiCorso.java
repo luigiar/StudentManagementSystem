@@ -30,7 +30,6 @@ import java.awt.event.MouseAdapter;
 public class PanelAggiungiCorso extends JPanel {
 	private JTextField textField_nomeCorso;
 	private JTextField textField_maxPartecipanti;
-	DefaultTableModel model;
 	private JTable table;
 	private JComboBox comboBox;
 	private JTextArea textArea_descrizione;
@@ -64,6 +63,7 @@ public class PanelAggiungiCorso extends JPanel {
 		add(scrollPane);
 
 		TestCellRenderer cell = new TestCellRenderer();
+		
 		table = new JTable() {
 //			@Override
 //			public Point getToolTipLocation(MouseEvent event) {
@@ -71,7 +71,6 @@ public class PanelAggiungiCorso extends JPanel {
 //
 //			}
 		};
-
 		table.setDefaultRenderer(Object.class, cell);
 		table.setBackground(new Color(230, 230, 250));
 		table.setBounds(10, 221, 612, -209);
@@ -183,6 +182,7 @@ public class PanelAggiungiCorso extends JPanel {
 						JOptionPane.showMessageDialog(null, "Inserimento non valido!", "Errore",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
+						CourseTableModel model = (CourseTableModel) table.getModel();
 						String valoreCorrente = model.getValueAt(rigaPressed, 2).toString();
 						model.setValueAt(comboBox.getSelectedItem(), rigaPressed, 2);
 						String valoreAggiunto = model.getValueAt(rigaPressed, 2).toString();

@@ -18,7 +18,7 @@ public interface StudenteDAO {
 	
 	public void aggiornaStudente(Studente studente) throws SQLException;
 	
-	public void eliminaStudente(Studente studente) throws SQLException;
+	public void eliminaStudente(int id) throws SQLException;
 	
 	public ArrayList<Studente> leggiStudenti() throws SQLException;
 	

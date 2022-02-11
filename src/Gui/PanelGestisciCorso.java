@@ -29,7 +29,6 @@ import javax.swing.ListSelectionModel;
 
 public class PanelGestisciCorso extends JPanel {
 	private JTextField textField_nomeCorso;
-	DefaultTableModel model;
 	private JTable table;
 	private JTextField textFieldPartecipanti;
 	private JTextArea textArea_descrizione;
@@ -148,14 +147,9 @@ public class PanelGestisciCorso extends JPanel {
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						
-
 						c.updateCourse(table,textField_nomeCorso.getText(), textFieldPartecipanti.getText(),
 								comboBox_areaTematica.getSelectedItem().toString(), textArea_descrizione.getText());
-						
-						
-						clearTextField();
-						
-
+					
 						JOptionPane.showMessageDialog(null, "Aggiornamento effettuato", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
 					}

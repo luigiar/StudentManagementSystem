@@ -21,6 +21,7 @@ public class StudenteDAOImpl implements StudenteDAO {
 	private PreparedStatement inserisciStudenteStmt;
 	Connection conn = null;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	Statement deleteStudentST;
 
 	public void inserisciStudente(String nome, String cognome, String dataNascita, String genere) throws SQLException {
 		Connessione connect = Connessione.getInstance();
@@ -64,12 +65,38 @@ public class StudenteDAOImpl implements StudenteDAO {
 
 	}
 
-	public void aggiornaStudente(Studente s) throws SQLException {
+	public void eliminaStudente(int id) throws SQLException {
 
-	}
+		Connessione connection = Connessione.getInstance();
+		conn = connection.getConnection();
+		System.out.println("connessione delete eseguita");
 
-	public void eliminaStudente(Studente studente) throws SQLException {
+		try {
+			String eliminazioneSql = "DELETE FROM studente WHERE id = " + id;
 
+			System.out.println("eliminando corsi...");
+			deleteStudentST = conn.createStatement();
+
+			deleteStudentST.executeUpdate(eliminazioneSql);
+			System.out.println("corso eliminato!");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// blocco per chiudere risorse
+			try {
+				if (deleteStudentST != null)
+					conn.close();
+			} catch (SQLException se) {
+				// non fa nulla
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
 	}
 
 	public ArrayList<Studente> leggiStudenti() throws SQLException {
@@ -144,6 +171,12 @@ public class StudenteDAOImpl implements StudenteDAO {
 			se.printStackTrace();
 		}
 		return id;
+	}
+
+	@Override
+	public void aggiornaStudente(Studente studente) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

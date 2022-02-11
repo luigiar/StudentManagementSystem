@@ -83,6 +83,10 @@ public class StudenteTableModel extends  AbstractTableModel{
 		fireTableCellUpdated(rowIndex, columnIndex);
 	}
 	
+	public void remove(int riga) {
+		 studenti.remove(riga);
+		fireTableRowsDeleted(getRowCount(), getColumnCount());
+	}
 	
 	
 }

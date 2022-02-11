@@ -30,7 +30,7 @@ public class PanelGestisciStudente extends JPanel {
 	private Controller theController;
 	private JTable table;
 	private JTextField textFieldNome;
-	private JTextField txtCogniome;
+	private JTextField txtCognome;
 	private JTextField txtDate;
 	private JTextField txtId;
 	DefaultTableModel model;
@@ -52,27 +52,27 @@ public class PanelGestisciStudente extends JPanel {
 		panelAggiornaStudente = new PanelAggiornaStudente();
 		JButton update_button = new JButton("Aggiorna");
 		JButton delete_button = new JButton("Elimina");
-//		delete_button.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				
-//					int rigaPressed = table.getSelectedRow();
-//					if (rigaPressed >= 0) {
-//						int input = JOptionPane.showConfirmDialog(null, "Vuoi procedere?", "Seleziona un'opzione",
-//								JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-//						if (input == JOptionPane.YES_OPTION) {
-//							model.removeRow(rigaPressed);
-//							JOptionPane.showMessageDialog(null, "Corso eliminato correttamente", "Conferma",
-//									JOptionPane.INFORMATION_MESSAGE);
-//						} else {
-//							J0OptionPane.showMessageDialog(null, "Eliminazione non eseguita", "Conferma",
-//									JOptionPane.INFORMATION_MESSAGE);
-//						}
-//					} else {
-//						JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso", "Attenzione",
-//								JOptionPane.WARNING_MESSAGE);
-//					}
-//			}
-//		});
+		delete_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+					int rigaPressed = table.getSelectedRow();
+					if (rigaPressed >= 0) {
+						int input = JOptionPane.showConfirmDialog(null, "Vuoi procedere?", "Seleziona un'opzione",
+								JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+						if (input == JOptionPane.YES_OPTION) {
+							c.deleteStudent(table);
+							JOptionPane.showMessageDialog(null, "Corso eliminato correttamente", "Conferma",
+									JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							JOptionPane.showMessageDialog(null, "Eliminazione non eseguita", "Conferma",
+									JOptionPane.INFORMATION_MESSAGE);
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso", "Attenzione",
+								JOptionPane.WARNING_MESSAGE);
+					}
+			}
+		});
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -141,7 +141,7 @@ public class PanelGestisciStudente extends JPanel {
 				int rigaSelected = table.getSelectedRow();
 				txtId.setText((model.getValueAt(rigaSelected, 0)).toString());
 				textFieldNome.setText((model.getValueAt(rigaSelected, 1)).toString());
-				txtCogniome.setText((model.getValueAt(rigaSelected, 2)).toString());
+				txtCognome.setText((model.getValueAt(rigaSelected, 2)).toString());
 				txtDate.setText((model.getValueAt(rigaSelected, 3)).toString());
 
 			}
@@ -167,11 +167,11 @@ public class PanelGestisciStudente extends JPanel {
 		lblCognome.setBounds(33, 438, 75, 17);
 		panel_gestisciStudente.add(lblCognome);
 
-		txtCogniome = new JTextField();
-		txtCogniome.setEditable(false);
-		txtCogniome.setColumns(10);
-		txtCogniome.setBounds(33, 466, 101, 20);
-		panel_gestisciStudente.add(txtCogniome);
+		txtCognome = new JTextField();
+		txtCognome.setEditable(false);
+		txtCognome.setColumns(10);
+		txtCognome.setBounds(33, 466, 101, 20);
+		panel_gestisciStudente.add(txtCognome);
 
 		JLabel lblDataNascita = new JLabel("Data Nascita : ");
 		lblDataNascita.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -189,7 +189,7 @@ public class PanelGestisciStudente extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				if (textFieldNome.getText().equals("") || txtCogniome.getText().equals("")
+				if (textFieldNome.getText().equals("") || txtCognome.getText().equals("")
 						|| txtDate.getText().equals("") || txtId.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Selezionare studente dalla tabella!", "Attenzione!",
 							JOptionPane.WARNING_MESSAGE);
@@ -238,6 +238,13 @@ public class PanelGestisciStudente extends JPanel {
 
 		aggiornaPanel.setVisible(true);
 
+	}
+	public void setGrandezzaColonneTable() {
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(4).setPreferredWidth(250);
+		cellRender = new DefaultTableCellRenderer();
+		cellRender.setHorizontalAlignment(JLabel.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
 	}
 
 }
