@@ -35,7 +35,6 @@ public class PanelGestisciCorso extends JPanel {
 	private JComboBox comboBox_areaTematica;
 	DefaultTableCellRenderer cellRender;
 	private Controller theController;
-	private CourseTableModel modelCourse;
 
 	/**
 	 * Create the panel.
@@ -146,7 +145,6 @@ public class PanelGestisciCorso extends JPanel {
 						JOptionPane.showMessageDialog(null, "Aggiornamento non valido!", "Errore",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
-						
 						c.updateCourse(table,textField_nomeCorso.getText(), textFieldPartecipanti.getText(),
 								comboBox_areaTematica.getSelectedItem().toString(), textArea_descrizione.getText());
 					

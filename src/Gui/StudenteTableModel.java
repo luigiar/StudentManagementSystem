@@ -7,24 +7,23 @@ import javax.swing.table.AbstractTableModel;
 
 import Entità.Studente;
 
-public class StudenteTableModel extends  AbstractTableModel{
-	
+public class StudenteTableModel extends AbstractTableModel {
+
 	private List<Studente> studenti = new ArrayList<Studente>();
 	private String[] colonne = { "ID", "Nome", "Cognome", "Data Nascita", "Genere" };
-	
-	public StudenteTableModel(){
-		
-		
+
+	public StudenteTableModel() {
+
 	}
+
 	public StudenteTableModel(ArrayList<Studente> studenti) {
 		this.studenti = studenti;
 	}
-	
+
 	public String getColumnName(int column) {
 		return colonne[column];
 	}
 
-	
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
@@ -39,7 +38,7 @@ public class StudenteTableModel extends  AbstractTableModel{
 
 	@Override
 	public Object getValueAt(int rowIndex, int colonne) {
-		switch(colonne) {
+		switch (colonne) {
 		case 0:
 			return studenti.get(rowIndex).getId();
 		case 1:
@@ -64,9 +63,10 @@ public class StudenteTableModel extends  AbstractTableModel{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		switch(columnIndex) {
+		switch (columnIndex) {
 		case 1:
 			studenti.get(rowIndex).setNome(aValue.toString());
 			break;
@@ -82,11 +82,10 @@ public class StudenteTableModel extends  AbstractTableModel{
 		}
 		fireTableCellUpdated(rowIndex, columnIndex);
 	}
-	
+
 	public void remove(int riga) {
-		 studenti.remove(riga);
+		studenti.remove(riga);
 		fireTableRowsDeleted(getRowCount(), getColumnCount());
 	}
-	
-	
+
 }

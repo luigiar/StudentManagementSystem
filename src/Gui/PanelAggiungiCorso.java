@@ -119,7 +119,6 @@ public class PanelAggiungiCorso extends JPanel {
 
 					c.addCourseToTableView(table,textField_nomeCorso, textField_maxPartecipanti, comboBox,
 							textArea_descrizione);
-
 					setGrandezzaColonneTable();
 					clearTextField();
 
@@ -214,7 +213,20 @@ public class PanelAggiungiCorso extends JPanel {
 		textField_maxPartecipanti.setColumns(10);
 		textField_maxPartecipanti.setBounds(20, 404, 120, 20);
 		add(textField_maxPartecipanti);
-
+		
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		btnRefresh.setBackground(new Color(30, 144, 255));
+		btnRefresh.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				c.refreshTable(table);
+				setGrandezzaColonneTable();
+			}
+		});
+		btnRefresh.setBounds(546, 302, 85, 20);
+		add(btnRefresh);
+		
 	}
 
 	public void clearTextField() {
@@ -231,5 +243,4 @@ public class PanelAggiungiCorso extends JPanel {
 		cellRender.setHorizontalAlignment(JLabel.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
 	}
-
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -40,6 +41,7 @@ public class Controller {
 	CorsoDAO course = new CorsoDAOImpl();
 	private CourseTableModel model;
 	private StudenteTableModel modelStud;
+
 
 	public static void main(String[] args) {
 
@@ -116,6 +118,7 @@ public class Controller {
 			
 			e.printStackTrace();
 		}
+		modelStud.remove(row);
 	}
 
 	public void insertCourse(String name, String description, String maxStudents, String themeArea) {
@@ -123,13 +126,13 @@ public class Controller {
 		try {
 			course.inserisciCorso(name, description, maxStudents, themeArea);
 			JOptionPane.showMessageDialog(null, "Inserimento effettuato", "Conferma", JOptionPane.INFORMATION_MESSAGE);
-
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
+	
 	public void displayCourse(JTable table) {
 		try {
 			model = new CourseTableModel(course.leggiCorsi());
@@ -182,6 +185,11 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	
 	}
-
+	
+	public void refreshTable(JTable table) {
+		table.setModel(model);
+	}
+	
 }
