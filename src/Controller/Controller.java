@@ -188,8 +188,13 @@ public class Controller {
 	
 	}
 	
-	public void refreshTable(JTable table) {
+	public void refreshTableCourse(JTable table) {
 		table.setModel(model);
 	}
+	
+	public void refreshTableStudent(JTable table) {
+		table.setModel(modelStud);
+	}
+	
 	
 }

@@ -23,6 +23,8 @@ import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PanelAggiungiStudente extends JPanel {
 	private Controller theController;
@@ -146,6 +148,19 @@ public class PanelAggiungiStudente extends JPanel {
 		insert_button.setBackground(new Color(51, 153, 204));
 		insert_button.setBounds(531, 492, 88, 30);
 		add(insert_button);
+		
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				c.refreshTableStudent(table);
+			}
+		});
+		btnRefresh.setToolTipText("Aggiorna la tabella");
+		btnRefresh.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		btnRefresh.setBackground(new Color(30, 144, 255));
+		btnRefresh.setBounds(557, 290, 85, 20);
+		add(btnRefresh);
 	}
 
 	public void clearTextField() {

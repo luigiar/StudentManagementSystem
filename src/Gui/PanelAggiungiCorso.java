@@ -215,16 +215,17 @@ public class PanelAggiungiCorso extends JPanel {
 		add(textField_maxPartecipanti);
 		
 		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.setToolTipText("Aggiorna la tabella");
 		btnRefresh.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		btnRefresh.setBackground(new Color(30, 144, 255));
 		btnRefresh.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				c.refreshTable(table);
+				c.refreshTableCourse(table);
 				setGrandezzaColonneTable();
 			}
 		});
-		btnRefresh.setBounds(546, 302, 85, 20);
+		btnRefresh.setBounds(557, 302, 85, 20);
 		add(btnRefresh);
 		
 	}
