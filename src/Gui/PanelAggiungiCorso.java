@@ -64,13 +64,7 @@ public class PanelAggiungiCorso extends JPanel {
 
 		TestCellRenderer cell = new TestCellRenderer();
 
-		table = new JTable() {
-//			@Override
-//			public Point getToolTipLocation(MouseEvent event) {
-//				return new Point(scrollPane.getMousePosition().x, scrollPane.getMousePosition().y);
-//
-//			}
-		};
+		table = new JTable();
 		table.setDefaultRenderer(Object.class, cell);
 		table.setBackground(new Color(230, 230, 250));
 		table.setBounds(10, 221, 612, -209);
@@ -131,12 +125,6 @@ public class PanelAggiungiCorso extends JPanel {
 		insert_button.setBounds(546, 521, 96, 29);
 		add(insert_button);
 
-		JButton clear_button = new JButton("Pulisci");
-		clear_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		clear_button.setBackground(new Color(255, 255, 51));
-		clear_button.setBounds(447, 521, 89, 29);
-		add(clear_button);
-
 		JLabel lblAreaTematica = new JLabel("Area Tematica :");
 		lblAreaTematica.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAreaTematica.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
@@ -182,11 +170,11 @@ public class PanelAggiungiCorso extends JPanel {
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						CourseTableModel model = (CourseTableModel) table.getModel();
-						String valoreCorrente = model.getValueAt(rigaPressed, 2).toString();
-						model.setValueAt(comboBox.getSelectedItem(), rigaPressed, 2);
-						String valoreAggiunto = model.getValueAt(rigaPressed, 2).toString();
+						String valoreCorrente = model.getValueAt(rigaPressed, 3).toString();
+						model.setValueAt(comboBox.getSelectedItem(), rigaPressed, 3);
+						String valoreAggiunto = model.getValueAt(rigaPressed, 3).toString();
 						valoreCorrente = valoreCorrente.concat(valoreAggiunto.indent(2));
-						model.setValueAt(valoreCorrente, rigaPressed, 2);
+						model.setValueAt(valoreCorrente, rigaPressed, 3);
 						JOptionPane.showMessageDialog(null, "Area tematica aggiunta con successo", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
 						comboBox.setSelectedIndex(0);

@@ -62,12 +62,7 @@ public class PanelGestisciCorso extends JPanel {
 		add(scrollPane);
 
 		TestCellRenderer cell = new TestCellRenderer();
-		table = new JTable() {
-			public Point getToolTipLocation(MouseEvent event) {
-				return new Point(scrollPane.getMousePosition().x, scrollPane.getMousePosition().y);
-
-			}
-		};
+		table = new JTable();
 		table.setDefaultRenderer(Object.class, cell);
 		table.setBounds(10, 221, 612, -209);
 
