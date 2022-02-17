@@ -63,7 +63,7 @@ public class PanelAggiungiCorso extends JPanel {
 		add(scrollPane);
 
 		TestCellRenderer cell = new TestCellRenderer();
-		
+
 		table = new JTable() {
 //			@Override
 //			public Point getToolTipLocation(MouseEvent event) {
@@ -113,11 +113,11 @@ public class PanelAggiungiCorso extends JPanel {
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi!", "Errore",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					
+
 					c.insertCourse(textField_nomeCorso.getText(), textArea_descrizione.getText(),
 							textField_maxPartecipanti.getText(), comboBox.getSelectedItem().toString());
 
-					c.addCourseToTableView(table,textField_nomeCorso, textField_maxPartecipanti, comboBox,
+					c.addCourseToTableView(table, textField_nomeCorso, textField_maxPartecipanti, comboBox,
 							textArea_descrizione);
 					setGrandezzaColonneTable();
 					clearTextField();
@@ -151,7 +151,7 @@ public class PanelAggiungiCorso extends JPanel {
 					if (itemAdd == null) {
 						JOptionPane.showMessageDialog(null, "Inserimento non eseguito!", "Attenzione",
 								JOptionPane.WARNING_MESSAGE);
-						
+
 					} else if (itemAdd.equals("") || String.valueOf(itemAdd).isBlank()) {
 						JOptionPane.showMessageDialog(null, "Inserimento non eseguito!", "Attenzione",
 								JOptionPane.WARNING_MESSAGE);
@@ -213,7 +213,7 @@ public class PanelAggiungiCorso extends JPanel {
 		textField_maxPartecipanti.setColumns(10);
 		textField_maxPartecipanti.setBounds(20, 404, 120, 20);
 		add(textField_maxPartecipanti);
-		
+
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.setToolTipText("Aggiorna la tabella");
 		btnRefresh.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
@@ -227,7 +227,7 @@ public class PanelAggiungiCorso extends JPanel {
 		});
 		btnRefresh.setBounds(557, 302, 85, 20);
 		add(btnRefresh);
-		
+
 	}
 
 	public void clearTextField() {

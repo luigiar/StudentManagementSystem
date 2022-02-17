@@ -54,23 +54,23 @@ public class PanelGestisciStudente extends JPanel {
 		JButton delete_button = new JButton("Elimina");
 		delete_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-					int rigaPressed = table.getSelectedRow();
-					if (rigaPressed >= 0) {
-						int input = JOptionPane.showConfirmDialog(null, "Vuoi procedere?", "Seleziona un'opzione",
-								JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-						if (input == JOptionPane.YES_OPTION) {
-							c.deleteStudent(table);
-							JOptionPane.showMessageDialog(null, "Corso eliminato correttamente", "Conferma",
-									JOptionPane.INFORMATION_MESSAGE);
-						} else {
-							JOptionPane.showMessageDialog(null, "Eliminazione non eseguita", "Conferma",
-									JOptionPane.INFORMATION_MESSAGE);
-						}
+
+				int rigaPressed = table.getSelectedRow();
+				if (rigaPressed >= 0) {
+					int input = JOptionPane.showConfirmDialog(null, "Vuoi procedere?", "Seleziona un'opzione",
+							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+					if (input == JOptionPane.YES_OPTION) {
+						c.deleteStudent(table);
+						JOptionPane.showMessageDialog(null, "Corso eliminato correttamente", "Conferma",
+								JOptionPane.INFORMATION_MESSAGE);
 					} else {
-						JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso", "Attenzione",
-								JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Eliminazione non eseguita", "Conferma",
+								JOptionPane.INFORMATION_MESSAGE);
 					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso", "Attenzione",
+							JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 
@@ -239,6 +239,7 @@ public class PanelGestisciStudente extends JPanel {
 		aggiornaPanel.setVisible(true);
 
 	}
+
 	public void setGrandezzaColonneTable() {
 		table.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table.getColumnModel().getColumn(4).setPreferredWidth(250);

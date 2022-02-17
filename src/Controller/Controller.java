@@ -42,7 +42,6 @@ public class Controller {
 	private CourseTableModel model;
 	private StudenteTableModel modelStud;
 
-
 	public static void main(String[] args) {
 
 		// CREAZIONE DEL DATABASE E CONNESSIONE
@@ -106,16 +105,16 @@ public class Controller {
 		}
 
 	}
-	
+
 	public void deleteStudent(JTable table) {
 		int row = table.getSelectedRow();
 		String deleteCell = table.getValueAt(row, 0).toString();
 		int theID = Integer.parseInt(deleteCell);
-		
+
 		try {
 			student.eliminaStudente(theID);
-		} catch(SQLException e){
-			
+		} catch (SQLException e) {
+
 			e.printStackTrace();
 		}
 		modelStud.remove(row);
@@ -126,13 +125,13 @@ public class Controller {
 		try {
 			course.inserisciCorso(name, description, maxStudents, themeArea);
 			JOptionPane.showMessageDialog(null, "Inserimento effettuato", "Conferma", JOptionPane.INFORMATION_MESSAGE);
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void displayCourse(JTable table) {
 		try {
 			model = new CourseTableModel(course.leggiCorsi());
@@ -168,7 +167,6 @@ public class Controller {
 		}
 		model.remove(row);
 	}
-	
 
 	public void updateCourse(JTable table, String nome, String maxPartecipanti, String areaTematica,
 			String descrizione) {
@@ -176,7 +174,7 @@ public class Controller {
 			int rigaSelected = table.getSelectedRow();
 			int theID = (int) model.getValueAt(rigaSelected, 0);
 			course.aggiornaCorso(theID, nome, maxPartecipanti, areaTematica, descrizione);
-			
+
 			model.setValueAt(nome, rigaSelected, 1);
 			model.setValueAt(maxPartecipanti, rigaSelected, 2);
 			model.setValueAt(areaTematica, rigaSelected, 3);
@@ -185,16 +183,15 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
 	}
-	
+
 	public void refreshTableCourse(JTable table) {
 		table.setModel(model);
 	}
-	
+
 	public void refreshTableStudent(JTable table) {
 		table.setModel(modelStud);
 	}
-	
-	
+
 }
