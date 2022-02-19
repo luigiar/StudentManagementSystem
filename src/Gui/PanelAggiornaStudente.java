@@ -4,6 +4,9 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+
+import Controller.Controller;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -11,20 +14,23 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
+import java.awt.Component;
 
 public class PanelAggiornaStudente extends JPanel {
 	private final JSeparator separator = new JSeparator();
-	private JTextField textField;
+	private JTextField textField_corso;
 	private JTextField textFieldPresenze;
 	private JTextField textFieldAssenze;
+	private JComboBox comboBoxCorsi;
+	private Controller theController;
 	private JTable table;
-	private JTextField textField_1;
-	private JTextField textField_2;
-
 	/**
 	 * Create the panel.
 	 */
-	public PanelAggiornaStudente() {
+	public PanelAggiornaStudente(Controller c) {
+		theController = c;
 		setBackground(new Color(255, 215, 0));
 		setBounds(0, 56, 673, 525);
 		setLayout(null);
@@ -36,45 +42,49 @@ public class PanelAggiornaStudente extends JPanel {
 		separator_1.setBounds(335, 2, 2, 428);
 		add(separator_1);
 		
-		JButton btnNewButton = new JButton("Salva");
-		btnNewButton.setBounds(293, 441, 89, 23);
-		add(btnNewButton);
+		JButton btn_salva = new JButton("Salva");
+		btn_salva.setBounds(293, 441, 89, 23);
+		add(btn_salva);
 		
-		JLabel lblNewLabel = new JLabel("Aggiorna partecipazione corsi :");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel.setBounds(47, 11, 232, 23);
-		add(lblNewLabel);
+		JLabel lbl_iscrizioneCorsi = new JLabel("Iscrizione ai corsi");
+		lbl_iscrizioneCorsi.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_iscrizioneCorsi.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbl_iscrizioneCorsi.setBounds(47, 11, 232, 23);
+		add(lbl_iscrizioneCorsi);
 		
-		JLabel lblNewLabel_1 = new JLabel("Dettagli presenze/assenze :");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(362, 11, 258, 23);
-		add(lblNewLabel_1);
+		JLabel lbl_presenzeAssenze = new JLabel("Dettagli presenze/assenze :");
+		lbl_presenzeAssenze.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_presenzeAssenze.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbl_presenzeAssenze.setBounds(362, 11, 258, 23);
+		add(lbl_presenzeAssenze);
 		
-		JLabel lblNewLabel_2 = new JLabel("Inserire il corso :");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setBounds(417, 59, 160, 14);
-		add(lblNewLabel_2);
+		JLabel lbl_inserireCorso = new JLabel("Inserire il corso :");
+		lbl_inserireCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		lbl_inserireCorso.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_inserireCorso.setBounds(424, 45, 160, 28);
+		add(lbl_inserireCorso);
 		
-		textField = new JTextField();
-		textField.setBounds(424, 84, 150, 20);
-		add(textField);
-		textField.setColumns(10);
+		textField_corso = new JTextField();
+		textField_corso.setBounds(424, 84, 150, 20);
+		add(textField_corso);
+		textField_corso.setColumns(10);
 		
-		JButton btnNewButton_1 = new JButton("Seleziona");
-		btnNewButton_1.setBounds(449, 115, 89, 23);
-		add(btnNewButton_1);
+		JButton btn_seleziona = new JButton("Seleziona");
+		btn_seleziona.setBackground(new Color(0, 139, 139));
+		btn_seleziona.setBounds(449, 115, 89, 23);
+		add(btn_seleziona);
 		
-		JLabel lblNewLabel_3 = new JLabel("Presenze :");
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setBounds(398, 156, 65, 14);
-		add(lblNewLabel_3);
+		JLabel lbl_presenze = new JLabel("Presenze :");
+		lbl_presenze.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		lbl_presenze.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_presenze.setBounds(398, 156, 65, 14);
+		add(lbl_presenze);
 		
-		JLabel lblNewLabel_4 = new JLabel("Assenze :");
-		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4.setBounds(518, 156, 59, 14);
-		add(lblNewLabel_4);
+		JLabel lbl_assenze = new JLabel("Assenze :");
+		lbl_assenze.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		lbl_assenze.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_assenze.setBounds(518, 156, 59, 14);
+		add(lbl_assenze);
 		
 		textFieldPresenze = new JTextField();
 		textFieldPresenze.setBounds(408, 178, 43, 20);
@@ -106,29 +116,31 @@ public class PanelAggiornaStudente extends JPanel {
 		group.add(RadioButtonPresente);
 		group.add(rdbtnAssente);
 		
-		JLabel lblNewLabel_5 = new JLabel("Aggiungi corso :");
-		lblNewLabel_5.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_5.setBounds(47, 59, 94, 14);
-		add(lblNewLabel_5);
+		JLabel lbl_iscriviStudente = new JLabel("Seleziona i corsi per lo studente :");
+		lbl_iscriviStudente.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		lbl_iscriviStudente.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_iscriviStudente.setBounds(57, 45, 184, 28);
+		add(lbl_iscriviStudente);
 		
-		JLabel lblNewLabel_6 = new JLabel("Elimina corso :");
-		lblNewLabel_6.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_6.setBounds(57, 87, 84, 14);
-		add(lblNewLabel_6);
+		comboBoxCorsi = new JComboBox();
+		comboBoxCorsi.setBounds(72, 83, 131, 22);
+		// mostra corsi nella comboBox
+		c.mostraCorsiComboBox(comboBoxCorsi);
+		add(comboBoxCorsi);
+		
+		JButton btn_aggiungiCorso = new JButton("Aggiungi");
+		btn_aggiungiCorso.setToolTipText("Clicca per iscrivere lo studente al corso");
+		btn_aggiungiCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		btn_aggiungiCorso.setBackground(new Color(102, 204, 51));
+		btn_aggiungiCorso.setBounds(213, 83, 96, 21);
+		add(btn_aggiungiCorso);
+		
+		JScrollPane scrollPane = new JScrollPane((Component) null);
+		scrollPane.setBounds(55, 126, 254, 186);
+		add(scrollPane);
 		
 		table = new JTable();
-		table.setBounds(72, 142, 214, 142);
-		add(table);
+		scrollPane.setViewportView(table);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(151, 56, 86, 20);
-		add(textField_1);
-		textField_1.setColumns(10);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(151, 84, 86, 20);
-		add(textField_2);
-		textField_2.setColumns(10);
-
 	}
 }

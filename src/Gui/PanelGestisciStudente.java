@@ -49,7 +49,7 @@ public class PanelGestisciStudente extends JPanel {
 		setBounds(0, 0, 673, 581);
 
 		JPanel panel_gestisciStudente = new JPanel();
-		panelAggiornaStudente = new PanelAggiornaStudente();
+		panelAggiornaStudente = new PanelAggiornaStudente(c);
 		JButton update_button = new JButton("Aggiorna");
 		JButton delete_button = new JButton("Elimina");
 		delete_button.addActionListener(new ActionListener() {

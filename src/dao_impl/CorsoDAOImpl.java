@@ -80,7 +80,6 @@ public class CorsoDAOImpl implements CorsoDAO {
 				c.setMaxPartecipanti(risultato.getInt(4));
 				c.setAreeTematiche(risultato.getString(5));
 				corsi.add(c);
-
 			}
 
 		} catch (SQLException e) {
@@ -208,6 +207,47 @@ public class CorsoDAOImpl implements CorsoDAO {
 				se.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public ArrayList<Corso> displayCorsiComboBox() throws SQLException {
+		ArrayList<Corso> corsi = new ArrayList<Corso>();
+		Connessione connection = Connessione.getInstance();
+		Connection conn = connection.getConnection();
+		
+		Statement mostraCorsi = null;
+
+		try {
+			System.out.println("Mostrando elementi comboBox corsi... ");
+			mostraCorsi = conn.createStatement();
+
+			String selezionaCorsiSql = "SELECT nome FROM corso";
+			ResultSet risultato = mostraCorsi.executeQuery(selezionaCorsiSql);
+
+			while (risultato.next()) {
+				Corso c = new Corso();
+				c.setNome(risultato.getString(1));
+
+				corsi.add(c);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (mostraCorsi != null)
+					conn.close();
+			} catch (SQLException se) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+		
+		return corsi;
 	}
 
 }

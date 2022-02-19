@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -192,6 +193,20 @@ public class Controller {
 
 	public void refreshTableStudent(JTable table) {
 		table.setModel(modelStud);
+	}
+
+	public void mostraCorsiComboBox(JComboBox comboBox) {
+		try {
+			ArrayList<Corso> corsi = course.displayCorsiComboBox();
+			DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
+			for (Corso c : corsi) {
+				modelComboBox.addElement(c.getNome());
+				System.out.println(c.getNome());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

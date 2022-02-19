@@ -25,6 +25,9 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.ListSelectionModel;
 
 public class PanelGestisciCorso extends JPanel {
