@@ -51,6 +51,11 @@ public class PanelGestisciStudente extends JPanel {
 		JPanel panel_gestisciStudente = new JPanel();
 		panelAggiornaStudente = new PanelAggiornaStudente(c);
 		JButton update_button = new JButton("Aggiorna");
+		update_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelAggiornaStudente.setStudentDetails(txtId.getText(), textFieldNome.getText(), txtCognome.getText());
+			}
+		});
 		JButton delete_button = new JButton("Elimina");
 		delete_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

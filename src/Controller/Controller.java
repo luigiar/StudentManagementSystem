@@ -201,7 +201,6 @@ public class Controller {
 			DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
 			for (Corso c : corsi) {
 				modelComboBox.addElement(c.getNome());
-				System.out.println(c.getNome());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -209,4 +208,29 @@ public class Controller {
 		}
 	}
 
+//	public void addCourseToStudent(JComboBox comboBox, JTable table) {
+//		DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
+//		StudenteTableModel modelStud = (StudenteTableModel) table.getModel();
+//		Connessione connect = null;
+//		try {
+//			connect = Connessione.getInstance();
+//
+//			Connection conn = connect.getConnection();
+//
+//			PreparedStatement inserimentoCorso;
+//
+//			String inserimento = "INSERT INTO registrazione (studente_id, corso_id, nome_corso) VALUES (?, ?, ?)";
+//
+//			inserimentoCorso = conn.prepareStatement(inserimento);
+//			inserimentoCorso.setString(1, inserimento);
+//			inserimentoCorso.setString(2, inserimento);
+//			inserimentoCorso.setString(3, inserimento);
+//			inserimentoCorso.executeUpdate();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}  
+//
+//	}
+	
 }

@@ -87,7 +87,5 @@ public class CourseTableModel extends AbstractTableModel {
 	public void remove(int riga) {
 		 this.corsi.remove(riga);
 		 this.fireTableRowsDeleted(getRowCount(), getColumnCount());
-	}
-	
-
+	}	
 }
