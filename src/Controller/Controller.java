@@ -200,10 +200,10 @@ public class Controller {
 			ArrayList<Corso> corsi = course.displayCorsiComboBox();
 			DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
 			for (Corso c : corsi) {
-				int codice = c.getCodiceCorso();
 				String nomeCorso = c.getNome();
-				modelComboBox.addElement(codice + " " + nomeCorso);
-
+				Integer codice = c.getCodiceCorso();
+				String codiceCorso = String.valueOf(codice);
+				modelComboBox.addElement(codiceCorso+ " "+ nomeCorso);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -211,29 +211,30 @@ public class Controller {
 		}
 	}
 
-//	public void addCourseToStudent(JComboBox comboBox,JTextField id) {
-//		DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
-//		Connessione connect = null;
-//		try {
-//			connect = Connessione.getInstance();
-//
-//			Connection conn = connect.getConnection();
-//
-//			PreparedStatement inserimentoCorso;
-//
-//			String inserimento = "INSERT INTO registrazione (studente_id, corso_id, nome_corso) VALUES (?, ?, ?)";
-//			
-//			int idStudent = Integer.parseInt(id.getText());
-//
-//			inserimentoCorso = conn.prepareStatement(inserimento);
-//			inserimentoCorso.setInt(1, idStudent);
-//			inserimentoCorso.setString(2, comboBox.getSelectedItem().toString());
-//			inserimentoCorso.executeUpdate();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	
-//	}
+	public void addCourseToStudent(JComboBox comboBox,String idStudente, String idCorso) {
+		DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
+		Connessione connect = null;
+		try {
+			connect = Connessione.getInstance();
+
+			Connection conn = connect.getConnection();
+
+			PreparedStatement inserimentoCorso;
+
+			String inserimento = "INSERT INTO registrazione (studente_id, corso_id) VALUES (?, ?)";
+			
+			int theStudentID = Integer.parseInt(idStudente);
+			int theCourseID = Integer.parseInt(idCorso);
+
+			inserimentoCorso = conn.prepareStatement(inserimento);
+			inserimentoCorso.setInt(1, theStudentID);
+			inserimentoCorso.setInt(2, theCourseID);
+			JOptionPane.showMessageDialog(null, "Iscrizione effettuata");
+			inserimentoCorso.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
+	}
 }

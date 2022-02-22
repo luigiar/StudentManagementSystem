@@ -21,6 +21,8 @@ import javax.swing.JScrollPane;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class PanelAggiornaStudente extends JPanel {
 	private final JSeparator separator = new JSeparator();
@@ -132,7 +134,7 @@ public class PanelAggiornaStudente extends JPanel {
 		add(lbl_iscriviStudente);
 		
 		comboBoxCorsi = new JComboBox();
-		comboBoxCorsi.setBounds(57, 133, 146, 22);
+		comboBoxCorsi.setBounds(67, 133, 136, 22);
 		textField_codiceCorso = new JTextField();
 		textField_nomeCorso = new JTextField();
 		textField_codiceCorso.setEditable(false);
@@ -149,8 +151,23 @@ public class PanelAggiornaStudente extends JPanel {
 		btn_aggiungiCorso.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showConfirmDialog(null, campiCorso, "Iscrivere lo studente al corso seguente? ", JOptionPane.OK_CANCEL_OPTION);
-//				c.addCourseToStudent(comboBoxCorsi, textField_id, textField_nome, textField_cognome);
+				String corsoID =  comboBoxCorsi.getSelectedItem().toString();
+				corsoID = corsoID.replaceAll("[^0-9]","");
+				textField_codiceCorso.setText(corsoID);
+				
+				String nomeCorso = comboBoxCorsi.getSelectedItem().toString();
+				nomeCorso = nomeCorso.replaceAll("[0-9]","");
+				textField_nomeCorso.setText(nomeCorso);
+				int input = JOptionPane.showConfirmDialog(null, campiCorso, "Iscrivere lo studente al corso seguente? ", JOptionPane.OK_CANCEL_OPTION);
+				if(input == JOptionPane.OK_OPTION) {
+					c.addCourseToStudent(comboBoxCorsi, textField_id.getText(), corsoID);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Iscrizione Annullata");
+				}
+
+
+
 			}
 		});
 		btn_aggiungiCorso.setToolTipText("Clicca per iscrivere lo studente al corso");
@@ -207,6 +224,7 @@ public class PanelAggiornaStudente extends JPanel {
 		lblCognome.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		lblCognome.setBounds(213, 53, 86, 14);
 		add(lblCognome);
+		
 	}
 	
 	public void setStudentDetails(String id, String nome, String cognome) {
@@ -214,4 +232,5 @@ public class PanelAggiornaStudente extends JPanel {
 		textField_nome.setText(nome);
 		textField_cognome.setText(cognome);
 	}
+	
 }
