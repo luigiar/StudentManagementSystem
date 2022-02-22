@@ -195,12 +195,19 @@ public class Controller {
 		table.setModel(modelStud);
 	}
 
-	public void mostraCorsiComboBox(JComboBox comboBox) {
+	public void mostraCorsiComboBox(JComboBox comboBox, JTextField id, JTextField nome) {
 		try {
 			ArrayList<Corso> corsi = course.displayCorsiComboBox();
 			DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
 			for (Corso c : corsi) {
-				modelComboBox.addElement(c.getNome());
+				Integer codice = c.getCodiceCorso();
+				String idCorso = String.valueOf(codice);
+				String nomeCorso = c.getNome();
+				modelComboBox.addElement(codice + " " + nomeCorso);
+				if(comboBox.getSelectedItem() != null) {
+				id.setText(idCorso);
+				nome.setText(nomeCorso);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -208,9 +215,8 @@ public class Controller {
 		}
 	}
 
-//	public void addCourseToStudent(JComboBox comboBox, JTable table) {
+//	public void addCourseToStudent(JComboBox comboBox,JTextField id) {
 //		DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
-//		StudenteTableModel modelStud = (StudenteTableModel) table.getModel();
 //		Connessione connect = null;
 //		try {
 //			connect = Connessione.getInstance();
@@ -220,17 +226,18 @@ public class Controller {
 //			PreparedStatement inserimentoCorso;
 //
 //			String inserimento = "INSERT INTO registrazione (studente_id, corso_id, nome_corso) VALUES (?, ?, ?)";
+//			
+//			int idStudent = Integer.parseInt(id.getText());
 //
 //			inserimentoCorso = conn.prepareStatement(inserimento);
-//			inserimentoCorso.setString(1, inserimento);
-//			inserimentoCorso.setString(2, inserimento);
-//			inserimentoCorso.setString(3, inserimento);
+//			inserimentoCorso.setInt(1, idStudent);
+//			inserimentoCorso.setString(2, comboBox.getSelectedItem().toString());
 //			inserimentoCorso.executeUpdate();
 //		} catch (SQLException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
-//		}  
-//
+//		}
+//	
 //	}
 	
 }

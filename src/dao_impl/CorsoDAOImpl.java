@@ -221,13 +221,14 @@ public class CorsoDAOImpl implements CorsoDAO {
 			System.out.println("Mostrando elementi comboBox corsi... ");
 			mostraCorsi = conn.createStatement();
 
-			String selezionaCorsiSql = "SELECT nome FROM corso";
+			String selezionaCorsiSql = "SELECT id, nome FROM corso";
 			ResultSet risultato = mostraCorsi.executeQuery(selezionaCorsiSql);
 
 			while (risultato.next()) {
 				Corso c = new Corso();
-				c.setNome(risultato.getString(1));
-
+				c.setCodiceCorso(risultato.getInt(1));
+				c.setNome(risultato.getString(2));
+				
 				corsi.add(c);
 			}
 
