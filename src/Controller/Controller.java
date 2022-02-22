@@ -195,19 +195,15 @@ public class Controller {
 		table.setModel(modelStud);
 	}
 
-	public void mostraCorsiComboBox(JComboBox comboBox, JTextField id, JTextField nome) {
+	public void mostraCorsiComboBox(JComboBox comboBox) {
 		try {
 			ArrayList<Corso> corsi = course.displayCorsiComboBox();
 			DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
 			for (Corso c : corsi) {
-				Integer codice = c.getCodiceCorso();
-				String idCorso = String.valueOf(codice);
+				int codice = c.getCodiceCorso();
 				String nomeCorso = c.getNome();
 				modelComboBox.addElement(codice + " " + nomeCorso);
-				if(comboBox.getSelectedItem() != null) {
-				id.setText(idCorso);
-				nome.setText(nomeCorso);
-				}
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

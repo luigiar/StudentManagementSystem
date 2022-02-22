@@ -138,11 +138,10 @@ public class PanelAggiornaStudente extends JPanel {
 		textField_codiceCorso.setEditable(false);
 		textField_nomeCorso.setEditable(false);
 		// mostra corsi nella comboBox
-		c.mostraCorsiComboBox(comboBoxCorsi, textField_codiceCorso,textField_nomeCorso);
+		c.mostraCorsiComboBox(comboBoxCorsi);
 		add(comboBoxCorsi);
 		
 		JButton btn_aggiungiCorso = new JButton("Aggiungi");
-		textField_codiceCorso.setText(comboBoxCorsi.getSelectedItem().toString());
 		Object [] campiCorso  = {
 				"Codice corso" , textField_codiceCorso,
 				"Nome corso" , textField_nomeCorso
@@ -150,8 +149,8 @@ public class PanelAggiornaStudente extends JPanel {
 		btn_aggiungiCorso.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				JOptionPane.showConfirmDialog(null, campiCorso, "Iscrivere lo studente al corso seguente? ", JOptionPane.OK_CANCEL_OPTION);
 //				c.addCourseToStudent(comboBoxCorsi, textField_id, textField_nome, textField_cognome);
-				JOptionPane.showConfirmDialog(null, campiCorso, "Iscrivere lo studente corso seguente? ", JOptionPane.OK_CANCEL_OPTION);
 			}
 		});
 		btn_aggiungiCorso.setToolTipText("Clicca per iscrivere lo studente al corso");
