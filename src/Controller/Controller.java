@@ -29,7 +29,6 @@ import Entità.Studente;
 import Gui.CourseTableModel;
 import Gui.LoginFrame;
 import Gui.MainFrame;
-import Gui.RegistrationTableModel;
 import Gui.StudenteTableModel;
 import dao_impl.AdminDAOImpl;
 import dao_impl.CorsoDAOImpl;
@@ -46,7 +45,6 @@ public class Controller {
 	AdminDAO admin = new AdminDAOImpl();
 	private CourseTableModel model;
 	private StudenteTableModel modelStud;
-	private RegistrationTableModel registrationModel;
 	private DefaultTableModel registrationStudent;
 
 	public static void main(String[] args) {
@@ -269,6 +267,12 @@ public class Controller {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void removeTableDataStudent(JTable table) {
+		table.setModel(registrationStudent);
+		int row = table.getSelectedRow();
+		registrationStudent.removeRow(row);
 	}
 	
 	public void addTableDataStudentToTableView(JTable table, String nomeCorso, String codiceCorso) {

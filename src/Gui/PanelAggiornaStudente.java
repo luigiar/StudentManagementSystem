@@ -24,6 +24,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PanelAggiornaStudente extends JPanel {
 	private final JSeparator separator = new JSeparator();
@@ -38,7 +40,8 @@ public class PanelAggiornaStudente extends JPanel {
 	private JTextField textField_cognome;
 	private JTextField textField_codiceCorso;
 	private JTextField textField_nomeCorso;
-	private RegistrationTableModel model;
+	private JTextField textField_idCorso;
+	private JTextField textField_nameCourse;
 	/**
 	 * Create the panel.
 	 */
@@ -47,17 +50,13 @@ public class PanelAggiornaStudente extends JPanel {
 		setBackground(new Color(255, 215, 0));
 		setBounds(0, 56, 673, 525);
 		setLayout(null);
-		separator.setBounds(10, 428, 673, 2);
+		separator.setBounds(0, 480, 673, 2);
 		add(separator);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
-		separator_1.setBounds(335, 2, 2, 428);
+		separator_1.setBounds(335, 2, 2, 434);
 		add(separator_1);
-		
-		JButton btn_salva = new JButton("Salva");
-		btn_salva.setBounds(293, 441, 89, 23);
-		add(btn_salva);
 		
 		JLabel lbl_iscrizioneCorsi = new JLabel("Iscrizione ai corsi");
 		lbl_iscrizioneCorsi.setHorizontalAlignment(SwingConstants.CENTER);
@@ -181,6 +180,16 @@ public class PanelAggiornaStudente extends JPanel {
 		add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int rigaSelected = table.getSelectedRow();
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				textField_idCorso.setText((model.getValueAt(rigaSelected, 0)).toString());
+				textField_nameCourse.setText((model.getValueAt(rigaSelected, 1)).toString());
+
+			}
+		});
 		table.setBackground(new Color(230,230,250));
 
 		scrollPane.setViewportView(table);
@@ -226,6 +235,40 @@ public class PanelAggiornaStudente extends JPanel {
 		lblCognome.setBounds(213, 53, 86, 14);
 		add(lblCognome);
 		
+		textField_idCorso = new JTextField();
+		textField_idCorso.setEditable(false);
+		textField_idCorso.setColumns(10);
+		textField_idCorso.setBounds(55, 416, 52, 20);
+		add(textField_idCorso);
+		
+		textField_nameCourse = new JTextField();
+		textField_nameCourse.setEditable(false);
+		textField_nameCourse.setColumns(10);
+		textField_nameCourse.setBounds(117, 416, 86, 20);
+		add(textField_nameCourse);
+		
+		JButton deleteCourse_button = new JButton("Elimina");
+		deleteCourse_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!textField_idCorso.getText().isBlank() && !textField_nameCourse.getText().isBlank()) {
+					c.removeTableDataStudent(table);
+					JOptionPane.showMessageDialog(null, "Icrizione al corso rimossa", "Conferma",
+							JOptionPane.INFORMATION_MESSAGE);
+					clearTextField();
+				}
+			}
+		});
+		deleteCourse_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		deleteCourse_button.setBackground(new Color(255, 127, 80));
+		deleteCourse_button.setBounds(213, 415, 96, 21);
+		add(deleteCourse_button);
+		
+		JLabel lbl_iscriviStudente_2 = new JLabel("Seleziona dalla tabella un'iscrizione da annullare");
+		lbl_iscriviStudente_2.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_iscriviStudente_2.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		lbl_iscriviStudente_2.setBounds(55, 382, 258, 23);
+		add(lbl_iscriviStudente_2);
+		
 	}
 	
 	public void setStudentDetails(String id, String nome, String cognome) {
@@ -243,6 +286,11 @@ public class PanelAggiornaStudente extends JPanel {
 	public void clearTableData() {
 		DefaultTableModel model  = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
+		clearTextField();
 	}
 	
+	public void clearTextField() {
+		textField_idCorso.setText("");
+		textField_nameCourse.setText("");
+	}
 }
