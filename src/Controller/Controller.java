@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
+import DAO.AdminDAO;
 import DAO.CorsoDAO;
 import DAO.StudenteDAO;
 import Entità.Corso;
@@ -28,7 +29,9 @@ import Entità.Studente;
 import Gui.CourseTableModel;
 import Gui.LoginFrame;
 import Gui.MainFrame;
+import Gui.RegistrationTableModel;
 import Gui.StudenteTableModel;
+import dao_impl.AdminDAOImpl;
 import dao_impl.CorsoDAOImpl;
 import dao_impl.StudenteDAOImpl;
 import dbSettings.Connessione;
@@ -40,8 +43,11 @@ public class Controller {
 	MainFrame hm;
 	StudenteDAO student = new StudenteDAOImpl();
 	CorsoDAO course = new CorsoDAOImpl();
+	AdminDAO admin = new AdminDAOImpl();
 	private CourseTableModel model;
 	private StudenteTableModel modelStud;
+	private RegistrationTableModel registrationModel;
+	private DefaultTableModel registrationStudent;
 
 	public static void main(String[] args) {
 
@@ -203,7 +209,7 @@ public class Controller {
 				String nomeCorso = c.getNome();
 				Integer codice = c.getCodiceCorso();
 				String codiceCorso = String.valueOf(codice);
-				modelComboBox.addElement(codiceCorso+ " "+ nomeCorso);
+				modelComboBox.addElement(codiceCorso + " " + nomeCorso);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -211,7 +217,7 @@ public class Controller {
 		}
 	}
 
-	public void addCourseToStudent(JComboBox comboBox,String idStudente, String idCorso) {
+	public void addCourseToStudent(JComboBox comboBox, String idStudente, String idCorso) {
 		DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
 		Connessione connect = null;
 		try {
@@ -221,12 +227,12 @@ public class Controller {
 
 			PreparedStatement inserimentoCorso;
 
-			String inserimento = "INSERT INTO registrazione (studente_id, corso_id) VALUES (?, ?)";
-			
+			String inserimentoSql = "INSERT INTO registrazione (studente_id, corso_id) VALUES (?, ?)";
+
 			int theStudentID = Integer.parseInt(idStudente);
 			int theCourseID = Integer.parseInt(idCorso);
 
-			inserimentoCorso = conn.prepareStatement(inserimento);
+			inserimentoCorso = conn.prepareStatement(inserimentoSql);
 			inserimentoCorso.setInt(1, theStudentID);
 			inserimentoCorso.setInt(2, theCourseID);
 			JOptionPane.showMessageDialog(null, "Iscrizione effettuata");
@@ -235,6 +241,47 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+	}
+
+	public void showTableDataStudent(String idStudente, JTable table) {
+		registrationStudent = (DefaultTableModel) table.getModel();
+		String[] colonne = {"Corso ID", "Nome corso"};
+		registrationStudent.setColumnIdentifiers(colonne);
+		Connessione connect = null;
+		try {
+			connect = Connessione.getInstance();
+			Connection conn = connect.getConnection();
+			int id = Integer.parseInt(idStudente);
+			PreparedStatement mostraCorsi;
+			String mostraSql = "SELECT DISTINCT registrazione.corso_id, corso.nome "
+							 + "FROM corso, registrazione, studente "
+							 + "WHERE corso.id = registrazione.corso_id "
+							 + "AND registrazione.studente_id = " + id;
+
+			mostraCorsi = conn.prepareStatement(mostraSql);
+			ResultSet risultato = mostraCorsi.executeQuery();
+			while(risultato.next()) {
+				int idCorso = risultato.getInt(1);
+				String nomeCorso = risultato.getString(2);
+				registrationStudent.addRow(new Object[] {idCorso,nomeCorso});
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	public void addTableDataStudentToTableView(JTable table, String nomeCorso, String codiceCorso) {
+		table.setModel(registrationStudent);
+		registrationStudent.addRow(new Object[] {nomeCorso, codiceCorso});
+	}
+	
+	public void registraAdmin(String username, String password) {
+		try {
+			admin.registrationAdmin(username, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

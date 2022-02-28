@@ -107,6 +107,7 @@ public class PanelGestisciStudente extends JPanel {
 				lblAggiornaStudente.setVisible(false);
 				lblGestioneStudenti.setVisible(true);
 				panel_indietro.setVisible(false);
+				panelAggiornaStudente.clearTableData();
 
 			}
 		});

@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 import Controller.Controller;
 
@@ -37,6 +38,7 @@ public class PanelAggiornaStudente extends JPanel {
 	private JTextField textField_cognome;
 	private JTextField textField_codiceCorso;
 	private JTextField textField_nomeCorso;
+	private RegistrationTableModel model;
 	/**
 	 * Create the panel.
 	 */
@@ -161,13 +163,11 @@ public class PanelAggiornaStudente extends JPanel {
 				int input = JOptionPane.showConfirmDialog(null, campiCorso, "Iscrivere lo studente al corso seguente? ", JOptionPane.OK_CANCEL_OPTION);
 				if(input == JOptionPane.OK_OPTION) {
 					c.addCourseToStudent(comboBoxCorsi, textField_id.getText(), corsoID);
+					c.addTableDataStudentToTableView(table, textField_codiceCorso.getText(), textField_nomeCorso.getText());
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Iscrizione Annullata");
 				}
-
-
-
 			}
 		});
 		btn_aggiungiCorso.setToolTipText("Clicca per iscrivere lo studente al corso");
@@ -181,8 +181,9 @@ public class PanelAggiornaStudente extends JPanel {
 		add(scrollPane);
 		
 		table = new JTable();
+		table.setBackground(new Color(230,230,250));
+
 		scrollPane.setViewportView(table);
-		
 		JLabel lbl_iscriviStudente_1 = new JLabel("Studente :");
 		lbl_iscriviStudente_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_iscriviStudente_1.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
@@ -231,6 +232,17 @@ public class PanelAggiornaStudente extends JPanel {
 		textField_id.setText(id);		
 		textField_nome.setText(nome);
 		textField_cognome.setText(cognome);
+		showTableData();
+	}
+	
+	public void showTableData(){
+		if(table.getRowCount() == 0)
+		theController.showTableDataStudent(textField_id.getText(), table);
+	}
+	
+	public void clearTableData() {
+		DefaultTableModel model  = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
 	}
 	
 }
