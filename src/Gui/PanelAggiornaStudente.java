@@ -42,6 +42,7 @@ public class PanelAggiornaStudente extends JPanel {
 	private JTextField textField_nomeCorso;
 	private JTextField textField_idCorso;
 	private JTextField textField_nameCourse;
+	private DefaultTableModel registrationStudent;
 	/**
 	 * Create the panel.
 	 */
@@ -180,6 +181,16 @@ public class PanelAggiornaStudente extends JPanel {
 		add(scrollPane);
 		
 		table = new JTable();
+		DefaultTableModel registrationStudent = new DefaultTableModel () {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		};
+		table.setModel(registrationStudent);
+		String[] colonne = {"Corso ID","Nome corso" };
+		registrationStudent.setColumnIdentifiers(colonne);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
