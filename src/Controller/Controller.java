@@ -244,7 +244,7 @@ public class Controller {
 
 	public void showTableDataStudent(String idStudente, JTable table) {
 		registrationStudent = (DefaultTableModel) table.getModel();
-		String[] colonne = {"Corso ID", "Nome corso"};
+		String[] colonne = { "Corso ID", "Nome corso" };
 		registrationStudent.setColumnIdentifiers(colonne);
 		Connessione connect = null;
 		try {
@@ -253,33 +253,26 @@ public class Controller {
 			int id = Integer.parseInt(idStudente);
 			PreparedStatement mostraCorsi;
 			String mostraSql = "SELECT DISTINCT registrazione.corso_id, corso.nome "
-							 + "FROM corso, registrazione, studente "
-							 + "WHERE corso.id = registrazione.corso_id "
-							 + "AND registrazione.studente_id = " + id;
+					+ "FROM corso, registrazione, studente " + "WHERE corso.id = registrazione.corso_id "
+					+ "AND registrazione.studente_id = " + id;
 
 			mostraCorsi = conn.prepareStatement(mostraSql);
 			ResultSet risultato = mostraCorsi.executeQuery();
-			while(risultato.next()) {
+			while (risultato.next()) {
 				int idCorso = risultato.getInt(1);
 				String nomeCorso = risultato.getString(2);
-				registrationStudent.addRow(new Object[] {idCorso,nomeCorso});
+				registrationStudent.addRow(new Object[] { idCorso, nomeCorso });
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void removeTableDataStudent(JTable table) {
-		table.setModel(registrationStudent);
-		int row = table.getSelectedRow();
-		registrationStudent.removeRow(row);
-	}
-	
+
 	public void addTableDataStudentToTableView(JTable table, String nomeCorso, String codiceCorso) {
 		table.setModel(registrationStudent);
-		registrationStudent.addRow(new Object[] {nomeCorso, codiceCorso});
+		registrationStudent.addRow(new Object[] { nomeCorso, codiceCorso });
 	}
-	
+
 	public void registraAdmin(String username, String password) {
 		try {
 			admin.registrationAdmin(username, password);
@@ -287,5 +280,26 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void removeTableDataStudent(JTable table, String id) {
+		Connessione connect = null;
+
+		try {
+			connect = Connessione.getInstance();
+			Connection conn = connect.getConnection();
+
+			PreparedStatement rimuoviCorsoRegistrato;
+
+			String removeSql = "DELETE FROM registrazione WHERE corso_id = " + id;
+			rimuoviCorsoRegistrato = conn.prepareStatement(removeSql);
+			rimuoviCorsoRegistrato.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		table.setModel(registrationStudent);
+		int row = table.getSelectedRow();
+		registrationStudent.removeRow(row);
 	}
 }

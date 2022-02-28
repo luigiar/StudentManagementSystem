@@ -251,16 +251,16 @@ public class PanelAggiornaStudente extends JPanel {
 		deleteCourse_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!textField_idCorso.getText().isBlank() && !textField_nameCourse.getText().isBlank()) {
-					c.removeTableDataStudent(table);
+					c.removeTableDataStudent(table, textField_idCorso.getText());
 					JOptionPane.showMessageDialog(null, "Icrizione al corso rimossa", "Conferma",
 							JOptionPane.INFORMATION_MESSAGE);
 					clearTextField();
 				}
 			}
 		});
-		deleteCourse_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		deleteCourse_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 10));
 		deleteCourse_button.setBackground(new Color(255, 127, 80));
-		deleteCourse_button.setBounds(213, 415, 96, 21);
+		deleteCourse_button.setBounds(213, 415, 73, 21);
 		add(deleteCourse_button);
 		
 		JLabel lbl_iscriviStudente_2 = new JLabel("Seleziona dalla tabella un'iscrizione da annullare");
