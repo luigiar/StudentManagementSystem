@@ -45,7 +45,6 @@ public class Controller {
 	AdminDAO admin = new AdminDAOImpl();
 	private CourseTableModel model;
 	private StudenteTableModel modelStud;
-//	private DefaultTableModel registrationStudent;
 
 	public static void main(String[] args) {
 
@@ -244,8 +243,6 @@ public class Controller {
 
 	public void showTableDataStudent(String idStudente, JTable table) {
 		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
-//		String[] colonne = { "Corso ID", "Nome corso" };
-//		registrationStudent.setColumnIdentifiers(colonne);
 		Connessione connect = null;
 		try {
 			connect = Connessione.getInstance();
@@ -269,7 +266,6 @@ public class Controller {
 	}
 
 	public void addTableDataStudentToTableView(JTable table, String nomeCorso, String codiceCorso) {
-//		table.setModel(registrationStudent);
 		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
 		registrationStudent.addRow(new Object[] { nomeCorso, codiceCorso });
 	}
@@ -277,6 +273,15 @@ public class Controller {
 	public void registraAdmin(String username, String password) {
 		try {
 			admin.registrationAdmin(username, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void isAdminExists(String username, String password) {
+		try {
+			admin.loginAdmin(username, password);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -300,7 +305,6 @@ public class Controller {
 			e.printStackTrace();
 		}
 		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
-//		table.setModel(registrationStudent);
 		int row = table.getSelectedRow();
 		registrationStudent.removeRow(row);
 	}

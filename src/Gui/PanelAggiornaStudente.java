@@ -56,7 +56,7 @@ public class PanelAggiornaStudente extends JPanel {
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
-		separator_1.setBounds(335, 2, 2, 434);
+		separator_1.setBounds(342, 2, 2, 480);
 		add(separator_1);
 		
 		JLabel lbl_iscrizioneCorsi = new JLabel("Iscrizione ai corsi");

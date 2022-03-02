@@ -1,7 +1,9 @@
 package dao_impl;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import DAO.AdminDAO;
@@ -36,6 +38,19 @@ public class AdminDAOImpl implements AdminDAO {
 			se.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void loginAdmin(String username, String password) throws SQLException {
+		CallableStatement myStatement = null;
+		ResultSet result = null;
+		
+		myStatement = conn.prepareCall("{call check_login(?, ?)}");
+		myStatement.setString(1,username);
+		myStatement.setString(2, password);
+		
+		myStatement.execute();
+		
 	}
 
 }
