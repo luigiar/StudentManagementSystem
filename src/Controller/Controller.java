@@ -279,13 +279,21 @@ public class Controller {
 		}
 	}
 	
-	public void isAdminExists(String username, String password) {
+	public boolean isAdminExists(String username, String password,boolean exist) {
 		try {
-			admin.loginAdmin(username, password);
+			if(admin.loginAdmin(username, password, exist)) {
+				exist = true;
+			}
+			else {
+				exist = false;
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return exist;
+
 	}
 
 	public void removeTableDataStudent(JTable table, String id) {

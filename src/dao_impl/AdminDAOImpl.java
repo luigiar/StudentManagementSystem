@@ -12,13 +12,14 @@ import dbSettings.Connessione;
 public class AdminDAOImpl implements AdminDAO {
 	Connection conn = null;
 	private PreparedStatement inserisciAdmin;
+	boolean login = false;
 
 	@Override
 	public void registrationAdmin(String username, String password) throws SQLException {
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
 
-		String inserimentoSql = "INSERT INTO admin(username, password) VALUES (?,?)";
+		String inserimentoSql = "INSERT INTO amministratore(username, password) VALUES (?,?)";
 
 		inserisciAdmin = conn.prepareStatement(inserimentoSql);
 		inserisciAdmin.setString(1, username);
@@ -41,7 +42,10 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public void loginAdmin(String username, String password) throws SQLException {
+	public boolean loginAdmin(String username, String password, boolean value) throws SQLException {
+		Connessione connect = Connessione.getInstance();
+		conn = connect.getConnection();
+		
 		CallableStatement myStatement = null;
 		ResultSet result = null;
 		
@@ -49,8 +53,17 @@ public class AdminDAOImpl implements AdminDAO {
 		myStatement.setString(1,username);
 		myStatement.setString(2, password);
 		
-		myStatement.execute();
-		
+		result = myStatement.executeQuery();
+		while(result.next()) {
+			 value = result.getBoolean(1);
+			System.out.println(value);
+		}
+
+		System.out.println("esecuzione finita");
+		return value;
+
 	}
+	
+	
 
 }

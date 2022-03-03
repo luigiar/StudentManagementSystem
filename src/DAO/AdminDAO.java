@@ -6,6 +6,6 @@ public interface AdminDAO {
 
 	public void registrationAdmin(String username, String password) throws SQLException;
 	
-	public void loginAdmin(String username, String password) throws SQLException;
+	public boolean loginAdmin(String username, String password, boolean value) throws SQLException;
 }
 

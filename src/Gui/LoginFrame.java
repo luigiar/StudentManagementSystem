@@ -22,6 +22,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
+import javax.swing.JButton;
 
 public class LoginFrame extends JFrame {
 
@@ -32,6 +33,10 @@ public class LoginFrame extends JFrame {
 	private JPasswordField pwdPassword;
 	private JLabel loginMessageLabel = new JLabel("");
 	private MainFrame mainFrame;
+	private JTextField textField_codiceFiscale;
+	private JTextField textField_Password;
+	private JTextField textField_confirmPassword;
+	private boolean exist = false;
 
 	/**
 	 * Create the frame.
@@ -145,7 +150,7 @@ public class LoginFrame extends JFrame {
 		login_panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (txtUsername.getText().equals("admin") && pwdPassword.getText().equals("admin")) {
+				if (c.isAdminExists(txtUsername.getText(), pwdPassword.getText(), exist)) {
 					mainFrame = new MainFrame(c);
 					mainFrame.setVisible(true);
 					LoginFrame.this.dispose();
@@ -156,6 +161,7 @@ public class LoginFrame extends JFrame {
 					loginMessageLabel.setText("Per favore, tutti i campi sono richiesti!");
 				} else {
 					loginMessageLabel.setText("Username e password non corrispondono!");
+					clearTextField();
 				}
 			}
 
@@ -198,10 +204,41 @@ public class LoginFrame extends JFrame {
 		loginMessageLabel.setBounds(185, 248, 294, 14);
 		LoginPane.add(loginMessageLabel);
 
-		JLabel background_label = new JLabel("");
-		background_label.setBounds(0, 35, 600, 326);
-		background_label.setIcon(new ImageIcon(img));
-		LoginPane.add(background_label);
+		JLabel lblNewLabel = new JLabel("Registrati");
+		lblNewLabel.setForeground(new Color(0, 0, 0));
+
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblNewLabel.setForeground(Color.BLUE);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblNewLabel.setForeground(Color.BLACK);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				GestisciRegistrazione Registrazione = new GestisciRegistrazione(c);
+				Registrazione.setVisible(true);
+
+			}
+		});
+		lblNewLabel.setForeground(new Color(0, 0, 0));
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel.setBounds(500, 328, 87, 22);
+		LoginPane.add(lblNewLabel);
+
+		JLabel background_label_1 = new JLabel("");
+		background_label_1.setBounds(0, 35, 600, 326);
+		background_label_1.setIcon(new ImageIcon(img));
+
+		LoginPane.add(background_label_1);
 	}
 
+	public void clearTextField() {
+		txtUsername.setText("");
+		pwdPassword.setText("");
+	}
 }
