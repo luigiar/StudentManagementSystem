@@ -1,5 +1,6 @@
 package Controller;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -279,15 +280,11 @@ public class Controller {
 		}
 	}
 	
-	public boolean isAdminExists(String username, String password,boolean exist) {
+	public boolean isAdminExists(String username, String password, boolean exist) {
 		try {
 			if(admin.loginAdmin(username, password, exist)) {
 				exist = true;
 			}
-			else {
-				exist = false;
-			}
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -295,25 +292,27 @@ public class Controller {
 		return exist;
 
 	}
-
+	
 	public void removeTableDataStudent(JTable table, String id) {
-		Connessione connect = null;
+	Connessione connect = null;
 
-		try {
-			connect = Connessione.getInstance();
-			Connection conn = connect.getConnection();
+	try {
+		connect = Connessione.getInstance();
+		Connection conn = connect.getConnection();
 
-			PreparedStatement rimuoviCorsoRegistrato;
+		CallableStatement rimuoviCorsoRegistrato;
+		ResultSet risultato;
 
-			String removeSql = "DELETE FROM registrazione WHERE corso_id = " + id;
-			rimuoviCorsoRegistrato = conn.prepareStatement(removeSql);
-			rimuoviCorsoRegistrato.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
-		int row = table.getSelectedRow();
-		registrationStudent.removeRow(row);
+		int idCorso = Integer.parseInt(id);
+		rimuoviCorsoRegistrato = conn.prepareCall("{call delete_registered_course(?)}");
+		rimuoviCorsoRegistrato.setInt(1, idCorso);
+		rimuoviCorsoRegistrato.executeQuery();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}
+	DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
+	int row = table.getSelectedRow();
+	registrationStudent.removeRow(row);
+}
 }

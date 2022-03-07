@@ -56,10 +56,8 @@ public class AdminDAOImpl implements AdminDAO {
 		result = myStatement.executeQuery();
 		while(result.next()) {
 			 value = result.getBoolean(1);
-			System.out.println(value);
 		}
 
-		System.out.println("esecuzione finita");
 		return value;
 
 	}
