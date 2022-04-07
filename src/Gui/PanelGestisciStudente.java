@@ -108,6 +108,7 @@ public class PanelGestisciStudente extends JPanel {
 				lblGestioneStudenti.setVisible(true);
 				panel_indietro.setVisible(false);
 				panelAggiornaStudente.clearTableData();
+				panelAggiornaStudente.clearTextField();
 
 			}
 		});
@@ -241,7 +242,6 @@ public class PanelGestisciStudente extends JPanel {
 
 	public void setAggiorna(JPanel aggiornaPanel) {
 		panelAggiornaStudente.setVisible(false);
-
 		aggiornaPanel.setVisible(true);
 
 	}

@@ -29,7 +29,7 @@ import java.awt.event.ActionEvent;
 
 public class PanelAggiornaStudente extends JPanel {
 	private final JSeparator separator = new JSeparator();
-	private JTextField textField_corso;
+	private JTextField textField_corsoClicked;
 	private JTextField textFieldPresenze;
 	private JTextField textFieldAssenze;
 	private JComboBox comboBoxCorsi;
@@ -71,48 +71,51 @@ public class PanelAggiornaStudente extends JPanel {
 		lbl_presenzeAssenze.setBounds(362, 11, 258, 23);
 		add(lbl_presenzeAssenze);
 		
-		JLabel lbl_inserireCorso = new JLabel("Inserire il corso :");
-		lbl_inserireCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		lbl_inserireCorso.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_inserireCorso.setBounds(424, 45, 160, 28);
-		add(lbl_inserireCorso);
+		JLabel lbl_corsoClicked = new JLabel("Corso selezionato dalla tabella :");
+		lbl_corsoClicked.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		lbl_corsoClicked.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_corsoClicked.setBounds(398, 45, 179, 28);
+		add(lbl_corsoClicked);
 		
-		textField_corso = new JTextField();
-		textField_corso.setBounds(424, 83, 131, 20);
-		add(textField_corso);
-		textField_corso.setColumns(10);
+		textField_corsoClicked = new JTextField();
+		textField_corsoClicked.setEditable(false);
+		textField_corsoClicked.setBounds(424, 84, 131, 20);
+		add(textField_corsoClicked);
+		textField_corsoClicked.setColumns(10);
 		
-		JButton btn_seleziona = new JButton("Seleziona");
+		JButton btn_seleziona = new JButton("Mostra");
 		btn_seleziona.setBackground(new Color(0, 139, 139));
-		btn_seleziona.setBounds(449, 115, 89, 23);
+		btn_seleziona.setBounds(442, 154, 97, 23);
 		add(btn_seleziona);
 		
 		JLabel lbl_presenze = new JLabel("Presenze :");
 		lbl_presenze.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
 		lbl_presenze.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_presenze.setBounds(398, 156, 65, 14);
+		lbl_presenze.setBounds(398, 184, 65, 14);
 		add(lbl_presenze);
 		
 		JLabel lbl_assenze = new JLabel("Assenze :");
 		lbl_assenze.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
 		lbl_assenze.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_assenze.setBounds(518, 156, 59, 14);
+		lbl_assenze.setBounds(525, 184, 59, 14);
 		add(lbl_assenze);
 		
 		textFieldPresenze = new JTextField();
-		textFieldPresenze.setBounds(408, 178, 43, 20);
+		textFieldPresenze.setEditable(false);
+		textFieldPresenze.setBounds(409, 209, 43, 20);
 		add(textFieldPresenze);
 		textFieldPresenze.setColumns(10);
 		
 		textFieldAssenze = new JTextField();
+		textFieldAssenze.setEditable(false);
 		textFieldAssenze.setColumns(10);
-		textFieldAssenze.setBounds(525, 178, 43, 20);
+		textFieldAssenze.setBounds(534, 209, 43, 20);
 		add(textFieldAssenze);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Aggiornamento presenze/assenze :");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1_1.setBounds(362, 226, 275, 23);
+		lblNewLabel_1_1.setBounds(362, 240, 275, 23);
 		add(lblNewLabel_1_1);
 		
 		JRadioButton RadioButtonPresente = new JRadioButton("Presenze");
@@ -132,7 +135,7 @@ public class PanelAggiornaStudente extends JPanel {
 		JLabel lbl_iscriviStudente = new JLabel("Seleziona i corsi per lo studente :");
 		lbl_iscriviStudente.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		lbl_iscriviStudente.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_iscriviStudente.setBounds(67, 98, 189, 23);
+		lbl_iscriviStudente.setBounds(55, 103, 189, 23);
 		add(lbl_iscriviStudente);
 		
 		comboBoxCorsi = new JComboBox();
@@ -145,7 +148,7 @@ public class PanelAggiornaStudente extends JPanel {
 		c.mostraCorsiComboBox(comboBoxCorsi);
 		add(comboBoxCorsi);
 		
-		JButton btn_aggiungiCorso = new JButton("Aggiungi");
+		JButton btn_aggiungiCorso = new JButton("Iscrivi");
 		Object [] campiCorso  = {
 				"Codice corso" , textField_codiceCorso,
 				"Nome corso" , textField_nomeCorso
@@ -198,7 +201,7 @@ public class PanelAggiornaStudente extends JPanel {
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				textField_idCorso.setText((model.getValueAt(rigaSelected, 0)).toString());
 				textField_nameCourse.setText((model.getValueAt(rigaSelected, 1)).toString());
-
+				textField_corsoClicked.setText((model.getValueAt(rigaSelected,1)).toString());
 			}
 		});
 		table.setBackground(new Color(230,230,250));
@@ -280,6 +283,18 @@ public class PanelAggiornaStudente extends JPanel {
 		lbl_iscriviStudente_2.setBounds(55, 382, 258, 23);
 		add(lbl_iscriviStudente_2);
 		
+		JLabel lbl_mostraAssenzePresenze = new JLabel("Clicca per mostrare assenze/presenze");
+		lbl_mostraAssenzePresenze.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_mostraAssenzePresenze.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		lbl_mostraAssenzePresenze.setBounds(398, 115, 197, 28);
+		add(lbl_mostraAssenzePresenze);
+		
+		JLabel lbl_corsiIscritti = new JLabel("Corsi iscritti :");
+		lbl_corsiIscritti.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_corsiIscritti.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		lbl_corsiIscritti.setBounds(55, 170, 179, 28);
+		add(lbl_corsiIscritti);
+		
 	}
 	
 	public void setStudentDetails(String id, String nome, String cognome) {
@@ -303,5 +318,6 @@ public class PanelAggiornaStudente extends JPanel {
 	public void clearTextField() {
 		textField_idCorso.setText("");
 		textField_nameCourse.setText("");
+		textField_corsoClicked.setText("");
 	}
 }
