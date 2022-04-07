@@ -72,14 +72,13 @@ public class PanelAggiungiStudente extends JPanel {
 		lblDataNascita.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblDataNascita.setBounds(215, 303, 96, 17);
 		add(lblDataNascita);
-		
-	    dateChooser = new JDateChooser();
+
+		dateChooser = new JDateChooser();
 		dateChooser.setBounds(215, 331, 128, 20);
 		add(dateChooser);
 		dateChooser.setDateFormatString("yyyy-MM-dd");
 		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateChooser.getDateEditor();
 		editor.setEditable(false);
-
 
 		JLabel lblGenere = new JLabel("Genere :");
 		lblGenere.setHorizontalAlignment(SwingConstants.LEFT);
@@ -148,7 +147,7 @@ public class PanelAggiungiStudente extends JPanel {
 		insert_button.setBackground(new Color(51, 153, 204));
 		insert_button.setBounds(531, 492, 88, 30);
 		add(insert_button);
-		
+
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addMouseListener(new MouseAdapter() {
 			@Override
@@ -164,9 +163,13 @@ public class PanelAggiungiStudente extends JPanel {
 	}
 
 	public void clearTextField() {
-		textField_nome.setText("");
-		textField_cognome.setText("");
-		Group.clearSelection();
-		dateChooser.setCalendar(null);
+		if (!textField_nome.getText().isBlank() || !textField_cognome.getText().isBlank() || !Group.isSelected(null)
+				|| !dateChooser.equals(null)) {
+			textField_nome.setText("");
+			textField_cognome.setText("");
+			Group.clearSelection();
+			dateChooser.setCalendar(null);
+			table.clearSelection();
+		}
 	}
 }

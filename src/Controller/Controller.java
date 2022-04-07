@@ -266,6 +266,31 @@ public class Controller {
 		}
 	}
 
+// da fare procedura show con function nel database
+//	public void showTableDataStudent(String idStudente, JTable table) {
+//		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
+//		Connessione connect = null;
+//		try {
+//			connect = Connessione.getInstance();
+//			Connection conn = connect.getConnection();
+//			int id = Integer.parseInt(idStudente);
+//			
+//			CallableStatement mostraCorsi;
+//			mostraCorsi = conn.prepareCall("{call show_table_student_course(?)}");
+//			mostraCorsi.setInt(1, id);
+//			ResultSet risultato = mostraCorsi.executeQuery();
+//			while (risultato.next()) {
+//				int idCorso = risultato.getInt(1);
+//				System.out.println(idCorso);
+//				String nomeCorso = risultato.getString(2);
+//				System.out.println(nomeCorso);
+//				registrationStudent.addRow(new Object[] { idCorso, nomeCorso });
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
+
 	public void addTableDataStudentToTableView(JTable table, String nomeCorso, String codiceCorso) {
 		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
 		registrationStudent.addRow(new Object[] { nomeCorso, codiceCorso });
@@ -306,7 +331,7 @@ public class Controller {
 		int idCorso = Integer.parseInt(id);
 		rimuoviCorsoRegistrato = conn.prepareCall("{call delete_registered_course(?)}");
 		rimuoviCorsoRegistrato.setInt(1, idCorso);
-		rimuoviCorsoRegistrato.executeQuery();
+		rimuoviCorsoRegistrato.executeUpdate();
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

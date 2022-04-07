@@ -143,9 +143,9 @@ public class PanelGestisciCorso extends JPanel {
 						JOptionPane.showMessageDialog(null, "Aggiornamento non valido!", "Errore",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
-						c.updateCourse(table,textField_nomeCorso.getText(), textFieldPartecipanti.getText(),
+						c.updateCourse(table, textField_nomeCorso.getText(), textFieldPartecipanti.getText(),
 								comboBox_areaTematica.getSelectedItem().toString(), textArea_descrizione.getText());
-					
+
 						JOptionPane.showMessageDialog(null, "Aggiornamento effettuato", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
@@ -282,10 +282,16 @@ public class PanelGestisciCorso extends JPanel {
 	}
 
 	public void clearTextField() {
-		textField_nomeCorso.setText("");
-		comboBox_areaTematica.setSelectedIndex(0);
-		textFieldPartecipanti.setText("");
-		textArea_descrizione.setText("");
+		if (!textField_nomeCorso.getText().isBlank() || !textFieldPartecipanti.getText().isBlank()
+				|| !textArea_descrizione.getText().isBlank()
+				|| !comboBox_areaTematica.getSelectedItem().equals("---Seleziona Area")) {
+			
+			textField_nomeCorso.setText("");
+			comboBox_areaTematica.setSelectedIndex(0);
+			textFieldPartecipanti.setText("");
+			textArea_descrizione.setText("");
+			table.clearSelection();
+		}
 	}
 
 	public void setGrandezzaColonneTable() {

@@ -219,10 +219,16 @@ public class PanelAggiungiCorso extends JPanel {
 	}
 
 	public void clearTextField() {
-		textField_nomeCorso.setText("");
-		comboBox.setSelectedIndex(0);
-		textField_maxPartecipanti.setText("");
-		textArea_descrizione.setText("");
+		if (!textField_nomeCorso.getText().isBlank() || !textField_maxPartecipanti.getText().isBlank()
+				|| !textArea_descrizione.getText().isBlank()
+				|| !comboBox.getSelectedItem().equals("---Seleziona Area")) {
+
+			textField_nomeCorso.setText("");
+			comboBox.setSelectedIndex(0);
+			textField_maxPartecipanti.setText("");
+			textArea_descrizione.setText("");
+			table.clearSelection();
+		}
 	}
 
 	public void setGrandezzaColonneTable() {

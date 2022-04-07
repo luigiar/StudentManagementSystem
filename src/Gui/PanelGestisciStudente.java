@@ -194,9 +194,8 @@ public class PanelGestisciStudente extends JPanel {
 		update_button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
-				if (textFieldNome.getText().equals("") || txtCognome.getText().equals("")
-						|| txtDate.getText().equals("") || txtId.getText().equals("")) {
+				if (textFieldNome.getText().isBlank() || txtCognome.getText().isBlank() || txtDate.getText().isBlank()
+						|| txtId.getText().isBlank()) {
 					JOptionPane.showMessageDialog(null, "Selezionare studente dalla tabella!", "Attenzione!",
 							JOptionPane.WARNING_MESSAGE);
 
@@ -211,8 +210,9 @@ public class PanelGestisciStudente extends JPanel {
 					lblGestioneStudenti.setVisible(false);
 					panel_indietro.setVisible(true);
 
+					table.clearSelection();
+					clearFields();
 				}
-
 			}
 		});
 		update_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
@@ -252,6 +252,17 @@ public class PanelGestisciStudente extends JPanel {
 		cellRender = new DefaultTableCellRenderer();
 		cellRender.setHorizontalAlignment(JLabel.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
+	}
+
+	public void clearFields() {
+		if (!txtId.getText().isBlank() || !textFieldNome.getText().isBlank() || !txtCognome.getText().isBlank()
+				|| !txtDate.getText().isBlank()) {
+			txtId.setText("");
+			textFieldNome.setText("");
+			txtCognome.setText("");
+			txtDate.setText("");
+			table.clearSelection();
+		}
 	}
 
 }

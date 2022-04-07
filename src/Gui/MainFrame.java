@@ -109,6 +109,9 @@ public class MainFrame extends JFrame {
 		addStudent_panel.addMouseListener(new PanelButtonMouseAdapter(addStudent_panel) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(panelAggiungiStudente);
+				panelGestisciCorso.clearTextField();
+				panelGestisciStudente.clearFields();
+				panelAggiungiCorso.clearTextField();
 				nascondisubMenu();
 			}
 		});
@@ -125,6 +128,9 @@ public class MainFrame extends JFrame {
 		manageStudent_panel.addMouseListener(new PanelButtonMouseAdapter(manageStudent_panel) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(panelGestisciStudente);
+				panelGestisciCorso.clearTextField();
+				panelAggiungiStudente.clearTextField();
+				panelAggiungiCorso.clearTextField();
 				nascondisubMenu();
 			}
 		});
@@ -146,6 +152,9 @@ public class MainFrame extends JFrame {
 		addCourse_panel.addMouseListener(new PanelButtonMouseAdapter(addCourse_panel) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(panelAggiungiCorso);
+				panelGestisciCorso.clearTextField();
+				panelAggiungiStudente.clearTextField();
+				panelGestisciStudente.clearFields();
 				nascondisubMenu();
 			}
 		});
@@ -162,6 +171,9 @@ public class MainFrame extends JFrame {
 		manageCourse_panel.addMouseListener(new PanelButtonMouseAdapter(manageCourse_panel) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(panelGestisciCorso);
+				panelAggiungiStudente.clearTextField();
+				panelGestisciStudente.clearFields();
+				panelAggiungiCorso.clearTextField();
 				nascondisubMenu();
 			}
 		});
@@ -201,6 +213,10 @@ public class MainFrame extends JFrame {
 		home_panel.addMouseListener(new PanelButtonMouseAdapter(home_panel) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(panelHome);
+				panelAggiungiStudente.clearTextField();
+				panelGestisciStudente.clearFields();
+				panelAggiungiCorso.clearTextField();
+				panelGestisciCorso.clearTextField();
 			}
 		});
 		home_panel.setBackground(new Color(255, 215, 0));
