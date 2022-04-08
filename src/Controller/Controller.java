@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -46,7 +47,6 @@ public class Controller {
 	AdminDAO admin = new AdminDAOImpl();
 	private CourseTableModel model;
 	private StudenteTableModel modelStud;
-
 	public static void main(String[] args) {
 
 		// CREAZIONE DEL DATABASE E CONNESSIONE
@@ -73,6 +73,47 @@ public class Controller {
 	public Controller() {
 		lf = new LoginFrame(this);
 		lf.setVisible(true);
+	}
+
+// funzione che mostra numero di studenti totali presenti nel db
+	public void showTotalStudentsNumber(JLabel label) {
+		Connessione connessione = null;
+		try {
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+			
+			PreparedStatement show;
+			String mostraStudenti = "select count(*) from studente";
+			show = con.prepareStatement(mostraStudenti);
+			
+			ResultSet risultato = show.executeQuery();
+			while (risultato.next()) {
+				label.setText("Studenti presenti : " +risultato.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void showTotalCourseNumber(JLabel label) {
+		Connessione connessione = null;
+		try {
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+			
+			PreparedStatement show;
+			String mostraCorsi = "select count(*) from corso";
+			show = con.prepareStatement(mostraCorsi);
+			
+			ResultSet risultato = show.executeQuery();
+			while (risultato.next()) {
+				label.setText("Corsi presenti : " +risultato.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void insertStudent(String name, String surname, String date, String genere) {
@@ -304,10 +345,10 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean isAdminExists(String username, String password, boolean exist) {
 		try {
-			if(admin.loginAdmin(username, password, exist)) {
+			if (admin.loginAdmin(username, password, exist)) {
 				exist = true;
 			}
 		} catch (SQLException e) {
@@ -317,27 +358,28 @@ public class Controller {
 		return exist;
 
 	}
-	
+
 	public void removeTableDataStudent(JTable table, String id) {
-	Connessione connect = null;
+		Connessione connect = null;
 
-	try {
-		connect = Connessione.getInstance();
-		Connection conn = connect.getConnection();
+		try {
+			connect = Connessione.getInstance();
+			Connection conn = connect.getConnection();
 
-		CallableStatement rimuoviCorsoRegistrato;
-		ResultSet risultato;
+			CallableStatement rimuoviCorsoRegistrato;
 
-		int idCorso = Integer.parseInt(id);
-		rimuoviCorsoRegistrato = conn.prepareCall("{call delete_registered_course(?)}");
-		rimuoviCorsoRegistrato.setInt(1, idCorso);
-		rimuoviCorsoRegistrato.executeUpdate();
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+			int idCorso = Integer.parseInt(id);
+			rimuoviCorsoRegistrato = conn.prepareCall("{call delete_registered_course(?)}");
+			rimuoviCorsoRegistrato.setInt(1, idCorso);
+			rimuoviCorsoRegistrato.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
+		int row = table.getSelectedRow();
+		registrationStudent.removeRow(row);
 	}
-	DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
-	int row = table.getSelectedRow();
-	registrationStudent.removeRow(row);
-}
+	
+	
 }

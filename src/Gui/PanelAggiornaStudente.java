@@ -42,7 +42,7 @@ public class PanelAggiornaStudente extends JPanel {
 	private JTextField textField_nomeCorso;
 	private JTextField textField_idCorso;
 	private JTextField textField_nameCourse;
-	private DefaultTableModel registrationStudent;
+
 	/**
 	 * Create the panel.
 	 */

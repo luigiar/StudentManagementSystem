@@ -78,7 +78,7 @@ public class MainFrame extends JFrame {
 
 		setLocationRelativeTo(null);
 		
-		panelHome = new main_panel();
+		panelHome = new main_panel(c);
 		panelHome.setBounds(0, 0, 648, 554);
 		panelAggiungiStudente = new PanelAggiungiStudente(c);
 		panelAggiungiStudente.setBounds(0, 0, 648, 554);
