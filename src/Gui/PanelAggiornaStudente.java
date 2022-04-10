@@ -118,12 +118,12 @@ public class PanelAggiornaStudente extends JPanel {
 		lblNewLabel_1_1.setBounds(362, 240, 275, 23);
 		add(lblNewLabel_1_1);
 		
-		JRadioButton RadioButtonPresente = new JRadioButton("Presenze");
+		JRadioButton RadioButtonPresente = new JRadioButton("Presente");
 		RadioButtonPresente.setBackground(new Color(255, 215, 0));
-		RadioButtonPresente.setBounds(398, 289, 80, 23);
+		RadioButtonPresente.setBounds(525, 322, 80, 23);
 		add(RadioButtonPresente);
 		
-		JRadioButton rdbtnAssente = new JRadioButton("Assenze");
+		JRadioButton rdbtnAssente = new JRadioButton("Assente");
 		rdbtnAssente.setBackground(new Color(255, 215, 0));
 		rdbtnAssente.setBounds(523, 289, 97, 23);
 		add(rdbtnAssente);
@@ -294,6 +294,23 @@ public class PanelAggiornaStudente extends JPanel {
 		lbl_corsiIscritti.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		lbl_corsiIscritti.setBounds(55, 170, 179, 28);
 		add(lbl_corsiIscritti);
+		
+		JComboBox comboBoxLezioni = new JComboBox();
+		comboBoxLezioni.setBounds(383, 303, 136, 22);
+		add(comboBoxLezioni);
+		
+		JButton btn_salvaPresenza = new JButton("Salva");
+		btn_salvaPresenza.setToolTipText("Clicca per salvare");
+		btn_salvaPresenza.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		btn_salvaPresenza.setBackground(new Color(102, 204, 51));
+		btn_salvaPresenza.setBounds(383, 349, 96, 21);
+		add(btn_salvaPresenza);
+		
+		JLabel lbl_lezioni = new JLabel("Seleziona una lezione");
+		lbl_lezioni.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_lezioni.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		lbl_lezioni.setBounds(383, 274, 115, 28);
+		add(lbl_lezioni);
 		
 	}
 	

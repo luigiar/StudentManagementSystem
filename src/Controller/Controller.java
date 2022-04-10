@@ -307,7 +307,7 @@ public class Controller {
 		}
 	}
 
-// da fare procedura show con function nel database
+// da fare procedura show con function nel database al posto di confrontare con java
 //	public void showTableDataStudent(String idStudente, JTable table) {
 //		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
 //		Connessione connect = null;

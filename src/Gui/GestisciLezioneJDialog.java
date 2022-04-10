@@ -31,6 +31,7 @@ public class GestisciLezioneJDialog extends JDialog {
 	private JTextField textField_OraInizio;
 	private JTextField textField_Presenze;
 	private JTextField textField_Assenze;
+	private JTextField textField;
 	
 	/**
 	 * Create the dialog.
@@ -60,7 +61,7 @@ public class GestisciLezioneJDialog extends JDialog {
 		lblGestioneLezioni.setBounds(109, 11, 197, 28);
 		panel_GestioneLezioni.add(lblGestioneLezioni);
 		
-		JLabel lblLezionenumero = new JLabel("Lezione #Numero : ");
+		JLabel lblLezionenumero = new JLabel("Titolo :");
 		lblLezionenumero.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLezionenumero.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblLezionenumero.setBounds(10, 68, 128, 17);
@@ -149,6 +150,17 @@ public class GestisciLezioneJDialog extends JDialog {
 		btnNewButton.setBackground(new Color(102, 204, 51));
 		btnNewButton.setBounds(324, 415, 89, 23);
 		contentPanel.add(btnNewButton);
+		
+		JLabel lblNumeroLez = new JLabel("Numero lez.");
+		lblNumeroLez.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNumeroLez.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblNumeroLez.setBounds(244, 68, 73, 17);
+		contentPanel.add(lblNumeroLez);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(324, 68, 31, 20);
+		contentPanel.add(textField);
 	
 	
 
