@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import Controller.Controller;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -43,6 +44,7 @@ public class PanelAggiornaStudente extends JPanel {
 	private JTextField textField_nomeCorso;
 	private JTextField textField_idCorso;
 	private JTextField textField_nameCourse;
+	DefaultComboBoxModel modelComboBox;
 
 	/**
 	 * Create the panel.
@@ -201,7 +203,8 @@ public class PanelAggiornaStudente extends JPanel {
 				textField_idCorso.setText((model.getValueAt(rigaSelected, 0)).toString());
 				textField_nameCourse.setText((model.getValueAt(rigaSelected, 1)).toString());
 				textField_corsoClicked.setText((model.getValueAt(rigaSelected, 1)).toString());
-				c.mostraLezioniComboBox(comboBoxLezioni, textField_idCorso.getText());
+//				c.mostraLezioniComboBox(comboBoxLezioni, textField_idCorso.getText());;
+				mostraLezioni();
 			}
 		});
 		table.setBackground(new Color(230, 230, 250));
@@ -297,6 +300,8 @@ public class PanelAggiornaStudente extends JPanel {
 
 		comboBoxLezioni = new JComboBox();
 		comboBoxLezioni.setBounds(383, 303, 136, 22);
+		modelComboBox = new DefaultComboBoxModel();
+		comboBoxLezioni.setModel(modelComboBox);
 		add(comboBoxLezioni);
 
 		JButton btn_salvaPresenza = new JButton("Salva");
@@ -336,5 +341,15 @@ public class PanelAggiornaStudente extends JPanel {
 		textField_idCorso.setText("");
 		textField_nameCourse.setText("");
 		textField_corsoClicked.setText("");
+		modelComboBox.removeAllElements();
+	}
+
+	public void mostraLezioni() {
+		int row;
+		if (comboBoxLezioni.getItemCount() == 0) {
+			theController.mostraLezioniComboBox(comboBoxLezioni, textField_idCorso.getText());
+//		    row = table
+		}else
+			modelComboBox.removeAllElements();
 	}
 }
