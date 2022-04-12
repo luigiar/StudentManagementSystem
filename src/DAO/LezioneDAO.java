@@ -7,7 +7,7 @@ import Entità.Lezione;
 
 public interface LezioneDAO {
 
-	public ArrayList<Lezione> displayLezioniComboBox() throws SQLException;
+	public ArrayList<Lezione> displayLezioniComboBox(int id) throws SQLException;
 
 
 }

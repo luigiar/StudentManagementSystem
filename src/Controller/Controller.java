@@ -25,8 +25,10 @@ import com.toedter.calendar.JTextFieldDateEditor;
 
 import DAO.AdminDAO;
 import DAO.CorsoDAO;
+import DAO.LezioneDAO;
 import DAO.StudenteDAO;
 import Entità.Corso;
+import Entità.Lezione;
 import Entità.Studente;
 import Gui.CourseTableModel;
 import Gui.LoginFrame;
@@ -34,6 +36,7 @@ import Gui.MainFrame;
 import Gui.StudenteTableModel;
 import dao_impl.AdminDAOImpl;
 import dao_impl.CorsoDAOImpl;
+import dao_impl.LezioneDAOImpl;
 import dao_impl.StudenteDAOImpl;
 import dbSettings.Connessione;
 import dbSettings.DBBuilder;
@@ -45,8 +48,10 @@ public class Controller {
 	StudenteDAO student = new StudenteDAOImpl();
 	CorsoDAO course = new CorsoDAOImpl();
 	AdminDAO admin = new AdminDAOImpl();
+	LezioneDAO lesson = new LezioneDAOImpl();
 	private CourseTableModel model;
 	private StudenteTableModel modelStud;
+
 	public static void main(String[] args) {
 
 		// CREAZIONE DEL DATABASE E CONNESSIONE
@@ -81,39 +86,39 @@ public class Controller {
 		try {
 			connessione = Connessione.getInstance();
 			Connection con = connessione.getConnection();
-			
+
 			PreparedStatement show;
 			String mostraStudenti = "select count(*) from studente";
 			show = con.prepareStatement(mostraStudenti);
-			
+
 			ResultSet risultato = show.executeQuery();
 			while (risultato.next()) {
-				label.setText("Studenti presenti : " +risultato.getInt(1));
+				label.setText("Studenti presenti : " + risultato.getInt(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void showTotalCourseNumber(JLabel label) {
 		Connessione connessione = null;
 		try {
 			connessione = Connessione.getInstance();
 			Connection con = connessione.getConnection();
-			
+
 			PreparedStatement show;
 			String mostraCorsi = "select count(*) from corso";
 			show = con.prepareStatement(mostraCorsi);
-			
+
 			ResultSet risultato = show.executeQuery();
 			while (risultato.next()) {
-				label.setText("Corsi presenti : " +risultato.getInt(1));
+				label.setText("Corsi presenti : " + risultato.getInt(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void insertStudent(String name, String surname, String date, String genere) {
@@ -256,6 +261,22 @@ public class Controller {
 		}
 	}
 
+	public void mostraLezioniComboBox(JComboBox comboBox, String id) {
+		try {
+			int idCorso = Integer.parseInt(id);
+			ArrayList<Lezione> lezioni = lesson.displayLezioniComboBox(idCorso);
+			DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
+			for (Lezione l : lezioni) {
+				int numeroLezione = l.getNumeroLezione();
+				String dataInizio = l.getDataInizio();
+				modelComboBox.addElement("Lezione " + numeroLezione + " / " + dataInizio);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public void addCourseToStudent(JComboBox comboBox, String idStudente, String idCorso) {
 		DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
 		Connessione connect = null;
@@ -380,6 +401,5 @@ public class Controller {
 		int row = table.getSelectedRow();
 		registrationStudent.removeRow(row);
 	}
-	
-	
+
 }

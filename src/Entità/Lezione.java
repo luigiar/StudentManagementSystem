@@ -6,9 +6,10 @@ public class Lezione {
 	private String descrizione;
 	private String DataInizio;
 	private double OraInizio;
-	
-	
+	private int numeroLezione;
 	private String titolo;
+	
+	
 	public String getTitolo() {
 		return titolo;
 	}
@@ -32,5 +33,11 @@ public class Lezione {
 	}
 	public void setOraInizio(double oraInizio) {
 		OraInizio = oraInizio;
+	}
+	public int getNumeroLezione() {
+		return numeroLezione;
+	}
+	public void setNumeroLezione(int numeroLezione) {
+		this.numeroLezione = numeroLezione;
 	}
 }

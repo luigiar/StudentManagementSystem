@@ -12,29 +12,32 @@ import dbSettings.Connessione;
 
 public class LezioneDAOImpl implements LezioneDAO {
 	PreparedStatement mostraLezioni;
+
 	@Override
-	public ArrayList<Lezione> displayLezioniComboBox() throws SQLException {
+	public ArrayList<Lezione> displayLezioniComboBox(int id) throws SQLException {
 		ArrayList<Lezione> lezioni = new ArrayList<Lezione>();
 		Connessione connection = Connessione.getInstance();
 		Connection conn = connection.getConnection();
-		
-	
-		String mostraSql = "SELECT numero_lezione, data_inizio FROM lezione";
-		mostraLezioni = conn.prepareStatement(mostraSql);
-		ResultSet risultato = mostraLezioni.executeQuery(mostraSql);
-		while(risultato.next()) {
-			
-		Lezione lezione = new Lezione();
-		lezione.setDataInizio(risultato.getString(1));
-	     //scegliere cosa mostrare nella combo box
-		//lezione.setNumeroLezione(risultato.getInt(2);
-			
-			lezioni.add(lezione);
+
+		try {
+			mostraLezioni = conn
+					.prepareStatement("SELECT numero_lezione, data_inizio FROM lezione WHERE corso_id = " + id);
+			ResultSet risultato = mostraLezioni.executeQuery();
+			while (risultato.next()) {
+
+				Lezione lezione = new Lezione();
+				lezione.setNumeroLezione(risultato.getInt(1));
+				lezione.setDataInizio(risultato.getString(2));
+
+				lezioni.add(lezione);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		
-		
+
 		return lezioni;
-		
+
 	}
 
 }
