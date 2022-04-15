@@ -21,12 +21,12 @@ public class LezioneDAOImpl implements LezioneDAO {
 
 		try {
 			mostraLezioni = conn
-					.prepareStatement("SELECT numero_lezione, data_inizio FROM lezione WHERE corso_id = " + id);
+					.prepareStatement("SELECT lezione_id, data_inizio FROM lezione WHERE corso_id = " + id);
 			ResultSet risultato = mostraLezioni.executeQuery();
 			while (risultato.next()) {
 
 				Lezione lezione = new Lezione();
-				lezione.setNumeroLezione(risultato.getInt(1));
+				lezione.setCodiceLezione(risultato.getInt(1));
 				lezione.setDataInizio(risultato.getString(2));
 
 				lezioni.add(lezione);

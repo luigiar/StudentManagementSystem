@@ -345,10 +345,8 @@ public class PanelAggiornaStudente extends JPanel {
 	}
 
 	public void mostraLezioni() {
-		int row;
 		if (comboBoxLezioni.getItemCount() == 0) {
 			theController.mostraLezioniComboBox(comboBoxLezioni, textField_idCorso.getText());
-//		    row = table
 		}else
 			modelComboBox.removeAllElements();
 	}

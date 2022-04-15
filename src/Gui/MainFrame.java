@@ -27,9 +27,6 @@ public class MainFrame extends JFrame {
 	private final JLabel logo_label = new JLabel("");
 	JPanel side_panel = new JPanel();
 
-	
-	
-
 	private final JPanel student_panel = new JPanel();
 	JPanel studenti_panel = new JPanel();
 	private final JPanel course_panel = new JPanel();
@@ -47,6 +44,7 @@ public class MainFrame extends JFrame {
 	private final JLabel home_label = new JLabel("Home");
 	private final JLabel signOut_label = new JLabel("Esci");
 	private final JPanel mainContent_panel = new JPanel();
+	private final JPanel panelAttendance = new JPanel();
 	
 	private main_panel panelHome; 
 	private PanelAggiungiStudente panelAggiungiStudente;
@@ -54,6 +52,7 @@ public class MainFrame extends JFrame {
 	private PanelAggiungiCorso panelAggiungiCorso;
 	private PanelGestisciCorso panelGestisciCorso;
 	private PanelDettagliCorso panelDettagliCorso;
+	private PanelAttendance attendancePanel;
 	private final JPanel corsi_panel = new JPanel();
 	private final JLabel corsi_label = new JLabel("Corsi");
 	private Controller theController;
@@ -87,6 +86,7 @@ public class MainFrame extends JFrame {
 		panelAggiungiCorso = new PanelAggiungiCorso(c);
 		panelGestisciCorso = new PanelGestisciCorso(c);
 		panelDettagliCorso = new PanelDettagliCorso();
+		attendancePanel = new PanelAttendance(c);
 		side_panel.setAutoscrolls(true);
 		side_panel.setBorder(null);
 		side_panel.setBackground(new Color(255, 165, 0));
@@ -259,8 +259,11 @@ public class MainFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				mostrasubMenu(student_panel);
 				corsi_panel.setBounds(0,310,258,48);
-				if(!student_panel.isVisible())
+				panelAttendance.setBounds(0,358,258,47);
+				if(!student_panel.isVisible()) {
 				corsi_panel.setBounds(0,225,258,47);
+				panelAttendance.setBounds(0,270,258,47);
+				}
 			}
 		});
 		studenti_panel.setBackground(new Color(255, 215, 0));
@@ -279,6 +282,10 @@ public class MainFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				mostrasubMenu(course_panel);
+				panelAttendance.setBounds(0,405,258,47);
+				if(!course_panel.isVisible()) {
+					panelAttendance.setBounds(0,270,258,47);
+					}
 			}
 		});
 		corsi_panel.setLayout(null);
@@ -295,6 +302,24 @@ public class MainFrame extends JFrame {
 
 		corsi_panel.add(corsi_label);
 		
+		
+		panelAttendance.setLayout(null);
+		panelAttendance.setBackground(new Color(255, 215, 0));
+		panelAttendance.setBounds(0, 270, 258, 45);
+		side_panel.add(panelAttendance);
+
+		
+		JLabel attendance_label = new JLabel("Attendance");
+		attendance_label.setHorizontalAlignment(SwingConstants.LEFT);
+		attendance_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		attendance_label.setBounds(10, 11, 106, 25);
+		panelAttendance.add(attendance_label);
+		panelAttendance.addMouseListener(new PanelButtonMouseAdapter(panelAttendance));
+		panelAttendance.addMouseListener(new PanelButtonMouseAdapter(panelAttendance) {
+			public void mouseClicked(MouseEvent e) {
+				menuSelected(attendancePanel);
+			}
+		});
 	
 		
 		
@@ -308,6 +333,7 @@ public class MainFrame extends JFrame {
 		mainContent_panel.add(panelAggiungiCorso);
 		mainContent_panel.add(panelGestisciCorso);
 		mainContent_panel.add(panelDettagliCorso);
+		mainContent_panel.add(attendancePanel);
 		
 		menuSelected(panelHome);
 		
@@ -320,7 +346,7 @@ public class MainFrame extends JFrame {
 		panelDettagliCorso.setVisible(false);
 		panelAggiungiStudente.setVisible(false);
 		panelGestisciStudente.setVisible(false);
-
+		attendancePanel.setVisible(false);
 		
 		selectedPanel.setVisible(true);
 	}
@@ -361,7 +387,6 @@ public class MainFrame extends JFrame {
 		
 	}
 	
-
 	private void customDesign() {
 		student_panel.setVisible(false);
 		course_panel.setVisible(false);
@@ -371,10 +396,11 @@ public class MainFrame extends JFrame {
 		if(student_panel.isVisible()) {
 			student_panel.setVisible(false);
 			corsi_panel.setBounds(0,225,258,47);
-			
+			panelAttendance.setBounds(0,270,258,47);
 		}
 		if(course_panel.isVisible()) {
 			course_panel.setVisible(false);
+			panelAttendance.setBounds(0,270,258,47);
 		}
 	}
 	

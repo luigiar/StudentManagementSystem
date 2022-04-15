@@ -6,7 +6,7 @@ public class Lezione {
 	private String descrizione;
 	private String DataInizio;
 	private double OraInizio;
-	private int numeroLezione;
+	private int codiceLezione;
 	private String titolo;
 	
 	
@@ -34,10 +34,10 @@ public class Lezione {
 	public void setOraInizio(double oraInizio) {
 		OraInizio = oraInizio;
 	}
-	public int getNumeroLezione() {
-		return numeroLezione;
+	public int getCodiceLezione() {
+		return codiceLezione;
 	}
-	public void setNumeroLezione(int numeroLezione) {
-		this.numeroLezione = numeroLezione;
+	public void setCodiceLezione(int codiceLezione) {
+		this.codiceLezione = codiceLezione;
 	}
 }

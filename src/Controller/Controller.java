@@ -2,25 +2,25 @@ package Controller;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import com.toedter.calendar.JDateChooser;
+
 import com.toedter.calendar.JTextFieldDateEditor;
 
 import DAO.AdminDAO;
@@ -267,9 +267,9 @@ public class Controller {
 			ArrayList<Lezione> lezioni = lesson.displayLezioniComboBox(idCorso);
 			DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
 			for (Lezione l : lezioni) {
-				int numeroLezione = l.getNumeroLezione();
+				int codiceLezione = l.getCodiceLezione();
 				String dataInizio = l.getDataInizio();
-				modelComboBox.addElement("Lezione " + numeroLezione + " / " + dataInizio);
+				modelComboBox.addElement("Lezione " + codiceLezione + " : " + dataInizio);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -400,6 +400,40 @@ public class Controller {
 		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
 		int row = table.getSelectedRow();
 		registrationStudent.removeRow(row);
+	}
+	
+	public void showStudentEnrolledTable(String idCorso, String data_lezione,JTable table) {
+		Connessione connect = null;
+		
+		try {
+			connect = Connessione.getInstance();
+			Connection conn = connect.getConnection();
+			CallableStatement mostraStudentiIscritti;
+			
+			//convertendo string in date
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = (Date) simpleDateFormat.parse(data_lezione);
+			java.sql.Date dataSQL = new java.sql.Date(date.getTime());
+			int id = Integer.parseInt(idCorso);
+			mostraStudentiIscritti = conn.prepareCall("{call get_data_table(?,?)}");
+			mostraStudentiIscritti.setInt(1, id);
+			mostraStudentiIscritti.setDate(2, dataSQL);
+			ResultSet result = mostraStudentiIscritti.executeQuery();
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			while(result.next()) {
+				String nome = result.getString("nome");
+				String cognome = result.getString("cognome");
+				String data = result.getString("data_lezione");
+				model.addRow(new Object[] { nome, cognome, data, false});
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
