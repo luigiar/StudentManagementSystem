@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import Controller.Controller;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import java.awt.Component;
@@ -30,10 +31,13 @@ public class PanelAttendance extends JPanel {
 	private JButton btn_mostraLezioni;
 	private DefaultTableModel model;
 	private ButtonGroup btn;
-	private Controller theController; 
+	private Controller theController;
 	private JTextField textField_codiceCorso;
 	private JTextField textField_nomeCorso;
-	
+	private JComboBox comboBoxLezioni;
+	DefaultComboBoxModel modelComboBox;
+	String dataLezioneSelected, idLezioneSelected;
+
 	public PanelAttendance(Controller c) {
 		theController = c;
 		setLayout(null);
@@ -62,24 +66,26 @@ public class PanelAttendance extends JPanel {
 		JLabel lbl_lezioni = new JLabel("Seleziona una lezione");
 		lbl_lezioni.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_lezioni.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		lbl_lezioni.setBounds(385, 98, 115, 22);
+		lbl_lezioni.setBounds(20, 161, 115, 22);
 		add(lbl_lezioni);
 
-		JComboBox comboBoxLezioni = new JComboBox();
-		comboBoxLezioni.setBounds(506, 98, 136, 22);
+		comboBoxLezioni = new JComboBox();
+		comboBoxLezioni.setBounds(153, 162, 163, 22);
 		add(comboBoxLezioni);
+		modelComboBox = new DefaultComboBoxModel();
+		comboBoxLezioni.setModel(modelComboBox);
 
 		JLabel lbl_selezionaCorso = new JLabel("Seleziona un corso");
 		lbl_selezionaCorso.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_selezionaCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		lbl_selezionaCorso.setBounds(10, 98, 115, 23);
+		lbl_selezionaCorso.setBounds(20, 97, 115, 23);
 		add(lbl_selezionaCorso);
 
 		JComboBox comboBoxCorsi = new JComboBox();
-		comboBoxCorsi.setBounds(135, 99, 136, 22);
+		comboBoxCorsi.setBounds(135, 98, 136, 22);
 		add(comboBoxCorsi);
 		c.mostraCorsiComboBox(comboBoxCorsi);
-		
+
 		textField_codiceCorso = new JTextField();
 		textField_nomeCorso = new JTextField();
 		textField_codiceCorso.setEditable(false);
@@ -99,7 +105,7 @@ public class PanelAttendance extends JPanel {
 				int input = JOptionPane.showConfirmDialog(null, campiCorso, "Visualizzare le lezioni per il corso? ",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (input == JOptionPane.OK_OPTION) {
-					c.mostraLezioniComboBox(comboBoxLezioni, textField_codiceCorso.getText());
+					mostraLezioni();
 					JOptionPane.showMessageDialog(null, "Lezioni visualizzate");
 				} else {
 					JOptionPane.showMessageDialog(null, "Operazione annullata");
@@ -112,13 +118,28 @@ public class PanelAttendance extends JPanel {
 
 		JScrollPane scrollPane = new JScrollPane((Component) null);
 		scrollPane.setBackground(Color.WHITE);
-		scrollPane.setBounds(10, 159, 632, 231);
+		scrollPane.setBounds(10, 217, 632, 231);
 		add(scrollPane);
-		
-		model = new DefaultTableModel();
+
+		model = new DefaultTableModel() {
+			public boolean isCellEditable(int row, int column) {
+				// TODO Auto-generated method stub
+				switch (column) {
+				case 0:
+					return false;
+				case 1:
+					return false;
+				case 2:
+					return false;
+				case 3:
+					return true;
+				}
+				return false;
+			}
+		};
 		String[] colonne = { "Nome", "Cognome", "Data", "Presente" };
 		model.setColumnIdentifiers(colonne);
-		
+
 		table = new JTable(model) {
 			public Class getColumnClass(int colonne) {
 				switch (colonne) {
@@ -136,20 +157,42 @@ public class PanelAttendance extends JPanel {
 		};
 		table.setBackground(new Color(230, 230, 250));
 		scrollPane.setViewportView(table);
-		
+
 		JButton btn_aggiungiCorso = new JButton("Visualizza studenti");
 		btn_aggiungiCorso.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String lezioneSelected = comboBoxLezioni.getSelectedItem().toString();
-				lezioneSelected = lezioneSelected.substring(lezioneSelected.lastIndexOf(": ") + 1).strip();
-				c.showStudentEnrolledTable(textField_codiceCorso.getText(),lezioneSelected,table);
-				}
+				dataLezioneSelected = lezioneSelected.substring(lezioneSelected.lastIndexOf(": ") + 1).strip();
+				idLezioneSelected = lezioneSelected
+						.substring(lezioneSelected.indexOf("e ") + 1, lezioneSelected.indexOf(" :")).strip();
+				mostraTabellaStudentiIscritti();
+			}
 		});
 		btn_aggiungiCorso.setToolTipText("Clicca per visualizzare gli studenti");
 		btn_aggiungiCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
 		btn_aggiungiCorso.setBackground(new Color(255, 165, 0));
-		btn_aggiungiCorso.setBounds(10, 132, 136, 21);
+		btn_aggiungiCorso.setBounds(10, 195, 136, 21);
 		add(btn_aggiungiCorso);
+	}
+
+	public void mostraLezioni() {
+		if (comboBoxLezioni.getItemCount() == 0) {
+			theController.mostraLezioniComboBox(comboBoxLezioni, textField_codiceCorso.getText());
+		} else
+			modelComboBox.removeAllElements();
+		theController.mostraLezioniComboBox(comboBoxLezioni, textField_codiceCorso.getText());
+	}
+
+	public void mostraTabellaStudentiIscritti() {
+		if (table.getRowCount() == 0) {
+			theController.showStudentEnrolledTable(textField_codiceCorso.getText(), dataLezioneSelected,
+					idLezioneSelected, table);
+		}else {
+		model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		theController.showStudentEnrolledTable(textField_codiceCorso.getText(), dataLezioneSelected, idLezioneSelected,
+				table);
+		}
 	}
 }

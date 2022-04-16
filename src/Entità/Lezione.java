@@ -8,6 +8,7 @@ public class Lezione {
 	private double OraInizio;
 	private int codiceLezione;
 	private String titolo;
+	private boolean presenza;
 	
 	
 	public String getTitolo() {
@@ -39,5 +40,11 @@ public class Lezione {
 	}
 	public void setCodiceLezione(int codiceLezione) {
 		this.codiceLezione = codiceLezione;
+	}
+	public boolean isPresenza() {
+		return presenza;
+	}
+	public void setPresenza(boolean presenza) {
+		this.presenza = presenza;
 	}
 }

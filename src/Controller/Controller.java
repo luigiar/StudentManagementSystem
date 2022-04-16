@@ -402,7 +402,7 @@ public class Controller {
 		registrationStudent.removeRow(row);
 	}
 	
-	public void showStudentEnrolledTable(String idCorso, String data_lezione,JTable table) {
+	public void showStudentEnrolledTable(String idCorso, String data_lezione, String idLezione, JTable table) {
 		Connessione connect = null;
 		
 		try {
@@ -415,16 +415,19 @@ public class Controller {
 			Date date = (Date) simpleDateFormat.parse(data_lezione);
 			java.sql.Date dataSQL = new java.sql.Date(date.getTime());
 			int id = Integer.parseInt(idCorso);
-			mostraStudentiIscritti = conn.prepareCall("{call get_data_table(?,?)}");
+			int id_lesson = Integer.parseInt(idLezione);
+			mostraStudentiIscritti = conn.prepareCall("{call get_data_table(?,?,?)}");
 			mostraStudentiIscritti.setInt(1, id);
 			mostraStudentiIscritti.setDate(2, dataSQL);
+			mostraStudentiIscritti.setInt(3, id_lesson);
 			ResultSet result = mostraStudentiIscritti.executeQuery();
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
 			while(result.next()) {
 				String nome = result.getString("nome");
 				String cognome = result.getString("cognome");
 				String data = result.getString("data_lezione");
-				model.addRow(new Object[] { nome, cognome, data, false});
+				boolean presenza = result.getBoolean("presenza");
+				model.addRow(new Object[] { nome, cognome, data, presenza});
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
