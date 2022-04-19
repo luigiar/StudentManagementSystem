@@ -30,13 +30,13 @@ public class PanelAttendance extends JPanel {
 	private JTable table;
 	private JButton btn_mostraLezioni;
 	private DefaultTableModel model;
-	private ButtonGroup btn;
 	private Controller theController;
 	private JTextField textField_codiceCorso;
 	private JTextField textField_nomeCorso;
 	private JComboBox comboBoxLezioni;
+	private JButton btn_salva;
 	DefaultComboBoxModel modelComboBox;
-	String dataLezioneSelected, idLezioneSelected;
+	String dataLezioneSelected, idLezioneSelected, idStudente, presenza;
 
 	public PanelAttendance(Controller c) {
 		theController = c;
@@ -92,6 +92,7 @@ public class PanelAttendance extends JPanel {
 		textField_nomeCorso.setEditable(false);
 		Object[] campiCorso = { "Codice corso", textField_codiceCorso, "Nome corso", textField_nomeCorso };
 		btn_mostraLezioni = new JButton("Mostra");
+		btn_mostraLezioni.setToolTipText("visualizza le lezioni del corso");
 		btn_mostraLezioni.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -132,29 +133,48 @@ public class PanelAttendance extends JPanel {
 				case 2:
 					return false;
 				case 3:
+					return false;
+				case 4:
 					return true;
 				}
 				return false;
 			}
 		};
-		String[] colonne = { "Nome", "Cognome", "Data", "Presente" };
+		String[] colonne = { "ID", "Nome", "Cognome", "Data", "Presente" };
 		model.setColumnIdentifiers(colonne);
 
 		table = new JTable(model) {
 			public Class getColumnClass(int colonne) {
 				switch (colonne) {
 				case 0:
-					return String.class;
+					return int.class;
 				case 1:
 					return String.class;
 				case 2:
 					return String.class;
 				case 3:
+					return String.class;
+				case 4:
 					return Boolean.class;
 				}
 				return null;
 			}
 		};
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				model = (DefaultTableModel) table.getModel();
+				int column = table.columnAtPoint(e.getPoint());
+				if (column == 4) {
+					int row = table.getSelectedRow();
+					idStudente = model.getValueAt(row, 0).toString();
+					presenza = model.getValueAt(row, 4).toString();
+
+					c.updateAttendanceStudents(textField_codiceCorso.getText(), idStudente, idLezioneSelected, presenza,
+							table);
+				}
+			}
+		});
 		table.setBackground(new Color(230, 230, 250));
 		scrollPane.setViewportView(table);
 
@@ -162,37 +182,42 @@ public class PanelAttendance extends JPanel {
 		btn_aggiungiCorso.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String lezioneSelected = comboBoxLezioni.getSelectedItem().toString();
-				dataLezioneSelected = lezioneSelected.substring(lezioneSelected.lastIndexOf(": ") + 1).strip();
-				idLezioneSelected = lezioneSelected
-						.substring(lezioneSelected.indexOf("e ") + 1, lezioneSelected.indexOf(" :")).strip();
-				mostraTabellaStudentiIscritti();
+				if (comboBoxLezioni.getSelectedItem() == null) {
+					JOptionPane.showMessageDialog(null, "Selezionare prima una lezione!", "Attenzione",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					String lezioneSelected = comboBoxLezioni.getSelectedItem().toString();
+					dataLezioneSelected = lezioneSelected.substring(lezioneSelected.lastIndexOf(": ") + 1).strip();
+					idLezioneSelected = lezioneSelected
+							.substring(lezioneSelected.indexOf("e ") + 1, lezioneSelected.indexOf(" :")).strip();
+					mostraTabellaStudentiIscritti();
+				}
 			}
 		});
 		btn_aggiungiCorso.setToolTipText("Clicca per visualizzare gli studenti");
 		btn_aggiungiCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
 		btn_aggiungiCorso.setBackground(new Color(255, 165, 0));
-		btn_aggiungiCorso.setBounds(10, 195, 136, 21);
+		btn_aggiungiCorso.setBounds(326, 162, 136, 21);
 		add(btn_aggiungiCorso);
 	}
 
 	public void mostraLezioni() {
-		if (comboBoxLezioni.getItemCount() == 0) {
-			theController.mostraLezioniComboBox(comboBoxLezioni, textField_codiceCorso.getText());
-		} else
+		if (comboBoxLezioni.getItemCount() > -1) {
 			modelComboBox.removeAllElements();
-		theController.mostraLezioniComboBox(comboBoxLezioni, textField_codiceCorso.getText());
+			theController.mostraLezioniComboBox(comboBoxLezioni, textField_codiceCorso.getText());
+		}
 	}
 
 	public void mostraTabellaStudentiIscritti() {
 		if (table.getRowCount() == 0) {
 			theController.showStudentEnrolledTable(textField_codiceCorso.getText(), dataLezioneSelected,
 					idLezioneSelected, table);
-		}else {
-		model = (DefaultTableModel) table.getModel();
-		model.setRowCount(0);
-		theController.showStudentEnrolledTable(textField_codiceCorso.getText(), dataLezioneSelected, idLezioneSelected,
-				table);
+		} else {
+			model = (DefaultTableModel) table.getModel();
+			model.setRowCount(0);
+			theController.showStudentEnrolledTable(textField_codiceCorso.getText(), dataLezioneSelected,
+					idLezioneSelected, table);
 		}
 	}
+
 }

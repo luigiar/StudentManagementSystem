@@ -20,7 +20,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-
 import com.toedter.calendar.JTextFieldDateEditor;
 
 import DAO.AdminDAO;
@@ -401,16 +400,16 @@ public class Controller {
 		int row = table.getSelectedRow();
 		registrationStudent.removeRow(row);
 	}
-	
+
 	public void showStudentEnrolledTable(String idCorso, String data_lezione, String idLezione, JTable table) {
 		Connessione connect = null;
-		
+
 		try {
 			connect = Connessione.getInstance();
 			Connection conn = connect.getConnection();
 			CallableStatement mostraStudentiIscritti;
-			
-			//convertendo string in date
+
+			// conversione string in date
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = (Date) simpleDateFormat.parse(data_lezione);
 			java.sql.Date dataSQL = new java.sql.Date(date.getTime());
@@ -422,12 +421,13 @@ public class Controller {
 			mostraStudentiIscritti.setInt(3, id_lesson);
 			ResultSet result = mostraStudentiIscritti.executeQuery();
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			while(result.next()) {
+			while (result.next()) {
+				int idStudente = result.getInt("idStudente");
 				String nome = result.getString("nome");
 				String cognome = result.getString("cognome");
 				String data = result.getString("data_lezione");
 				boolean presenza = result.getBoolean("presenza");
-				model.addRow(new Object[] { nome, cognome, data, presenza});
+				model.addRow(new Object[] {idStudente,nome, cognome, data, presenza});
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -436,7 +436,32 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
+	public void updateAttendanceStudents(String idCorso, String idStudente, String idLezione, String presenza,
+			JTable table) {
+		Connessione connect = null;
+		try {
+			connect = Connessione.getInstance();
+			Connection conn = connect.getConnection();
+			CallableStatement aggiornaPresenza;
+			
+			int codiceCorso = Integer.parseInt(idCorso);
+			int codiceStudente = Integer.parseInt(idStudente);
+			int codiceLezione = Integer.parseInt(idLezione);
+			boolean presence = Boolean.parseBoolean(presenza);
+			aggiornaPresenza = conn.prepareCall("{call update_presence(?,?,?,?)}");
+			aggiornaPresenza.setInt(1, codiceCorso);
+			aggiornaPresenza.setInt(2, codiceStudente);
+			aggiornaPresenza.setInt(3, codiceLezione);
+			aggiornaPresenza.setBoolean(4, presence);
+			aggiornaPresenza.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 }
