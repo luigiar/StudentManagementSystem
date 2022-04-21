@@ -112,6 +112,7 @@ public class MainFrame extends JFrame {
 				panelGestisciCorso.clearTextField();
 				panelGestisciStudente.clearFields();
 				panelAggiungiCorso.clearTextField();
+				attendancePanel.clearFields();
 				nascondisubMenu();
 			}
 		});
@@ -131,6 +132,7 @@ public class MainFrame extends JFrame {
 				panelGestisciCorso.clearTextField();
 				panelAggiungiStudente.clearTextField();
 				panelAggiungiCorso.clearTextField();
+				attendancePanel.clearFields();
 				nascondisubMenu();
 			}
 		});
@@ -155,6 +157,7 @@ public class MainFrame extends JFrame {
 				panelGestisciCorso.clearTextField();
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
+				attendancePanel.clearFields();
 				nascondisubMenu();
 			}
 		});
@@ -174,6 +177,7 @@ public class MainFrame extends JFrame {
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
 				panelAggiungiCorso.clearTextField();
+				attendancePanel.clearFields();
 				nascondisubMenu();
 			}
 		});
@@ -190,6 +194,7 @@ public class MainFrame extends JFrame {
 		detailsCourse_panel.addMouseListener(new PanelButtonMouseAdapter(detailsCourse_panel) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(panelDettagliCorso);
+				attendancePanel.clearFields();
 				nascondisubMenu();
 			}
 		});
@@ -217,6 +222,7 @@ public class MainFrame extends JFrame {
 				panelGestisciStudente.clearFields();
 				panelAggiungiCorso.clearTextField();
 				panelGestisciCorso.clearTextField();
+				attendancePanel.clearFields();
 			}
 		});
 		home_panel.setBackground(new Color(255, 215, 0));
@@ -318,6 +324,10 @@ public class MainFrame extends JFrame {
 		panelAttendance.addMouseListener(new PanelButtonMouseAdapter(panelAttendance) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(attendancePanel);
+				panelAggiungiStudente.clearTextField();
+				panelGestisciStudente.clearFields();
+				panelAggiungiCorso.clearTextField();
+				panelGestisciCorso.clearTextField();
 			}
 		});
 	

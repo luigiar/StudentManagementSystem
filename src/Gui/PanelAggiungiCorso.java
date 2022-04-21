@@ -227,8 +227,8 @@ public class PanelAggiungiCorso extends JPanel {
 			comboBox.setSelectedIndex(0);
 			textField_maxPartecipanti.setText("");
 			textArea_descrizione.setText("");
-			table.clearSelection();
 		}
+		table.clearSelection();
 	}
 
 	public void setGrandezzaColonneTable() {

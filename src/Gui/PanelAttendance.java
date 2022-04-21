@@ -219,5 +219,13 @@ public class PanelAttendance extends JPanel {
 					idLezioneSelected, table);
 		}
 	}
+	
+	public void clearFields() {
+		if(comboBoxLezioni.getSelectedIndex() >= 0 || table.getRowCount() > 0) {
+			modelComboBox.removeAllElements();
+			model.setRowCount(0);
+		}
+		
+	}
 
 }
