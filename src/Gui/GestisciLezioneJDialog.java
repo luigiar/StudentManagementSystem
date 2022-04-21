@@ -29,9 +29,6 @@ public class GestisciLezioneJDialog extends JDialog {
 	private JTextField textFieldDurataLezione;
 	private JTextField textField_DataInizio;
 	private JTextField textField_OraInizio;
-	private JTextField textField_Presenze;
-	private JTextField textField_Assenze;
-	private JTextField textField;
 	
 	/**
 	 * Create the dialog.
@@ -41,7 +38,7 @@ public class GestisciLezioneJDialog extends JDialog {
 		setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 439, 489);
+		setBounds(100, 100, 425, 405);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(255, 215, 0));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -69,7 +66,7 @@ public class GestisciLezioneJDialog extends JDialog {
 		
 		textFieldLezioneNum = new JTextField();
 		textFieldLezioneNum.setColumns(10);
-		textFieldLezioneNum.setBounds(148, 67, 86, 20);
+		textFieldLezioneNum.setBounds(148, 67, 151, 20);
 		contentPanel.add(textFieldLezioneNum);
 		
 		JLabel lblDurataLezione = new JLabel("Durata Lezione :");
@@ -122,45 +119,12 @@ public class GestisciLezioneJDialog extends JDialog {
 		textField_OraInizio.setBounds(148, 278, 86, 20);
 		contentPanel.add(textField_OraInizio);
 		
-		JLabel lblPresenze = new JLabel("Presenze :");
-		lblPresenze.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPresenze.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblPresenze.setBounds(10, 319, 108, 17);
-		contentPanel.add(lblPresenze);
-		
-		textField_Presenze = new JTextField();
-		textField_Presenze.setColumns(10);
-		textField_Presenze.setBounds(148, 318, 86, 20);
-		contentPanel.add(textField_Presenze);
-		
-		JLabel lblAssenze = new JLabel("Assenze :");
-		lblAssenze.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAssenze.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblAssenze.setBounds(10, 357, 108, 17);
-		contentPanel.add(lblAssenze);
-		
-		textField_Assenze = new JTextField();
-		textField_Assenze.setColumns(10);
-		textField_Assenze.setBounds(148, 356, 86, 20);
-		contentPanel.add(textField_Assenze);
-		
 		
 		JButton btnNewButton = new JButton("Salva");
 		btnNewButton.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		btnNewButton.setBackground(new Color(102, 204, 51));
-		btnNewButton.setBounds(324, 415, 89, 23);
+		btnNewButton.setBounds(305, 313, 89, 23);
 		contentPanel.add(btnNewButton);
-		
-		JLabel lblNumeroLez = new JLabel("Numero lez.");
-		lblNumeroLez.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNumeroLez.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblNumeroLez.setBounds(244, 68, 73, 17);
-		contentPanel.add(lblNumeroLez);
-		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(324, 68, 31, 20);
-		contentPanel.add(textField);
 	
 	
 

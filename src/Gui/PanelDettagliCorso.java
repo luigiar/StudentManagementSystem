@@ -19,22 +19,25 @@ import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JButton;
+import com.toedter.calendar.JDateChooser;
+
+import Controller.Controller;
 
 public class PanelDettagliCorso extends JPanel {
-	private JTextField textField_OreTotali;
 	private JTextField textField_NumLezioni;
-	private JTextField textField_OreObbligatorie;
+	private JTextField textField_PresenzeObbligatorie;
 	Image search = new ImageIcon(this.getClass().getResource("/searchImm.png")).getImage();
-	private JTextField textField_DataInizio;
 	private JTextField textField;
 	private JTable table;
 	private DefaultTableModel model;
 	private DefaultTableCellRenderer cellRender;
+	private Controller theController;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelDettagliCorso() {
+	public PanelDettagliCorso(Controller c) {
+		theController = c;
 		setLayout(null);
 		setBounds(0, 0, 673, 581);
 		setBackground(new Color(255, 215, 0));
@@ -52,7 +55,7 @@ public class PanelDettagliCorso extends JPanel {
 		panel.add(lblDettagliCorso);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(10, 325, 632, 226);
+		scrollPane.setBounds(10, 241, 632, 226);
 		add(scrollPane);
 		
 		table = new JTable();
@@ -82,54 +85,43 @@ public class PanelDettagliCorso extends JPanel {
 		table.getColumnModel().getColumn(5).setPreferredWidth(150);
 		table.getColumnModel().getColumn(6).setPreferredWidth(150);
 		
-		JLabel lblSelezionaCorso = new JLabel("Seleziona Corso :");
+		JLabel lblSelezionaCorso = new JLabel("Seleziona corso :");
 		lblSelezionaCorso.setHorizontalAlignment(SwingConstants.LEFT);
 		lblSelezionaCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblSelezionaCorso.setBounds(10, 82, 112, 17);
 		add(lblSelezionaCorso);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setToolTipText("Scegli un corso");
-		comboBox.setBackground(Color.WHITE);
-		comboBox.setBounds(132, 80, 116, 22);
-		add(comboBox);
+		JComboBox comboBoxCorsi = new JComboBox();
+		comboBoxCorsi.setToolTipText("Scegli un corso");
+		comboBoxCorsi.setBackground(Color.WHITE);
+		comboBoxCorsi.setBounds(132, 80, 145, 22);
+		add(comboBoxCorsi);
+		c.mostraCorsiComboBox(comboBoxCorsi);
 		
-		JLabel lblOreTotali = new JLabel("Ore Totali :");
-		lblOreTotali.setHorizontalAlignment(SwingConstants.LEFT);
-		lblOreTotali.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblOreTotali.setBounds(346, 134, 76, 17);
-		add(lblOreTotali);
-		
-		textField_OreTotali = new JTextField();
-		textField_OreTotali.setBackground(Color.WHITE);
-		textField_OreTotali.setBounds(435, 133, 116, 20);
-		add(textField_OreTotali);
-		textField_OreTotali.setColumns(10);
-		
-		JLabel lblNumeroLezioni = new JLabel("Numero Lezioni :");
+		JLabel lblNumeroLezioni = new JLabel("Numero lezioni :");
 		lblNumeroLezioni.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNumeroLezioni.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblNumeroLezioni.setBounds(10, 134, 112, 17);
 		add(lblNumeroLezioni);
 		
 		textField_NumLezioni = new JTextField();
-		textField_NumLezioni.setBounds(132, 133, 116, 20);
+		textField_NumLezioni.setBounds(132, 133, 53, 20);
 		add(textField_NumLezioni);
 		textField_NumLezioni.setColumns(10);
 		
-		JLabel lblOreObbligatorie = new JLabel("Ore Obbligatorie :");
-		lblOreObbligatorie.setHorizontalAlignment(SwingConstants.LEFT);
-		lblOreObbligatorie.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblOreObbligatorie.setBounds(10, 197, 112, 17);
-		add(lblOreObbligatorie);
+		JLabel lblPresenzeObbligatorie = new JLabel("Presenze obbligatorie :");
+		lblPresenzeObbligatorie.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPresenzeObbligatorie.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblPresenzeObbligatorie.setBounds(332, 82, 145, 17);
+		add(lblPresenzeObbligatorie);
 		
-		textField_OreObbligatorie = new JTextField();
-		textField_OreObbligatorie.setBounds(132, 196, 116, 20);
-		add(textField_OreObbligatorie);
-		textField_OreObbligatorie.setColumns(10);
+		textField_PresenzeObbligatorie = new JTextField();
+		textField_PresenzeObbligatorie.setBounds(487, 81, 53, 20);
+		add(textField_PresenzeObbligatorie);
+		textField_PresenzeObbligatorie.setColumns(10);
 		
 		JPanel panel_cercaCorso = new JPanel();
-		panel_cercaCorso.setBounds(0, 281, 122, 30);
+		panel_cercaCorso.setBounds(0, 201, 112, 29);
 		panel_cercaCorso.setBackground(new Color(255, 165, 0));
 		add(panel_cercaCorso);
 		panel_cercaCorso.setLayout(null);
@@ -149,7 +141,7 @@ public class PanelDettagliCorso extends JPanel {
 		
 		
 		JPanel panel_GestisciLezione = new JPanel();
-		panel_GestisciLezione.setBounds(258, 134, 23, 17);
+		panel_GestisciLezione.setBounds(195, 134, 23, 17);
 		panel_GestisciLezione.setBackground(new Color(255, 165, 0));
 		add(panel_GestisciLezione);
 		panel_GestisciLezione.setLayout(null);
@@ -167,33 +159,21 @@ public class PanelDettagliCorso extends JPanel {
 		lblAggiungiLezioni.setBounds(-28, 0, 81, 14);
 		panel_GestisciLezione.add(lblAggiungiLezioni);
 		
-		
-		JLabel lblDataInizio = new JLabel("Data Inizio :");
-		lblDataInizio.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDataInizio.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblDataInizio.setBounds(346, 84, 84, 17);
-		add(lblDataInizio);
-		
-		textField_DataInizio = new JTextField();
-		textField_DataInizio.setColumns(10);
-		textField_DataInizio.setBounds(435, 81, 116, 20);
-		add(textField_DataInizio);
-		
 		textField = new JTextField();
-		textField.setBounds(132, 289, 116, 22);
+		textField.setBounds(132, 201, 96, 22);
 		add(textField);
 		textField.setColumns(10);
 		
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(255, 255, 0));
 		separator.setBackground(new Color(255, 255, 0));
-		separator.setBounds(0, 242, 673, 2);
+		separator.setBounds(0, 188, 673, 2);
 		add(separator);
 		
 		JButton addArea_button = new JButton("Aggiungi");
 		addArea_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
 		addArea_button.setBackground(new Color(102, 204, 51));
-		addArea_button.setBounds(537, 210, 96, 21);
+		addArea_button.setBounds(534, 156, 96, 21);
 		add(addArea_button);
 
 	}
