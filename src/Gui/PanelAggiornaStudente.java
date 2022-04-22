@@ -203,7 +203,6 @@ public class PanelAggiornaStudente extends JPanel {
 				textField_idCorso.setText((model.getValueAt(rigaSelected, 0)).toString());
 				textField_nameCourse.setText((model.getValueAt(rigaSelected, 1)).toString());
 				textField_corsoClicked.setText((model.getValueAt(rigaSelected, 1)).toString());
-//				c.mostraLezioniComboBox(comboBoxLezioni, textField_idCorso.getText());;
 				mostraLezioni();
 			}
 		});

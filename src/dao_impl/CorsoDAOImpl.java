@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import DAO.CorsoDAO;
 import Entità.Corso;
 import dbSettings.Connessione;
@@ -14,7 +16,7 @@ import dbSettings.Connessione;
 public class CorsoDAOImpl implements CorsoDAO {
 
 	Connection conn = null;
-	PreparedStatement inserisciCorsoStm, aggiornaCorsoStm;
+	PreparedStatement inserisciCorsoStm, aggiornaCorsoStm, aggiornaDettagliCorsoStm;
 	Statement deleteCourseST = null;
 
 	@Override
@@ -169,13 +171,14 @@ public class CorsoDAOImpl implements CorsoDAO {
 	}
 
 	@Override
-	public void aggiornaCorso(int id, String nome, String maxPartecipanti, String areeTematiche, String descrizione) throws SQLException {
+	public void aggiornaCorso(int id, String nome, String maxPartecipanti, String areeTematiche, String descrizione)
+			throws SQLException {
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
 
 		String updateSql = "UPDATE corso SET nome = ?, max_partecipanti = ?, aree_tematiche = ?, descrizione = ? WHERE id = "
-				+id;
-				
+				+ id;
+
 		try {
 			int numeroPartecipantiMax = Integer.parseInt(maxPartecipanti);
 			aggiornaCorsoStm = conn.prepareStatement(updateSql);
@@ -184,7 +187,6 @@ public class CorsoDAOImpl implements CorsoDAO {
 			aggiornaCorsoStm.setInt(2, numeroPartecipantiMax);
 			aggiornaCorsoStm.setString(3, areeTematiche);
 			aggiornaCorsoStm.setString(4, descrizione);
-
 
 			aggiornaCorsoStm.executeUpdate();
 			System.out.println("Corso aggiornato correttamente");
@@ -214,7 +216,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 		ArrayList<Corso> corsi = new ArrayList<Corso>();
 		Connessione connection = Connessione.getInstance();
 		Connection conn = connection.getConnection();
-		
+
 		Statement mostraCorsi = null;
 
 		try {
@@ -228,7 +230,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 				Corso c = new Corso();
 				c.setCodiceCorso(risultato.getInt(1));
 				c.setNome(risultato.getString(2));
-				
+
 				corsi.add(c);
 			}
 
@@ -247,8 +249,43 @@ public class CorsoDAOImpl implements CorsoDAO {
 				se.printStackTrace();
 			}
 		}
-		
+
 		return corsi;
 	}
 
+	@Override
+	public void aggiornaDettagliCorso(int numeroLezioni, int presenzeObbligatorie, int idCorso) throws SQLException {
+		Connessione connect = Connessione.getInstance();
+		conn = connect.getConnection();
+
+		try {
+			String inserimentoDettagliSql = "update corso set numero_lezioni = ?, presenze_obbligatorie = ?"
+					+ "where corso.id = " + idCorso;
+
+			aggiornaDettagliCorsoStm = conn.prepareStatement(inserimentoDettagliSql);
+			System.out.println("aggiornando tabella corso");
+			aggiornaDettagliCorsoStm.setInt(1, numeroLezioni);
+			aggiornaDettagliCorsoStm.setInt(2, presenzeObbligatorie);
+			aggiornaDettagliCorsoStm.executeUpdate();
+			System.out.println("Corso aggiornato correttamente");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// blocco per chiudere risorse
+			try {
+				if (aggiornaDettagliCorsoStm != null)
+					conn.close();
+			} catch (SQLException se) {
+				// non fa nulla
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+
+		}
+	}
 }

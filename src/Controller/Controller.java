@@ -218,6 +218,28 @@ public class Controller {
 		model.remove(row);
 	}
 
+	public void updateDetailsCourse(String numeroLezioni, String presenzeObbligatorie, String id) {
+		Connessione connect = null;
+
+		try {
+			connect = Connessione.getInstance();
+			Connection conn = connect.getConnection();
+
+			// Conversione valori
+			int codiceCorso = Integer.parseInt(id);
+			int lezioniTotali = Integer.parseInt(numeroLezioni);
+			int presenzeNecessarie = Integer.parseInt(presenzeObbligatorie);
+
+			course.aggiornaDettagliCorso(lezioniTotali, presenzeNecessarie, codiceCorso);
+			JOptionPane.showMessageDialog(null, "Aggiornamento effettuato", "Conferma",
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(null, "Dati inseriti non validi", "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void updateCourse(JTable table, String nome, String maxPartecipanti, String areaTematica,
 			String descrizione) {
 		try {
@@ -427,7 +449,7 @@ public class Controller {
 				String cognome = result.getString("cognome");
 				String data = result.getString("data_lezione");
 				boolean presenza = result.getBoolean("presenza");
-				model.addRow(new Object[] {idStudente,nome, cognome, data, presenza});
+				model.addRow(new Object[] { idStudente, nome, cognome, data, presenza });
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -446,7 +468,7 @@ public class Controller {
 			connect = Connessione.getInstance();
 			Connection conn = connect.getConnection();
 			CallableStatement aggiornaPresenza;
-			
+
 			int codiceCorso = Integer.parseInt(idCorso);
 			int codiceStudente = Integer.parseInt(idStudente);
 			int codiceLezione = Integer.parseInt(idLezione);
@@ -464,4 +486,5 @@ public class Controller {
 		}
 
 	}
+
 }
