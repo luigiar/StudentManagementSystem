@@ -95,7 +95,6 @@ public class PanelDettagliCorso extends JPanel {
 
 		JComboBox comboBoxCorsi = new JComboBox();
 		comboBoxCorsi.setToolTipText("Scegli un corso");
-		comboBoxCorsi.setBackground(Color.WHITE);
 		comboBoxCorsi.setBounds(132, 114, 145, 22);
 		add(comboBoxCorsi);
 		c.mostraCorsiComboBox(comboBoxCorsi);
@@ -197,43 +196,8 @@ public class PanelDettagliCorso extends JPanel {
 		JLabel lbl_introPanel = new JLabel("Imposta i dettagli di ogni corso, gestisci le lezioni");
 		lbl_introPanel.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_introPanel.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lbl_introPanel.setBounds(10, 64, 494, 23);
+		lbl_introPanel.setBounds(10, 68, 312, 23);
 		add(lbl_introPanel);
-
-	}
-
-	private class PanelButtonMouseAdapter extends MouseAdapter {
-
-		JPanel panel;
-
-		public PanelButtonMouseAdapter(JPanel panel) {
-			this.panel = panel;
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			panel.setBackground(new Color(60, 179, 113));
-			super.mousePressed(e);
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			panel.setBackground(new Color(112, 128, 144));
-			super.mouseReleased(e);
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			panel.setBackground(new Color(112, 128, 144));
-			super.mouseEntered(e);
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			panel.setBackground(new Color(255, 165, 0));
-			super.mouseExited(e);
-
-		}
 
 	}
 	

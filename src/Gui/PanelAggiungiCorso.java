@@ -150,7 +150,6 @@ public class PanelAggiungiCorso extends JPanel {
 			}
 		});
 
-		comboBox.setBackground(Color.WHITE);
 		comboBox.setToolTipText("Seleziona un'area tematica per il corso");
 
 		comboBox.setModel(new DefaultComboBoxModel(new String[] { "---Seleziona Area", "Aggiungi Area",

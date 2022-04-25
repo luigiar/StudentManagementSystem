@@ -179,7 +179,6 @@ public class PanelGestisciCorso extends JPanel {
 
 		comboBox_areaTematica = new JComboBox();
 		comboBox_areaTematica.setToolTipText("Seleziona un'area tematica per il corso");
-		comboBox_areaTematica.setBackground(Color.WHITE);
 		comboBox_areaTematica.setBounds(20, 388, 139, 21);
 		comboBox_areaTematica.setModel(new DefaultComboBoxModel(new String[] { "---Seleziona Area", "Aggiungi Area",
 				"Area Umanistica", "Area Linguistica", "Area Scientifica" }));
