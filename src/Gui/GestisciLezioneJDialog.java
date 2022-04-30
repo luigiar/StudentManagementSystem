@@ -11,6 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
+import Controller.Controller;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -29,11 +31,13 @@ public class GestisciLezioneJDialog extends JDialog {
 	private JTextField textFieldDurataLezione;
 	private JTextField textField_DataInizio;
 	private JTextField textField_OraInizio;
+	private Controller theController;
 	
 	/**
 	 * Create the dialog.
 	 */
-	public GestisciLezioneJDialog() {
+	public GestisciLezioneJDialog(Controller c) {
+		theController = c;
 		setTitle("Aggiungi delle lezioni");
 		setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -121,6 +125,12 @@ public class GestisciLezioneJDialog extends JDialog {
 		
 		
 		JButton btnNewButton = new JButton("Salva");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			}
+		});
 		btnNewButton.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		btnNewButton.setBackground(new Color(102, 204, 51));
 		btnNewButton.setBounds(305, 313, 89, 23);

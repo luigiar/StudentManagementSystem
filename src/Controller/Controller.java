@@ -486,5 +486,47 @@ public class Controller {
 		}
 
 	}
+	
+	public void showDetailLesson(String idCorso, JTextField numeroLezioni, JTextField presenzeObbligatorie) {
+		Connessione connect =null;
+		
+		try {
+			connect = Connessione.getInstance();
+			Connection conn = connect.getConnection();
+			
+			int id = Integer.parseInt(idCorso);
+			PreparedStatement insert = null;
+			String mostraDettagli = "insert into lezione(data_inizio, corso_id, titolo, descrizione, durata, ora_inizio)" +id;
+			insert = conn.prepareStatement(mostraDettagli);
+			
+			ResultSet risultato = insert.executeQuery();
+			while (risultato.next()) {
+				int numLezioni = risultato.getInt(1);
+				String lezioni = Integer.toString(numLezioni);
+				numeroLezioni.setText(lezioni);
+				
+				int numPresenzeObbligatorie = risultato.getInt(2);
+				String presenze = Integer.toString(numPresenzeObbligatorie);
+				presenzeObbligatorie.setText(presenze);
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void insertLesson(String dataInizio, String idCorso, String titolo, String descrizione, String durata, String oraInizio) {
+		
+		try {
+			lesson.insertLesson(dataInizio, idCorso, titolo, descrizione, durata, oraInizio);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 }

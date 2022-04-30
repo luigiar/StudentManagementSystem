@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -23,6 +24,10 @@ import javax.swing.JButton;
 import com.toedter.calendar.JDateChooser;
 
 import Controller.Controller;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class PanelDettagliCorso extends JPanel {
 	private JTextField textField_NumLezioni;
@@ -33,6 +38,7 @@ public class PanelDettagliCorso extends JPanel {
 	private DefaultTableModel model;
 	private DefaultTableCellRenderer cellRender;
 	private Controller theController;
+	private JComboBox comboBoxCorsi;
 
 	/**
 	 * Create the panel.
@@ -93,11 +99,22 @@ public class PanelDettagliCorso extends JPanel {
 		lblSelezionaCorso.setBounds(10, 116, 112, 17);
 		add(lblSelezionaCorso);
 
-		JComboBox comboBoxCorsi = new JComboBox();
+		comboBoxCorsi = new JComboBox();
+		c.mostraCorsiComboBox(comboBoxCorsi);
+		comboBoxCorsi.setSelectedIndex(-1);
+
+		comboBoxCorsi.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (comboBoxCorsi.getSelectedIndex() != -1) {
+					String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
+					String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
+					c.showDetailLesson(codiceCorso, textField_NumLezioni, textField_PresenzeObbligatorie);
+				}
+			}
+		});
 		comboBoxCorsi.setToolTipText("Scegli un corso");
 		comboBoxCorsi.setBounds(132, 114, 145, 22);
 		add(comboBoxCorsi);
-		c.mostraCorsiComboBox(comboBoxCorsi);
 
 		JLabel lblNumeroLezioni = new JLabel("Numero lezioni :");
 		lblNumeroLezioni.setHorizontalAlignment(SwingConstants.LEFT);
@@ -183,8 +200,10 @@ public class PanelDettagliCorso extends JPanel {
 
 					c.updateDetailsCourse(textField_NumLezioni.getText(), textField_PresenzeObbligatorie.getText(),
 							codiceCorso);
-					
+
+					comboBoxCorsi.setSelectedIndex(-1);
 					clearFields();
+
 				}
 			}
 		});
@@ -192,7 +211,7 @@ public class PanelDettagliCorso extends JPanel {
 		add_button.setBackground(new Color(102, 204, 51));
 		add_button.setBounds(534, 156, 96, 21);
 		add(add_button);
-		
+
 		JLabel lbl_introPanel = new JLabel("Imposta i dettagli di ogni corso, gestisci le lezioni");
 		lbl_introPanel.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_introPanel.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
@@ -200,9 +219,10 @@ public class PanelDettagliCorso extends JPanel {
 		add(lbl_introPanel);
 
 	}
-	
+
 	public void clearFields() {
 		textField_NumLezioni.setText("");
 		textField_PresenzeObbligatorie.setText("");
 	}
+
 }

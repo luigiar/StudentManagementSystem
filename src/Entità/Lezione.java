@@ -4,8 +4,8 @@ public class Lezione {
 
 	
 	private String descrizione;
-	private String DataInizio;
-	private double OraInizio;
+	private String dataInizio;
+	private double oraInizio;
 	private int codiceLezione;
 	private String titolo;
 	private boolean presenza;
@@ -24,16 +24,16 @@ public class Lezione {
 		this.descrizione = descrizione;
 	}
 	public String getDataInizio() {
-		return DataInizio;
+		return dataInizio;
 	}
 	public void setDataInizio(String dataInizio) {
-		DataInizio = dataInizio;
+		this.dataInizio = dataInizio;
 	}
 	public double getOraInizio() {
-		return OraInizio;
+		return oraInizio;
 	}
 	public void setOraInizio(double oraInizio) {
-		OraInizio = oraInizio;
+		this.oraInizio = oraInizio;
 	}
 	public int getCodiceLezione() {
 		return codiceLezione;

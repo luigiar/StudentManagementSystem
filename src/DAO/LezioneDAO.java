@@ -10,4 +10,5 @@ public interface LezioneDAO {
 	public ArrayList<Lezione> displayLezioniComboBox(int id) throws SQLException;
 
 
+	public void insertLesson(String dataInizio, String idCorso, String titolo, String descrizione, String durata, String oraInizio) throws SQLException;
 }
