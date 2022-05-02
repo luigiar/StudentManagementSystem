@@ -165,8 +165,7 @@ public class PanelDettagliCorso extends JPanel {
 		panel_GestisciLezione.addMouseListener(new PanelButtonMouseAdapter(panel_GestisciLezione));
 		panel_GestisciLezione.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(c);
-				lezione.setVisible(true);
+				showJDialogLesson();
 			}
 
 		});
@@ -223,6 +222,19 @@ public class PanelDettagliCorso extends JPanel {
 	public void clearFields() {
 		textField_NumLezioni.setText("");
 		textField_PresenzeObbligatorie.setText("");
+	}
+	
+	public void showJDialogLesson() {
+		if(comboBoxCorsi.getSelectedItem() != null) {
+			String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
+			String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
+			GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(theController, codiceCorso);
+			lezione.setVisible(true);
+		}else {
+			JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso!", "Attenzione",
+			JOptionPane.WARNING_MESSAGE);
+		}
+			
 	}
 
 }

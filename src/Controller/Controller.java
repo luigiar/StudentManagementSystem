@@ -20,6 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
 import DAO.AdminDAO;
@@ -518,15 +519,23 @@ public class Controller {
 		
 	}
 	
-//	public void insertLesson(String dataInizio, String idCorso, String titolo, String descrizione, String durata, String oraInizio) {
-//		
-//		try {
-//			lesson.insertLesson(dataInizio, idCorso, titolo, descrizione, durata, oraInizio);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//	}
+	public void insertLesson(String dataInizio, String idCorso, String titolo, String descrizione, String durata, String oraInizio) {
+		
+		try {
+			if(dataInizio.isBlank() || idCorso.isBlank() || titolo.isBlank() || durata.isBlank() || oraInizio.isBlank()) {
+				JOptionPane.showMessageDialog(null, "Completa prima tutti i campi!", "Attenzione",
+						JOptionPane.WARNING_MESSAGE);
+			}else {
+				lesson.insertLesson(dataInizio, idCorso, titolo, descrizione, durata, oraInizio);
+				JOptionPane.showMessageDialog(null, "Lezione aggiunta correttamente", "Conferma",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 }

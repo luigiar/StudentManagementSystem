@@ -23,20 +23,23 @@ import java.awt.event.MouseEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 
 public class GestisciLezioneJDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textFieldLezioneNum;
+	private JTextField textField_titolo;
 	private JTextField textFieldDurataLezione;
-	private JTextField textField_DataInizio;
-	private JTextField textField_OraInizio;
+	private JTextField textField_oraInizio;
+	private JTextArea textArea_descrizione;
+	private JDateChooser dateChooser;
 	private Controller theController;
 	
 	/**
 	 * Create the dialog.
 	 */
-	public GestisciLezioneJDialog(Controller c) {
+	public GestisciLezioneJDialog(Controller c, String corsoID) {
 		theController = c;
 		setTitle("Aggiungi delle lezioni");
 		setModal(true);
@@ -68,10 +71,10 @@ public class GestisciLezioneJDialog extends JDialog {
 		lblLezionenumero.setBounds(10, 68, 128, 17);
 		contentPanel.add(lblLezionenumero);
 		
-		textFieldLezioneNum = new JTextField();
-		textFieldLezioneNum.setColumns(10);
-		textFieldLezioneNum.setBounds(148, 67, 151, 20);
-		contentPanel.add(textFieldLezioneNum);
+		textField_titolo = new JTextField();
+		textField_titolo.setColumns(10);
+		textField_titolo.setBounds(148, 67, 151, 20);
+		contentPanel.add(textField_titolo);
 		
 		JLabel lblDurataLezione = new JLabel("Durata Lezione :");
 		lblDurataLezione.setHorizontalAlignment(SwingConstants.LEFT);
@@ -95,7 +98,7 @@ public class GestisciLezioneJDialog extends JDialog {
 		contentPanel.add(scrollPane_descrizione);
 		scrollPane_descrizione.setBounds(148, 150, 151, 73);
 		
-		JTextArea textArea_descrizione = new JTextArea();
+		textArea_descrizione = new JTextArea();
 		textArea_descrizione.setBounds(148, 150, 151, 73);
 		scrollPane_descrizione.setViewportView(textArea_descrizione);
 		textArea_descrizione.setLineWrap(true);
@@ -107,37 +110,45 @@ public class GestisciLezioneJDialog extends JDialog {
 		lblDataInizio.setBounds(10, 235, 93, 17);
 		contentPanel.add(lblDataInizio);
 		
-		textField_DataInizio = new JTextField();
-		textField_DataInizio.setColumns(10);
-		textField_DataInizio.setBounds(148, 234, 86, 20);
-		contentPanel.add(textField_DataInizio);
-		
 		JLabel lblOraInizio = new JLabel("Ora inizio :");
 		lblOraInizio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblOraInizio.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblOraInizio.setBounds(10, 279, 93, 17);
 		contentPanel.add(lblOraInizio);
 		
-		textField_OraInizio = new JTextField();
-		textField_OraInizio.setColumns(10);
-		textField_OraInizio.setBounds(148, 278, 86, 20);
-		contentPanel.add(textField_OraInizio);
+		textField_oraInizio = new JTextField();
+		textField_oraInizio.setColumns(10);
+		textField_oraInizio.setBounds(148, 278, 86, 20);
+		contentPanel.add(textField_oraInizio);
 		
+		dateChooser = new JDateChooser();
+		dateChooser.setBounds(148, 232, 128, 20);
+		contentPanel.add(dateChooser);
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateChooser.getDateEditor();
+		editor.setEditable(false);
 		
 		JButton btnNewButton = new JButton("Salva");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+			c.insertLesson(editor.getText(),corsoID,textField_titolo.getText(), textArea_descrizione.getText(), textFieldDurataLezione.getText(),textField_oraInizio.getText());
+			clearField();
+			
 			}
 		});
 		btnNewButton.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		btnNewButton.setBackground(new Color(102, 204, 51));
 		btnNewButton.setBounds(305, 313, 89, 23);
 		contentPanel.add(btnNewButton);
-	
-	
-
 		
+		}
+	
+	public void clearField() {
+		dateChooser.setCalendar(null);
+		textField_titolo.setText("");
+		textArea_descrizione.setText("");
+		textFieldDurataLezione.setText("");
+		textField_oraInizio.setText("");
 	}
 }
