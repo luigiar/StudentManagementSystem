@@ -165,7 +165,7 @@ public class PanelDettagliCorso extends JPanel {
 		panel_GestisciLezione.addMouseListener(new PanelButtonMouseAdapter(panel_GestisciLezione));
 		panel_GestisciLezione.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				GestisciLezioneJDialog lezione = new GestisciLezioneJDialog();
+				GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(c);
 				lezione.setVisible(true);
 			}
 
