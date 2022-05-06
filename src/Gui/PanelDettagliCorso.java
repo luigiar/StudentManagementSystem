@@ -37,6 +37,7 @@ public class PanelDettagliCorso extends JPanel {
 	private JTable table;
 	private DefaultTableModel model;
 	private DefaultTableCellRenderer cellRender;
+	private JLabel lblLezioniPresenti;
 	private Controller theController;
 	private JComboBox comboBoxCorsi;
 	private boolean lessonCreable = false;
@@ -110,6 +111,7 @@ public class PanelDettagliCorso extends JPanel {
 					String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
 					String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
 					c.showDetailLesson(codiceCorso, textField_NumLezioni, textField_PresenzeObbligatorie);
+					c.showNumberOfLessons(lblLezioniPresenti, codiceCorso);
 				}
 			}
 		});
@@ -158,23 +160,24 @@ public class PanelDettagliCorso extends JPanel {
 		lblSearch.setIcon(new ImageIcon(search));
 		panel_cercaCorso.add(lblSearch);
 
-		JPanel panel_GestisciLezione = new JPanel();
-		panel_GestisciLezione.setBounds(195, 156, 23, 17);
-		panel_GestisciLezione.setBackground(new Color(255, 165, 0));
-		add(panel_GestisciLezione);
-		panel_GestisciLezione.setLayout(null);
-		panel_GestisciLezione.addMouseListener(new PanelButtonMouseAdapter(panel_GestisciLezione));
-		panel_GestisciLezione.addMouseListener(new MouseAdapter() {
+		JButton button_GestisciLezione = new JButton();
+		button_GestisciLezione.setToolTipText("Clicca per aggiungere una lezione");
+		button_GestisciLezione.setText(" ...");
+		button_GestisciLezione.setBounds(195, 156, 22, 17);
+		button_GestisciLezione.setBackground(new Color(255, 165, 0));
+		add(button_GestisciLezione);
+		button_GestisciLezione.setLayout(null);
+		button_GestisciLezione.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				showJDialogLesson();
 			}
-
 		});
-
-		JLabel lblAggiungiLezioni = new JLabel("...");
-		lblAggiungiLezioni.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAggiungiLezioni.setBounds(-28, 0, 81, 14);
-		panel_GestisciLezione.add(lblAggiungiLezioni);
+		
+		lblLezioniPresenti = new JLabel("");
+		lblLezioniPresenti.setHorizontalAlignment(SwingConstants.LEFT);
+		lblLezioniPresenti.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblLezioniPresenti.setBounds(228, 158, 117, 17);
+		add(lblLezioniPresenti);
 
 		textField = new JTextField();
 		textField.setBounds(132, 201, 96, 22);
@@ -187,7 +190,7 @@ public class PanelDettagliCorso extends JPanel {
 		separator.setBounds(0, 188, 673, 2);
 		add(separator);
 
-		JButton add_button = new JButton("Aggiungi");
+		JButton add_button = new JButton("Salva");
 		add_button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -212,12 +215,16 @@ public class PanelDettagliCorso extends JPanel {
 		lbl_introPanel.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lbl_introPanel.setBounds(10, 68, 312, 23);
 		add(lbl_introPanel);
+		
+
 
 	}
 
 	public void clearFields() {
 		textField_NumLezioni.setText("");
 		textField_PresenzeObbligatorie.setText("");
+		lblLezioniPresenti.setText("");
+		comboBoxCorsi.setSelectedIndex(-1);
 	}
 	
 	public void showJDialogLesson() {
@@ -226,6 +233,9 @@ public class PanelDettagliCorso extends JPanel {
 			String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
 				GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(theController, codiceCorso);
 				lezione.setVisible(true);
+				if(!lezione.isVisible()) {
+					clearFields();
+				}
 		}else {
 			JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso!", "Attenzione",
 			JOptionPane.WARNING_MESSAGE);
@@ -251,5 +261,4 @@ public class PanelDettagliCorso extends JPanel {
 			JOptionPane.WARNING_MESSAGE);
 		}
 	}
-
 }

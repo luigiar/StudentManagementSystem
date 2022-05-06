@@ -84,7 +84,6 @@ public class PanelAttendance extends JPanel {
 		lbl_selezionaCorso.setBounds(20, 97, 115, 23);
 		add(lbl_selezionaCorso);
 
-
 		textField_codiceCorso = new JTextField();
 		textField_nomeCorso = new JTextField();
 		textField_codiceCorso.setEditable(false);
@@ -95,22 +94,26 @@ public class PanelAttendance extends JPanel {
 		btn_mostraLezioni.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String corsoID = comboBoxCorsi.getSelectedItem().toString();
-				corsoID = corsoID.replaceAll("[^0-9]", "");
-				textField_codiceCorso.setText(corsoID);
+				if (comboBoxCorsi.getSelectedIndex() != -1) {
+					String corsoID = comboBoxCorsi.getSelectedItem().toString();
+					corsoID = corsoID.replaceAll("[^0-9]", "");
+					textField_codiceCorso.setText(corsoID);
 
-				String nomeCorso = comboBoxCorsi.getSelectedItem().toString();
-				nomeCorso = nomeCorso.replaceAll("[0-9]", "");
-				textField_nomeCorso.setText(nomeCorso);
-				int input = JOptionPane.showConfirmDialog(null, campiCorso, "Visualizzare le lezioni per il corso? ",
-						JOptionPane.OK_CANCEL_OPTION);
-				if (input == JOptionPane.OK_OPTION) {
-					mostraLezioni();
-					JOptionPane.showMessageDialog(null, "Lezioni visualizzate");
-				} else {
-					JOptionPane.showMessageDialog(null, "Operazione annullata");
+					String nomeCorso = comboBoxCorsi.getSelectedItem().toString();
+					nomeCorso = nomeCorso.replaceAll("[0-9]", "");
+					textField_nomeCorso.setText(nomeCorso);
+					int input = JOptionPane.showConfirmDialog(null, campiCorso,
+							"Visualizzare le lezioni per il corso? ", JOptionPane.OK_CANCEL_OPTION);
+					if (input == JOptionPane.OK_OPTION) {
+						mostraLezioni();
+						JOptionPane.showMessageDialog(null, "Lezioni visualizzate");
+					} else {
+						JOptionPane.showMessageDialog(null, "Operazione annullata");
+					}
 				}
+
 			}
+
 		});
 		btn_mostraLezioni.setBackground(new Color(0, 139, 139));
 		btn_mostraLezioni.setBounds(281, 98, 75, 23);
@@ -176,8 +179,8 @@ public class PanelAttendance extends JPanel {
 		});
 		table.setBackground(new Color(230, 230, 250));
 		scrollPane.setViewportView(table);
-		
-	    comboBoxCorsi = new JComboBox();
+
+		comboBoxCorsi = new JComboBox();
 		comboBoxCorsi.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				clearFields();
@@ -186,6 +189,7 @@ public class PanelAttendance extends JPanel {
 		comboBoxCorsi.setBounds(135, 98, 136, 22);
 		add(comboBoxCorsi);
 		c.mostraCorsiComboBox(comboBoxCorsi);
+		comboBoxCorsi.setSelectedIndex(-1);
 
 		JButton btn_aggiungiCorso = new JButton("Visualizza studenti");
 		btn_aggiungiCorso.addMouseListener(new MouseAdapter() {
@@ -228,13 +232,13 @@ public class PanelAttendance extends JPanel {
 					idLezioneSelected, table);
 		}
 	}
-	
+
 	public void clearFields() {
-		if(comboBoxLezioni.getSelectedIndex() >= 0 || table.getRowCount() > 0 || comboBoxLezioni.getItemCount() > -1) {
+		if (comboBoxLezioni.getSelectedIndex() >= 0 || table.getRowCount() > 0 || comboBoxLezioni.getItemCount() > -1) {
 			modelComboBox.removeAllElements();
 			model.setRowCount(0);
 		}
-		
+
 	}
-	
+
 }

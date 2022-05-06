@@ -549,7 +549,28 @@ public class Controller {
 			e.printStackTrace();
 		}
 		return value;
-		
+
+	}
+
+	public void showNumberOfLessons(JLabel label, String idCorso) {
+		Connessione connessione = null;
+		try {
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+
+			int id = Integer.parseInt(idCorso);
+			PreparedStatement show;
+			String mostraNumeroLezioni = "select count(lezione_id) from lezione where corso_id = " +id;
+			show = con.prepareStatement(mostraNumeroLezioni);
+
+			ResultSet risultato = show.executeQuery();
+			while (risultato.next()) {
+				label.setText("Lezioni presenti : " + risultato.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
