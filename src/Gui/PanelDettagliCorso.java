@@ -39,6 +39,7 @@ public class PanelDettagliCorso extends JPanel {
 	private DefaultTableCellRenderer cellRender;
 	private Controller theController;
 	private JComboBox comboBoxCorsi;
+	private boolean lessonCreable = false;
 
 	/**
 	 * Create the panel.
@@ -194,12 +195,7 @@ public class PanelDettagliCorso extends JPanel {
 					JOptionPane.showMessageDialog(null, "Completa prima tutti i campi!", "Attenzione",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
-					String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
-					String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
-
-					c.updateDetailsCourse(textField_NumLezioni.getText(), textField_PresenzeObbligatorie.getText(),
-							codiceCorso);
-
+					updateDetails();
 					comboBoxCorsi.setSelectedIndex(-1);
 					clearFields();
 
@@ -228,13 +224,32 @@ public class PanelDettagliCorso extends JPanel {
 		if(comboBoxCorsi.getSelectedItem() != null) {
 			String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
 			String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
-			GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(theController, codiceCorso);
-			lezione.setVisible(true);
+				GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(theController, codiceCorso);
+				lezione.setVisible(true);
 		}else {
 			JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso!", "Attenzione",
 			JOptionPane.WARNING_MESSAGE);
 		}
 			
+	}
+	
+	public void updateDetails() {
+		if(comboBoxCorsi.getSelectedItem() != null) {
+			String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
+			String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
+		if(theController.checkNumberLesson(codiceCorso, lessonCreable,textField_NumLezioni.getText())) {
+			theController.updateDetailsCourse(textField_NumLezioni.getText(), textField_PresenzeObbligatorie.getText(),
+			codiceCorso);
+
+		}else {
+			JOptionPane.showMessageDialog(null, "Il numero delle lezioni inserito è inferiore a quelle già presenti.", "Attenzione",
+			JOptionPane.WARNING_MESSAGE);
+		}
+				
+		}else {
+			JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso!", "Attenzione",
+			JOptionPane.WARNING_MESSAGE);
+		}
 	}
 
 }

@@ -25,6 +25,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class PanelAttendance extends JPanel {
 	private JTable table;
@@ -34,6 +36,7 @@ public class PanelAttendance extends JPanel {
 	private JTextField textField_codiceCorso;
 	private JTextField textField_nomeCorso;
 	private JComboBox comboBoxLezioni;
+	private JComboBox comboBoxCorsi;
 	private JButton btn_salva;
 	DefaultComboBoxModel modelComboBox;
 	String dataLezioneSelected, idLezioneSelected, idStudente, presenza;
@@ -81,10 +84,6 @@ public class PanelAttendance extends JPanel {
 		lbl_selezionaCorso.setBounds(20, 97, 115, 23);
 		add(lbl_selezionaCorso);
 
-		JComboBox comboBoxCorsi = new JComboBox();
-		comboBoxCorsi.setBounds(135, 98, 136, 22);
-		add(comboBoxCorsi);
-		c.mostraCorsiComboBox(comboBoxCorsi);
 
 		textField_codiceCorso = new JTextField();
 		textField_nomeCorso = new JTextField();
@@ -177,6 +176,16 @@ public class PanelAttendance extends JPanel {
 		});
 		table.setBackground(new Color(230, 230, 250));
 		scrollPane.setViewportView(table);
+		
+	    comboBoxCorsi = new JComboBox();
+		comboBoxCorsi.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				clearFields();
+			}
+		});
+		comboBoxCorsi.setBounds(135, 98, 136, 22);
+		add(comboBoxCorsi);
+		c.mostraCorsiComboBox(comboBoxCorsi);
 
 		JButton btn_aggiungiCorso = new JButton("Visualizza studenti");
 		btn_aggiungiCorso.addMouseListener(new MouseAdapter() {
@@ -221,11 +230,11 @@ public class PanelAttendance extends JPanel {
 	}
 	
 	public void clearFields() {
-		if(comboBoxLezioni.getSelectedIndex() >= 0 || table.getRowCount() > 0) {
+		if(comboBoxLezioni.getSelectedIndex() >= 0 || table.getRowCount() > 0 || comboBoxLezioni.getItemCount() > -1) {
 			modelComboBox.removeAllElements();
 			model.setRowCount(0);
 		}
 		
 	}
-
+	
 }

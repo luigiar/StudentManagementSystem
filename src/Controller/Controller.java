@@ -487,54 +487,68 @@ public class Controller {
 		}
 
 	}
-	
+
 	public void showDetailLesson(String idCorso, JTextField numeroLezioni, JTextField presenzeObbligatorie) {
-		Connessione connect =null;
-		
+		Connessione connect = null;
+
 		try {
 			connect = Connessione.getInstance();
 			Connection conn = connect.getConnection();
-			
+
 			int id = Integer.parseInt(idCorso);
 			PreparedStatement insert = null;
-			String mostraDettagli = "select numero_lezioni, presenze_obbligatorie from corso where corso.id = " +id;
+			String mostraDettagli = "select numero_lezioni, presenze_obbligatorie from corso where corso.id = " + id;
 			insert = conn.prepareStatement(mostraDettagli);
-			
+
 			ResultSet risultato = insert.executeQuery();
 			while (risultato.next()) {
 				int numLezioni = risultato.getInt(1);
 				String lezioni = Integer.toString(numLezioni);
 				numeroLezioni.setText(lezioni);
-				
+
 				int numPresenzeObbligatorie = risultato.getInt(2);
 				String presenze = Integer.toString(numPresenzeObbligatorie);
 				presenzeObbligatorie.setText(presenze);
-			}
-			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public void insertLesson(String dataInizio, String idCorso, String titolo, String descrizione, String durata, String oraInizio) {
-		
-		try {
-			if(dataInizio.isBlank() || idCorso.isBlank() || titolo.isBlank() || durata.isBlank() || oraInizio.isBlank()) {
-				JOptionPane.showMessageDialog(null, "Completa prima tutti i campi!", "Attenzione",
-						JOptionPane.WARNING_MESSAGE);
-			}else {
-				lesson.insertLesson(dataInizio, idCorso, titolo, descrizione, durata, oraInizio);
-				JOptionPane.showMessageDialog(null, "Lezione aggiunta correttamente", "Conferma",
-						JOptionPane.INFORMATION_MESSAGE);
 			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+	}
+
+	public void insertLesson(String dataInizio, String idCorso, String titolo, String descrizione, String durata,
+			String oraInizio) {
+
+		try {
+			if (dataInizio.isBlank() || idCorso.isBlank() || titolo.isBlank() || durata.isBlank()
+					|| oraInizio.isBlank()) {
+				JOptionPane.showMessageDialog(null, "Completa prima tutti i campi!", "Attenzione",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				lesson.insertLesson(dataInizio, idCorso, titolo, descrizione, durata, oraInizio);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public boolean checkNumberLesson(String corsoID, boolean value, String numero_lezioni) {
+		int id = Integer.parseInt(corsoID);
+		int lezioniTotali = Integer.parseInt(numero_lezioni);
+		try {
+			if (lesson.checkLessonsNumber(id, value, lezioniTotali)) {
+				value = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return value;
 		
 	}
 

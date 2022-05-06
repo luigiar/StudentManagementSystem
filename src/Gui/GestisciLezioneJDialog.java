@@ -133,8 +133,6 @@ public class GestisciLezioneJDialog extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 			c.insertLesson(editor.getText(),corsoID,textField_titolo.getText(), textArea_descrizione.getText(), textFieldDurataLezione.getText(),textField_oraInizio.getText());
-			clearField();
-			
 			}
 		});
 		btnNewButton.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
@@ -144,11 +142,4 @@ public class GestisciLezioneJDialog extends JDialog {
 		
 		}
 	
-	public void clearField() {
-		dateChooser.setCalendar(null);
-		textField_titolo.setText("");
-		textArea_descrizione.setText("");
-		textFieldDurataLezione.setText("");
-		textField_oraInizio.setText("");
-	}
 }

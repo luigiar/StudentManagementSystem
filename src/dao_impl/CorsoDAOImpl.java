@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -267,7 +268,6 @@ public class CorsoDAOImpl implements CorsoDAO {
 			aggiornaDettagliCorsoStm.setInt(1, numeroLezioni);
 			aggiornaDettagliCorsoStm.setInt(2, presenzeObbligatorie);
 			aggiornaDettagliCorsoStm.executeUpdate();
-			System.out.println("Corso aggiornato correttamente");
 
 		} catch (SQLException e) {
 			e.printStackTrace();

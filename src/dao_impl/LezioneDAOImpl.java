@@ -1,15 +1,18 @@
 package dao_impl;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,12 +20,13 @@ import javax.swing.JOptionPane;
 
 import DAO.LezioneDAO;
 import Entità.Lezione;
+import Gui.GestisciLezioneJDialog;
 import dbSettings.Connessione;
 
 public class LezioneDAOImpl implements LezioneDAO {
 	PreparedStatement mostraLezioni, inserisciLezione;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+	SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 
 	@Override
 	public ArrayList<Lezione> displayLezioniComboBox(int id) throws SQLException {
@@ -75,11 +79,48 @@ public class LezioneDAOImpl implements LezioneDAO {
 			inserisciLezione.setTime(6, timeValue);
 			inserisciLezione.executeUpdate();
 
+			SQLWarning warning = inserisciLezione.getWarnings();
+
+			if (warning != null) {
+				JOptionPane.showMessageDialog(null,
+						"Non è possibile aggiungere altre lezioni al corso,\n aggiorna il numero di lezioni.",
+						"Attenzione", JOptionPane.WARNING_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "Lezione aggiunta correttamente", "Conferma",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+
+		} catch (DateTimeParseException exceptionTime) {
+			JOptionPane.showMessageDialog(null, "Inserisci un formato corretto per l'ora", "Attenzione",
+					JOptionPane.WARNING_MESSAGE);
+		} catch (NumberFormatException exceptionDurata) {
+			JOptionPane.showMessageDialog(null, "Durata della lezione inserita non corretta", "Attenzione",
+					JOptionPane.WARNING_MESSAGE);
+		} catch (ParseException e1) {
+			e1.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (ParseException e1) {
-			JOptionPane.showMessageDialog(null, "Inserimento data non corretto", "Attenzione",
-					JOptionPane.WARNING_MESSAGE);
 		}
+	}
+
+	@Override
+	public boolean checkLessonsNumber(int corsoID, boolean value, int numeroLezioni) throws SQLException {
+		Connessione connect = Connessione.getInstance();
+		Connection conn = connect.getConnection();
+
+		CallableStatement myStatement = null;
+		ResultSet result = null;
+
+		myStatement = conn.prepareCall("{call check_number_lesson(?,?)}");
+		myStatement.setInt(1, corsoID);
+		myStatement.setInt(2, numeroLezioni);
+
+		result = myStatement.executeQuery();
+		while (result.next()) {
+			value = result.getBoolean(1);
+		}
+
+		return value;
+
 	}
 }
