@@ -267,7 +267,7 @@ public class PanelAggiornaStudente extends JPanel {
 		deleteCourse_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!textField_idCorso.getText().isBlank() && !textField_nameCourse.getText().isBlank()) {
-					c.removeTableDataStudent(table, textField_idCorso.getText());
+					c.removeTableDataStudent(table, textField_idCorso.getText(), textField_id.getText());
 					JOptionPane.showMessageDialog(null, "Icrizione al corso rimossa", "Conferma",
 							JOptionPane.INFORMATION_MESSAGE);
 					clearTextField();

@@ -345,6 +345,9 @@ public class Controller {
 				String nomeCorso = risultato.getString(2);
 				registrationStudent.addRow(new Object[] { idCorso, nomeCorso });
 			}
+		}catch(NumberFormatException ec) {
+			JOptionPane.showMessageDialog(null, "Inserire un formato corretto", "Attenzione",
+					JOptionPane.WARNING_MESSAGE);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -402,7 +405,7 @@ public class Controller {
 
 	}
 
-	public void removeTableDataStudent(JTable table, String id) {
+	public void removeTableDataStudent(JTable table, String id, String idStudente) {
 		Connessione connect = null;
 
 		try {
@@ -412,8 +415,10 @@ public class Controller {
 			CallableStatement rimuoviCorsoRegistrato;
 
 			int idCorso = Integer.parseInt(id);
-			rimuoviCorsoRegistrato = conn.prepareCall("{call delete_registered_course(?)}");
+			int idStudent = Integer.parseInt(idStudente);
+			rimuoviCorsoRegistrato = conn.prepareCall("{call delete_registered_course(?,?)}");
 			rimuoviCorsoRegistrato.setInt(1, idCorso);
+			rimuoviCorsoRegistrato.setInt(1, idStudent);
 			rimuoviCorsoRegistrato.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

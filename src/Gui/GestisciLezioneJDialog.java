@@ -17,6 +17,8 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -117,6 +119,7 @@ public class GestisciLezioneJDialog extends JDialog {
 		contentPanel.add(lblOraInizio);
 		
 		textField_oraInizio = new JTextField();
+		textField_oraInizio.setToolTipText("hh:mm");
 		textField_oraInizio.setColumns(10);
 		textField_oraInizio.setBounds(148, 278, 86, 20);
 		contentPanel.add(textField_oraInizio);
@@ -140,6 +143,11 @@ public class GestisciLezioneJDialog extends JDialog {
 		btnNewButton.setBounds(305, 313, 89, 23);
 		contentPanel.add(btnNewButton);
 		
+		JLabel lblMinutes = new JLabel("min.");
+		lblMinutes.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMinutes.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblMinutes.setBounds(244, 113, 55, 17);
+		contentPanel.add(lblMinutes);
+		
 		}
-	
 }
