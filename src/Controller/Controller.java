@@ -27,6 +27,7 @@ import DAO.AdminDAO;
 import DAO.CorsoDAO;
 import DAO.LezioneDAO;
 import DAO.StudenteDAO;
+import Entità.AreeTematiche;
 import Entità.Corso;
 import Entità.Lezione;
 import Entità.Studente;
@@ -258,15 +259,6 @@ public class Controller {
 		}
 
 	}
-
-	public void refreshTableCourse(JTable table) {
-		table.setModel(model);
-	}
-
-	public void refreshTableStudent(JTable table) {
-		table.setModel(modelStud);
-	}
-
 	public void mostraCorsiComboBox(JComboBox comboBox) {
 		try {
 			ArrayList<Corso> corsi = course.displayCorsiComboBox();
@@ -345,7 +337,7 @@ public class Controller {
 				String nomeCorso = risultato.getString(2);
 				registrationStudent.addRow(new Object[] { idCorso, nomeCorso });
 			}
-		}catch(NumberFormatException ec) {
+		} catch (NumberFormatException ec) {
 			JOptionPane.showMessageDialog(null, "Inserire un formato corretto", "Attenzione",
 					JOptionPane.WARNING_MESSAGE);
 		} catch (SQLException e) {
@@ -565,7 +557,7 @@ public class Controller {
 
 			int id = Integer.parseInt(idCorso);
 			PreparedStatement show;
-			String mostraNumeroLezioni = "select count(lezione_id) from lezione where corso_id = " +id;
+			String mostraNumeroLezioni = "select count(lezione_id) from lezione where corso_id = " + id;
 			show = con.prepareStatement(mostraNumeroLezioni);
 
 			ResultSet risultato = show.executeQuery();
@@ -576,6 +568,32 @@ public class Controller {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void insertThematicArea(String areaTematica) {
+		Connessione connessione = null;
+		try {
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+			course.creaAreaTematica(areaTematica);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void mostraAreeComboBox(JComboBox comboBox) {
+		try {
+			ArrayList<AreeTematiche> aree = course.mostraAreeTematiche();
+			DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
+			for (AreeTematiche a : aree) {
+				String nomeArea = a.getNome();
+				modelComboBox.addElement(nomeArea);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

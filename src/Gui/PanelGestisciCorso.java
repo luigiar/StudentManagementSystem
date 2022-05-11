@@ -70,9 +70,9 @@ public class PanelGestisciCorso extends JPanel {
 		table.setBounds(10, 221, 612, -209);
 
 		table.setBackground(new Color(230, 230, 250));
-		c.displayCourse(table);
+//		c.displayCourse(table);
 		scrollPane.setViewportView(table);
-		setGrandezzaColonneTable();
+//		setGrandezzaColonneTable();
 
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -180,8 +180,7 @@ public class PanelGestisciCorso extends JPanel {
 		comboBox_areaTematica = new JComboBox();
 		comboBox_areaTematica.setToolTipText("Seleziona un'area tematica per il corso");
 		comboBox_areaTematica.setBounds(20, 388, 139, 21);
-		comboBox_areaTematica.setModel(new DefaultComboBoxModel(new String[] { "---Seleziona Area", "Aggiungi Area",
-				"Area Umanistica", "Area Linguistica", "Area Scientifica" }));
+		comboBox_areaTematica.setModel(new DefaultComboBoxModel(new String[] { "---Seleziona Area", "Aggiungi Area"}));
 		add(comboBox_areaTematica);
 		comboBox_areaTematica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -194,11 +193,12 @@ public class PanelGestisciCorso extends JPanel {
 						JOptionPane.showMessageDialog(null, "Inserimento non eseguito!", "Attenzione",
 								JOptionPane.WARNING_MESSAGE);
 					} else
+						c.insertThematicArea(itemAdd);
 						comboBox_areaTematica.addItem(itemAdd);
 				}
 			}
 		});
-
+		
 		JButton addArea_button = new JButton("Aggiungi");
 		addArea_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -282,11 +282,9 @@ public class PanelGestisciCorso extends JPanel {
 
 	public void clearTextField() {
 		if (!textField_nomeCorso.getText().isBlank() || !textFieldPartecipanti.getText().isBlank()
-				|| !textArea_descrizione.getText().isBlank()
-				|| !comboBox_areaTematica.getSelectedItem().equals("---Seleziona Area")) {
+				|| !textArea_descrizione.getText().isBlank()) {
 			
 			textField_nomeCorso.setText("");
-			comboBox_areaTematica.setSelectedIndex(0);
 			textFieldPartecipanti.setText("");
 			textArea_descrizione.setText("");
 			table.clearSelection();
@@ -299,5 +297,12 @@ public class PanelGestisciCorso extends JPanel {
 		cellRender = new DefaultTableCellRenderer();
 		cellRender.setHorizontalAlignment(JLabel.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
+	}
+	
+	public void showElementsPanel() {
+		comboBox_areaTematica.setModel(new DefaultComboBoxModel(new String[] { "---Seleziona Area", "Aggiungi Area"}));
+		theController.mostraAreeComboBox(comboBox_areaTematica);
+		theController.displayCourse(table);
+		setGrandezzaColonneTable();
 	}
 }

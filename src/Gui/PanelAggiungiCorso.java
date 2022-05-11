@@ -69,9 +69,9 @@ public class PanelAggiungiCorso extends JPanel {
 		table.setBackground(new Color(230, 230, 250));
 		table.setBounds(10, 221, 612, -209);
 
-		c.displayCourse(table);
+//		c.displayCourse(table);
 		scrollPane.setViewportView(table);
-		setGrandezzaColonneTable();
+//		setGrandezzaColonneTable();
 
 		JLabel lblNomeCorso = new JLabel("Nome Corso :");
 		lblNomeCorso.setHorizontalAlignment(SwingConstants.LEFT);
@@ -132,6 +132,10 @@ public class PanelAggiungiCorso extends JPanel {
 		add(lblAreaTematica);
 
 		comboBox = new JComboBox();
+		comboBox.setToolTipText("Seleziona un'area tematica per il corso");
+		comboBox.setModel(new DefaultComboBoxModel(new String[] { "---Seleziona Area", "Aggiungi Area"}));
+		comboBox.setBounds(235, 344, 139, 21);
+		add(comboBox);
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comboBox.getSelectedItem().equals("Aggiungi Area")) {
@@ -150,12 +154,6 @@ public class PanelAggiungiCorso extends JPanel {
 			}
 		});
 
-		comboBox.setToolTipText("Seleziona un'area tematica per il corso");
-
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "---Seleziona Area", "Aggiungi Area",
-				"Area Umanistica", "Area Linguistica", "Area Scientifica" }));
-		comboBox.setBounds(235, 344, 139, 21);
-		add(comboBox);
 
 		JButton addArea_button = new JButton("Aggiungi");
 		addArea_button.setToolTipText("Aggiungi area");
@@ -201,29 +199,13 @@ public class PanelAggiungiCorso extends JPanel {
 		textField_maxPartecipanti.setBounds(20, 404, 120, 20);
 		add(textField_maxPartecipanti);
 
-		JButton btnRefresh = new JButton("Refresh");
-		btnRefresh.setToolTipText("Aggiorna la tabella");
-		btnRefresh.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		btnRefresh.setBackground(new Color(30, 144, 255));
-		btnRefresh.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				c.refreshTableCourse(table);
-				setGrandezzaColonneTable();
-			}
-		});
-		btnRefresh.setBounds(557, 302, 85, 20);
-		add(btnRefresh);
-
 	}
 
 	public void clearTextField() {
 		if (!textField_nomeCorso.getText().isBlank() || !textField_maxPartecipanti.getText().isBlank()
-				|| !textArea_descrizione.getText().isBlank()
-				|| !comboBox.getSelectedItem().equals("---Seleziona Area")) {
+				|| !textArea_descrizione.getText().isBlank()) {
 
 			textField_nomeCorso.setText("");
-			comboBox.setSelectedIndex(0);
 			textField_maxPartecipanti.setText("");
 			textArea_descrizione.setText("");
 		}
@@ -236,5 +218,12 @@ public class PanelAggiungiCorso extends JPanel {
 		cellRender = new DefaultTableCellRenderer();
 		cellRender.setHorizontalAlignment(JLabel.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
+	}
+	
+	public void showElementsPanelAggiungiCorso() {
+		theController.displayCourse(table);
+		setGrandezzaColonneTable();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] { "---Seleziona Area", "Aggiungi Area"}));
+		theController.mostraAreeComboBox(comboBox);
 	}
 }

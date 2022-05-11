@@ -3,6 +3,7 @@ package DAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import Entità.AreeTematiche;
 import Entità.Corso;
 import Entità.Studente;
 
@@ -21,5 +22,9 @@ public interface CorsoDAO {
 	public ArrayList<Corso> displayCorsiComboBox() throws SQLException;
 	
 	public void aggiornaDettagliCorso(int numeroLezioni, int presenzeObbligatorie,int idCorso) throws SQLException;
+	
+	public void creaAreaTematica(String areaTematica) throws SQLException;
+	
+	public ArrayList<AreeTematiche> mostraAreeTematiche() throws SQLException;
 	
 }

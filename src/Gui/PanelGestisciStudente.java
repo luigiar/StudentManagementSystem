@@ -140,7 +140,6 @@ public class PanelGestisciStudente extends JPanel {
 		panel_gestisciStudente.add(scrollPane);
 
 		table = new JTable();
-		c.displayStudent(table);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -262,6 +261,10 @@ public class PanelGestisciStudente extends JPanel {
 			txtDate.setText("");
 			table.clearSelection();
 		}
+	}
+	
+	public void showElementsPanelGestisciStudente() {
+		theController.displayStudent(table);
 	}
 
 }

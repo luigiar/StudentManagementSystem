@@ -102,9 +102,6 @@ public class PanelDettagliCorso extends JPanel {
 		add(lblSelezionaCorso);
 
 		comboBoxCorsi = new JComboBox();
-		c.mostraCorsiComboBox(comboBoxCorsi);
-		comboBoxCorsi.setSelectedIndex(-1);
-
 		comboBoxCorsi.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (comboBoxCorsi.getSelectedIndex() != -1) {
@@ -260,5 +257,12 @@ public class PanelDettagliCorso extends JPanel {
 			JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso!", "Attenzione",
 			JOptionPane.WARNING_MESSAGE);
 		}
+	}
+	
+	public void showElementsPanelDettagliCorso() {
+		comboBoxCorsi.removeAllItems();
+		theController.mostraCorsiComboBox(comboBoxCorsi);
+		comboBoxCorsi.setSelectedIndex(-1);
+		clearFields();
 	}
 }

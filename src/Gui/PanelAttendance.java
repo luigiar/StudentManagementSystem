@@ -188,8 +188,6 @@ public class PanelAttendance extends JPanel {
 		});
 		comboBoxCorsi.setBounds(135, 98, 136, 22);
 		add(comboBoxCorsi);
-		c.mostraCorsiComboBox(comboBoxCorsi);
-		comboBoxCorsi.setSelectedIndex(-1);
 
 		JButton btn_aggiungiCorso = new JButton("Visualizza studenti");
 		btn_aggiungiCorso.addMouseListener(new MouseAdapter() {
@@ -239,6 +237,12 @@ public class PanelAttendance extends JPanel {
 			model.setRowCount(0);
 		}
 
+	}
+	
+	public void showElementsPanelAttendance() {
+		comboBoxCorsi.removeAllItems();
+		theController.mostraCorsiComboBox(comboBoxCorsi);
+		comboBoxCorsi.setSelectedIndex(-1);
 	}
 
 }

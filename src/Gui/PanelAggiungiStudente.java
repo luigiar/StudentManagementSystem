@@ -123,7 +123,6 @@ public class PanelAggiungiStudente extends JPanel {
 		table = new JTable();
 		table.setBackground(new Color(230, 230, 250));
 		scrollPane.setViewportView(table);
-		c.displayStudent(table);
 
 		JButton insert_button = new JButton("Inserisci");
 		insert_button.addActionListener(new ActionListener() {
@@ -148,18 +147,6 @@ public class PanelAggiungiStudente extends JPanel {
 		insert_button.setBounds(531, 492, 88, 30);
 		add(insert_button);
 
-		JButton btnRefresh = new JButton("Refresh");
-		btnRefresh.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				c.refreshTableStudent(table);
-			}
-		});
-		btnRefresh.setToolTipText("Aggiorna la tabella");
-		btnRefresh.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		btnRefresh.setBackground(new Color(30, 144, 255));
-		btnRefresh.setBounds(557, 290, 85, 20);
-		add(btnRefresh);
 	}
 
 	public void clearTextField() {
@@ -171,5 +158,8 @@ public class PanelAggiungiStudente extends JPanel {
 			dateChooser.setCalendar(null);
 			table.clearSelection();
 		}
+	}
+	public void showElementsPanelAggiungiStudente() {
+		theController.displayStudent(table);
 	}
 }

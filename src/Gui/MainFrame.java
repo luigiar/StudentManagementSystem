@@ -62,7 +62,7 @@ public class MainFrame extends JFrame {
 		
 		theController = c;
 		setResizable(false);
-		setTitle("Home");
+		setTitle("Gestione corsi di formazione");
 		customDesign();
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,7 +92,7 @@ public class MainFrame extends JFrame {
 		side_panel.setBackground(new Color(255, 165, 0));
 		
 		
-		side_panel.setBounds(0, 0, 258, 576);
+		side_panel.setBounds(0, 0, 258, 581);
 		contentPane.add(side_panel);
 		side_panel.setLayout(null);
 		
@@ -109,6 +109,7 @@ public class MainFrame extends JFrame {
 		addStudent_panel.addMouseListener(new PanelButtonMouseAdapter(addStudent_panel) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(panelAggiungiStudente);
+				panelAggiungiStudente.showElementsPanelAggiungiStudente();
 				panelGestisciCorso.clearTextField();
 				panelGestisciStudente.clearFields();
 				panelAggiungiCorso.clearTextField();
@@ -130,6 +131,7 @@ public class MainFrame extends JFrame {
 		manageStudent_panel.addMouseListener(new PanelButtonMouseAdapter(manageStudent_panel) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(panelGestisciStudente);
+				panelGestisciStudente.showElementsPanelGestisciStudente();
 				panelGestisciCorso.clearTextField();
 				panelAggiungiStudente.clearTextField();
 				panelAggiungiCorso.clearTextField();
@@ -156,6 +158,7 @@ public class MainFrame extends JFrame {
 		addCourse_panel.addMouseListener(new PanelButtonMouseAdapter(addCourse_panel) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(panelAggiungiCorso);
+				panelAggiungiCorso.showElementsPanelAggiungiCorso();
 				panelGestisciCorso.clearTextField();
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
@@ -177,6 +180,7 @@ public class MainFrame extends JFrame {
 		manageCourse_panel.addMouseListener(new PanelButtonMouseAdapter(manageCourse_panel) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(panelGestisciCorso);
+				panelGestisciCorso.showElementsPanel();
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
 				panelAggiungiCorso.clearTextField();
@@ -198,6 +202,7 @@ public class MainFrame extends JFrame {
 		detailsCourse_panel.addMouseListener(new PanelButtonMouseAdapter(detailsCourse_panel) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(panelDettagliCorso);
+				panelDettagliCorso.showElementsPanelDettagliCorso();
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
 				panelAggiungiCorso.clearTextField();
@@ -333,6 +338,7 @@ public class MainFrame extends JFrame {
 		panelAttendance.addMouseListener(new PanelButtonMouseAdapter(panelAttendance) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(attendancePanel);
+				attendancePanel.showElementsPanelAttendance();
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
 				panelAggiungiCorso.clearTextField();
