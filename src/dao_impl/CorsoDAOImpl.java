@@ -18,7 +18,8 @@ import dbSettings.Connessione;
 public class CorsoDAOImpl implements CorsoDAO {
 
 	Connection conn = null;
-	PreparedStatement inserisciCorsoStm, aggiornaCorsoStm, aggiornaDettagliCorsoStm, inserisciAreaStm, mostraAree;
+	PreparedStatement inserisciCorsoStm, aggiornaCorsoStm, aggiornaDettagliCorsoStm, inserisciAreaStm, mostraAree,
+			aggiornaArea;
 	Statement deleteCourseST = null;
 
 	@Override
@@ -173,13 +174,11 @@ public class CorsoDAOImpl implements CorsoDAO {
 	}
 
 	@Override
-	public void aggiornaCorso(int id, String nome, String maxPartecipanti, String areeTematiche, String descrizione)
-			throws SQLException {
+	public void aggiornaCorso(int id, String nome, String maxPartecipanti, String descrizione) throws SQLException {
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
 
-		String updateSql = "UPDATE corso SET nome = ?, max_partecipanti = ?, aree_tematiche = ?, descrizione = ? WHERE id = "
-				+ id;
+		String updateSql = "UPDATE corso SET nome = ?, max_partecipanti = ?, descrizione = ? WHERE id = " + id;
 
 		try {
 			int numeroPartecipantiMax = Integer.parseInt(maxPartecipanti);
@@ -187,8 +186,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 			System.out.println("Aggiornamento corso...");
 			aggiornaCorsoStm.setString(1, nome);
 			aggiornaCorsoStm.setInt(2, numeroPartecipantiMax);
-			aggiornaCorsoStm.setString(3, areeTematiche);
-			aggiornaCorsoStm.setString(4, descrizione);
+			aggiornaCorsoStm.setString(3, descrizione);
 
 			aggiornaCorsoStm.executeUpdate();
 			System.out.println("Corso aggiornato correttamente");
@@ -199,7 +197,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 		} finally {
 			// blocco per chiudere risorse
 			try {
-				if (inserisciCorsoStm != null)
+				if (aggiornaCorsoStm != null)
 					conn.close();
 			} catch (SQLException se) {
 				// non fa nulla
@@ -333,7 +331,6 @@ public class CorsoDAOImpl implements CorsoDAO {
 		try {
 			System.out.println("Mostrando elementi comboBox aree... ");
 
-
 			mostraAree = conn.prepareStatement("SELECT  nome_area FROM aree_tematiche");
 			ResultSet risultato = mostraAree.executeQuery();
 
@@ -361,6 +358,43 @@ public class CorsoDAOImpl implements CorsoDAO {
 		}
 
 		return aree;
+	}
+
+	@Override
+	public void aggiornaArea(String areaTematica, int id) throws SQLException {
+		Connessione connect = Connessione.getInstance();
+		conn = connect.getConnection();
+
+		String updateSql = "UPDATE corso SET aree_tematiche = ? where corso.id = " + id;
+
+		try {
+			
+			aggiornaArea = conn.prepareStatement(updateSql);
+			System.out.println("Aggiornamento area tematica...");
+			aggiornaArea.setString(1, areaTematica);
+
+			aggiornaArea.executeUpdate();
+			System.out.println("Area aggiornata correttamente");
+			aggiornaArea.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// blocco per chiudere risorse
+			try {
+				if (aggiornaArea != null)
+					conn.close();
+			} catch (SQLException se) {
+				// non fa nulla
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+
 	}
 
 }

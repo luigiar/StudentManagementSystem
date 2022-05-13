@@ -59,6 +59,8 @@ public class MainFrame extends JFrame {
 
 
 	public MainFrame(Controller c) {
+		setBackground(new Color(0, 0, 0));
+		setFont(new Font("Times New Roman", Font.BOLD, 12));
 		
 		theController = c;
 		setResizable(false);
@@ -112,6 +114,7 @@ public class MainFrame extends JFrame {
 				panelAggiungiStudente.showElementsPanelAggiungiStudente();
 				panelGestisciCorso.clearTextField();
 				panelGestisciStudente.clearFields();
+				panelGestisciStudente.resetAggiorna();
 				panelAggiungiCorso.clearTextField();
 				panelDettagliCorso.clearFields();
 				attendancePanel.clearFields();
@@ -163,6 +166,7 @@ public class MainFrame extends JFrame {
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
 				panelDettagliCorso.clearFields();
+				panelGestisciStudente.resetAggiorna();
 				attendancePanel.clearFields();
 				nascondisubMenu();
 			}
@@ -183,6 +187,7 @@ public class MainFrame extends JFrame {
 				panelGestisciCorso.showElementsPanel();
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
+				panelGestisciStudente.resetAggiorna();
 				panelAggiungiCorso.clearTextField();
 				panelDettagliCorso.clearFields();
 				attendancePanel.clearFields();
@@ -205,6 +210,7 @@ public class MainFrame extends JFrame {
 				panelDettagliCorso.showElementsPanelDettagliCorso();
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
+				panelGestisciStudente.resetAggiorna();
 				panelAggiungiCorso.clearTextField();
 				panelGestisciCorso.clearTextField();
 				attendancePanel.clearFields();
@@ -221,8 +227,9 @@ public class MainFrame extends JFrame {
 		detailsCourse_label.setBounds(77, 11, 106, 25);
 		
 		detailsCourse_panel.add(detailsCourse_label);
-		welcome_label.setForeground(new Color(240, 248, 255));
-		welcome_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 14));
+		welcome_label.setBackground(new Color(0, 0, 0));
+		welcome_label.setForeground(new Color(0, 0, 0));
+		welcome_label.setFont(new Font("DialogInput", Font.BOLD, 14));
 		welcome_label.setHorizontalAlignment(SwingConstants.CENTER);
 		welcome_label.setBounds(0, 114, 72, 29);
 		
@@ -233,6 +240,7 @@ public class MainFrame extends JFrame {
 				menuSelected(panelHome);
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
+				panelGestisciStudente.resetAggiorna();
 				panelAggiungiCorso.clearTextField();
 				panelGestisciCorso.clearTextField();
 				panelDettagliCorso.clearFields();
@@ -341,6 +349,7 @@ public class MainFrame extends JFrame {
 				attendancePanel.showElementsPanelAttendance();
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
+				panelGestisciStudente.resetAggiorna();
 				panelAggiungiCorso.clearTextField();
 				panelGestisciCorso.clearTextField();
 			}

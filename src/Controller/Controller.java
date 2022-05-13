@@ -81,7 +81,7 @@ public class Controller {
 		lf.setVisible(true);
 	}
 
-// funzione che mostra numero di studenti totali presenti nel db
+// funzione che mostra numero di studenti totali presenti nel db da aggiornare
 	public void showTotalStudentsNumber(JLabel label) {
 		Connessione connessione = null;
 		try {
@@ -242,22 +242,33 @@ public class Controller {
 		}
 	}
 
-	public void updateCourse(JTable table, String nome, String maxPartecipanti, String areaTematica,
+	public void updateCourse(JTable table, String nome, String maxPartecipanti,
 			String descrizione) {
 		try {
 			int rigaSelected = table.getSelectedRow();
 			int theID = (int) model.getValueAt(rigaSelected, 0);
-			course.aggiornaCorso(theID, nome, maxPartecipanti, areaTematica, descrizione);
+			course.aggiornaCorso(theID, nome, maxPartecipanti, descrizione);
 
 			model.setValueAt(nome, rigaSelected, 1);
 			model.setValueAt(maxPartecipanti, rigaSelected, 2);
-			model.setValueAt(areaTematica, rigaSelected, 3);
 			model.setValueAt(descrizione, rigaSelected, 4);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void updateAreaTematica(String areaTematica,String idCorso) {
+		int id = Integer.parseInt(idCorso);
+		
+		try {
+			course.aggiornaArea(areaTematica, id);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void mostraCorsiComboBox(JComboBox comboBox) {
 		try {

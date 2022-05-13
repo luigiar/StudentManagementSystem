@@ -17,7 +17,9 @@ public interface CorsoDAO {
 	
 	public void eliminaCorso(int id) throws SQLException;
 	
-	public void aggiornaCorso(int id, String nome, String massimoPartecipanti, String areaTematica ,String descrizione) throws SQLException;
+	public void aggiornaCorso(int id, String nome, String massimoPartecipanti ,String descrizione) throws SQLException;
+	
+	public void aggiornaArea(String areaTematica, int id) throws SQLException;
 	
 	public ArrayList<Corso> displayCorsiComboBox() throws SQLException;
 	

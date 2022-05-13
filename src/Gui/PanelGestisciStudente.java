@@ -33,8 +33,12 @@ public class PanelGestisciStudente extends JPanel {
 	private JTextField txtCognome;
 	private JTextField txtDate;
 	private JTextField txtId;
-	DefaultTableModel model;
+	private DefaultTableModel model;
 	private PanelAggiornaStudente panelAggiornaStudente;
+	private JLabel lblGestioneStudenti;
+	private JLabel lblAggiornaStudente;
+	private JPanel panel_indietro;
+	private JPanel panel_gestisciStudente;
 	DefaultTableCellRenderer cellRender;
 	Image indietro = new ImageIcon(this.getClass().getResource("/Freccia_Icon.png")).getImage();
 
@@ -48,11 +52,12 @@ public class PanelGestisciStudente extends JPanel {
 		setLayout(null);
 		setBounds(0, 0, 673, 581);
 
-		JPanel panel_gestisciStudente = new JPanel();
+		panel_gestisciStudente = new JPanel();
 		panelAggiornaStudente = new PanelAggiornaStudente(c);
 		JButton update_button = new JButton("Aggiorna");
 		update_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				panelAggiornaStudente.showElementsPanelAggiornaStudente();
 				panelAggiornaStudente.setStudentDetails(txtId.getText(), textFieldNome.getText(), txtCognome.getText());
 			}
 		});
@@ -85,19 +90,19 @@ public class PanelGestisciStudente extends JPanel {
 		panel.setBounds(0, 0, 673, 57);
 		add(panel);
 
-		JLabel lblGestioneStudenti = new JLabel("Gestione Studenti");
+		lblGestioneStudenti = new JLabel("Gestione Studenti");
 		lblGestioneStudenti.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGestioneStudenti.setFont(new Font("Yu Gothic UI", Font.BOLD, 15));
 		lblGestioneStudenti.setBounds(223, 11, 197, 28);
 		panel.add(lblGestioneStudenti);
 
-		JLabel lblAggiornaStudente = new JLabel("Aggiorna Studente");
+		lblAggiornaStudente = new JLabel("Aggiorna Studente");
 		lblAggiornaStudente.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAggiornaStudente.setFont(new Font("Yu Gothic UI", Font.BOLD, 15));
 		lblAggiornaStudente.setBounds(223, 11, 197, 28);
 		panel.add(lblAggiornaStudente);
 
-		JPanel panel_indietro = new JPanel();
+		panel_indietro = new JPanel();
 		panel_indietro.setBackground(new Color(245, 245, 245));
 		panel_indietro.addMouseListener(new MouseAdapter() {
 			@Override
@@ -200,13 +205,11 @@ public class PanelGestisciStudente extends JPanel {
 							JOptionPane.WARNING_MESSAGE);
 
 				} else {
-
-
 					panel_gestisciStudente.setVisible(false);
 					lblAggiornaStudente.setVisible(true);
 					lblGestioneStudenti.setVisible(false);
 					panel_indietro.setVisible(true);
-					
+
 					add(panelAggiornaStudente);
 					setAggiorna(panelAggiornaStudente);
 					table.clearSelection();
@@ -241,8 +244,7 @@ public class PanelGestisciStudente extends JPanel {
 	public void setAggiorna(JPanel aggiornaPanel) {
 		panelAggiornaStudente.setVisible(false);
 		aggiornaPanel.setVisible(true);
-
-	}
+		}
 
 	public void setGrandezzaColonneTable() {
 		table.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -262,9 +264,20 @@ public class PanelGestisciStudente extends JPanel {
 			table.clearSelection();
 		}
 	}
-	
+
 	public void showElementsPanelGestisciStudente() {
 		theController.displayStudent(table);
+	}
+	
+	public void resetAggiorna() {
+		if(panelAggiornaStudente.isVisible()) {
+			panelAggiornaStudente.setVisible(false);
+			panel_gestisciStudente.setVisible(true);
+			lblAggiornaStudente.setVisible(false);
+			lblGestioneStudenti.setVisible(true);
+			panel_indietro.setVisible(false);
+		}
+
 	}
 
 }

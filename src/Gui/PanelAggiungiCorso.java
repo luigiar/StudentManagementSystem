@@ -69,9 +69,7 @@ public class PanelAggiungiCorso extends JPanel {
 		table.setBackground(new Color(230, 230, 250));
 		table.setBounds(10, 221, 612, -209);
 
-//		c.displayCourse(table);
 		scrollPane.setViewportView(table);
-//		setGrandezzaColonneTable();
 
 		JLabel lblNomeCorso = new JLabel("Nome Corso :");
 		lblNomeCorso.setHorizontalAlignment(SwingConstants.LEFT);
@@ -168,10 +166,13 @@ public class PanelAggiungiCorso extends JPanel {
 					} else {
 						CourseTableModel model = (CourseTableModel) table.getModel();
 						String valoreCorrente = model.getValueAt(rigaPressed, 3).toString();
+						String idCorsoClicked = model.getValueAt(rigaPressed, 0).toString();
 						model.setValueAt(comboBox.getSelectedItem(), rigaPressed, 3);
 						String valoreAggiunto = model.getValueAt(rigaPressed, 3).toString();
 						valoreCorrente = valoreCorrente.concat(valoreAggiunto.indent(2));
 						model.setValueAt(valoreCorrente, rigaPressed, 3);
+						c.updateAreaTematica(valoreCorrente, idCorsoClicked);
+						
 						JOptionPane.showMessageDialog(null, "Area tematica aggiunta con successo", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
 						comboBox.setSelectedIndex(0);
