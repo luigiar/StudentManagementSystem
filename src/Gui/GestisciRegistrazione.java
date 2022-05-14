@@ -9,9 +9,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Controller.Controller;
+import DAO.AdminDAO;
+import dao_impl.AdminDAOImpl;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -24,6 +27,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 
 public class GestisciRegistrazione extends JDialog {
 
@@ -60,11 +67,26 @@ public class GestisciRegistrazione extends JDialog {
 
 		JPanel panel_Username = new JPanel();
 		panel_Username.setBackground(new Color(255, 255, 255));
-		panel_Username.setBounds(181, 103, 143, 26);
+		panel_Username.setBounds(181, 106, 143, 26);
 		contentPanel.add(panel_Username);
 		panel_Username.setLayout(null);
 
+		JLabel label_usrnNotAva = new JLabel("L'username non \u00E8 disponibile!");
+		label_usrnNotAva.setForeground(Color.RED);
+		label_usrnNotAva.setHorizontalAlignment(SwingConstants.CENTER);
+		label_usrnNotAva.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		label_usrnNotAva.setBounds(170, 131, 169, 12);
+		label_usrnNotAva.setVisible(false);
+		contentPanel.add(label_usrnNotAva);
+
 		txtUsername = new JTextField();
+		txtUsername.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String username = txtUsername.getText();
+				c.isAvaiableUsername(username, txtUsername, label_usrnNotAva);
+			}
+		});
 		txtUsername.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtUsername.addFocusListener(new FocusAdapter() {
 			@Override
@@ -85,7 +107,7 @@ public class GestisciRegistrazione extends JDialog {
 		});
 		txtUsername.setBorder(null);
 		txtUsername.setText("  Username");
-		txtUsername.setBounds(10, 0, 125, 26);
+		txtUsername.setBounds(10, 0, 133, 26);
 		panel_Username.add(txtUsername);
 		txtUsername.setColumns(10);
 
@@ -164,11 +186,10 @@ public class GestisciRegistrazione extends JDialog {
 				if (txtUsername.getText().equals("  Username") || txtUsername.getText().equals("")
 						|| password.equals("  Password") || password.equals("") || conferma_pwd.equals("  Password")
 						|| conferma_pwd.equals("")) {
-		
+
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi", "Errore",
 							JOptionPane.ERROR_MESSAGE);
-				}else
-				if (!conferma_pwd.equals(password)) {
+				} else if (!conferma_pwd.equals(password)) {
 					JOptionPane.showMessageDialog(null, "La password non corrisponde!", "Errore",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
@@ -181,11 +202,11 @@ public class GestisciRegistrazione extends JDialog {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnNewButton.setBounds(438, 282, 89, 23);
 		contentPanel.add(btnNewButton);
-		
-		JLabel lblRegistratiPerAccedere = new JLabel("Registra i dati per accedere all'applicazione");
+
+		JLabel lblRegistratiPerAccedere = new JLabel("Registra i tuoi dati per accedere all'applicazione");
 		lblRegistratiPerAccedere.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRegistratiPerAccedere.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblRegistratiPerAccedere.setBounds(10, 52, 258, 26);
+		lblRegistratiPerAccedere.setBounds(10, 52, 286, 26);
 		contentPanel.add(lblRegistratiPerAccedere);
 
 	}

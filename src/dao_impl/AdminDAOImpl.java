@@ -1,5 +1,6 @@
 package dao_impl;
 
+import java.awt.Color;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,14 +8,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.text.AttributeSet.ColorAttribute;
 
 import DAO.AdminDAO;
 import dbSettings.Connessione;
 
 public class AdminDAOImpl implements AdminDAO {
 	Connection conn = null;
-	private PreparedStatement inserisciAdmin;
+	private PreparedStatement inserisciAdmin, checkAvaiable;
 	boolean login = false;
 
 	@Override
@@ -75,6 +79,36 @@ public class AdminDAOImpl implements AdminDAO {
 		return value;
 
 	}
+
+	@Override
+	public void isUsernameAvaiable(String username,JTextField user, JLabel message) throws SQLException {
+		Connessione connect = Connessione.getInstance();
+		conn = connect.getConnection();
+		try {
+			
+			String check = "select * from amministratore where username ILIKE '"+username+ "' "; 
+			
+			checkAvaiable = conn.prepareStatement(check);
+			ResultSet risultato = checkAvaiable.executeQuery();
+			if(risultato.next()) {
+				String yes = risultato.getString("username");
+				System.out.println(yes);
+				user.setForeground(Color.RED);
+				message.setVisible(true);
+			}else {
+				System.out.println("nessun utente");
+				user.setForeground(Color.BLACK);
+				message.setVisible(false);
+			}
+			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	
 	
 

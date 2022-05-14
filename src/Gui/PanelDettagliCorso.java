@@ -202,18 +202,18 @@ public class PanelDettagliCorso extends JPanel {
 		lbl_introPanel.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lbl_introPanel.setBounds(10, 68, 312, 23);
 		add(lbl_introPanel);
-		
-				JLabel lblCercaCorso = new JLabel("Cerca Corso");
-				add(lblCercaCorso);
-				
-						lblCercaCorso.setHorizontalAlignment(SwingConstants.LEFT);
-						lblCercaCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-						lblCercaCorso.setBounds(74, 200, 90, 30);
-						
-								JLabel lblSearch = new JLabel("");
-								add(lblSearch);
-								lblSearch.setBounds(26, 200, 42, 30);
-								lblSearch.setIcon(new ImageIcon(search));
+
+		JLabel lblCercaCorso = new JLabel("Cerca Corso");
+		add(lblCercaCorso);
+
+		lblCercaCorso.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCercaCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblCercaCorso.setBounds(74, 200, 90, 30);
+
+		JLabel lblSearch = new JLabel("");
+		add(lblSearch);
+		lblSearch.setBounds(26, 200, 42, 30);
+		lblSearch.setIcon(new ImageIcon(search));
 
 	}
 

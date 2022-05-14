@@ -634,5 +634,20 @@ public class Controller {
 		}
 
 	}
+	
+	public void isAvaiableUsername(String username, JTextField user, JLabel message) {
+		Connessione connessione = null;
+		try {
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+			
+			admin.isUsernameAvaiable(username, user, message);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+	}
 
 }
