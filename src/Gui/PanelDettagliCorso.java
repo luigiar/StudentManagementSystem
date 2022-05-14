@@ -29,6 +29,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class PanelDettagliCorso extends JPanel {
 	private JTextField textField_NumLezioni;
@@ -138,30 +140,6 @@ public class PanelDettagliCorso extends JPanel {
 		add(textField_PresenzeObbligatorie);
 		textField_PresenzeObbligatorie.setColumns(10);
 
-		JButton button_cercaCorso = new JButton();
-		button_cercaCorso.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String cercaTesto = textField_cercaCorso.getText();
-				myRowSorter.setRowFilter(new TableRowFilter(cercaTesto));
-			}
-		});
-		button_cercaCorso.setBounds(383, 201, 112, 29);
-		button_cercaCorso.setBackground(new Color(255, 165, 0));
-		add(button_cercaCorso);
-		button_cercaCorso.setLayout(null);
-
-		JLabel lblCercaCorso = new JLabel("Cerca Corso");
-
-		lblCercaCorso.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCercaCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblCercaCorso.setBounds(10, 0, 72, 30);
-		button_cercaCorso.add(lblCercaCorso);
-
-		JLabel lblSearch = new JLabel("");
-		lblSearch.setBounds(80, 0, 49, 30);
-		lblSearch.setIcon(new ImageIcon(search));
-		button_cercaCorso.add(lblSearch);
-
 		JButton button_GestisciLezione = new JButton();
 		button_GestisciLezione.setToolTipText("Clicca per aggiungere una lezione");
 		button_GestisciLezione.setText(" ...");
@@ -182,7 +160,14 @@ public class PanelDettagliCorso extends JPanel {
 		add(lblLezioniPresenti);
 
 		textField_cercaCorso = new JTextField();
-		textField_cercaCorso.setBounds(228, 208, 145, 22);
+		textField_cercaCorso.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String cercaTesto = textField_cercaCorso.getText();
+				myRowSorter.setRowFilter(new TableRowFilter(cercaTesto));
+			}
+		});
+		textField_cercaCorso.setBounds(195, 201, 181, 22);
 		add(textField_cercaCorso);
 		textField_cercaCorso.setColumns(10);
 
@@ -217,6 +202,18 @@ public class PanelDettagliCorso extends JPanel {
 		lbl_introPanel.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lbl_introPanel.setBounds(10, 68, 312, 23);
 		add(lbl_introPanel);
+		
+				JLabel lblCercaCorso = new JLabel("Cerca Corso");
+				add(lblCercaCorso);
+				
+						lblCercaCorso.setHorizontalAlignment(SwingConstants.LEFT);
+						lblCercaCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+						lblCercaCorso.setBounds(74, 200, 90, 30);
+						
+								JLabel lblSearch = new JLabel("");
+								add(lblSearch);
+								lblSearch.setBounds(26, 200, 42, 30);
+								lblSearch.setIcon(new ImageIcon(search));
 
 	}
 
