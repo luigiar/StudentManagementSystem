@@ -143,11 +143,11 @@ public class GestisciLezioneJDialog extends JDialog {
 		btnNewButton.setBounds(305, 313, 89, 23);
 		contentPanel.add(btnNewButton);
 		
-		JLabel lblMinutes = new JLabel("min.");
-		lblMinutes.setHorizontalAlignment(SwingConstants.LEFT);
-		lblMinutes.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblMinutes.setBounds(244, 113, 55, 17);
-		contentPanel.add(lblMinutes);
+		JLabel lblDuration = new JLabel("h.");
+		lblDuration.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDuration.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblDuration.setBounds(244, 113, 55, 17);
+		contentPanel.add(lblDuration);
 		
 		}
 }

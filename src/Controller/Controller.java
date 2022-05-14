@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
@@ -81,7 +82,6 @@ public class Controller {
 		lf.setVisible(true);
 	}
 
-// funzione che mostra numero di studenti totali presenti nel db da aggiornare
 	public void showTotalStudentsNumber(JLabel label) {
 		Connessione connessione = null;
 		try {
@@ -137,6 +137,8 @@ public class Controller {
 		try {
 			modelStud = new StudenteTableModel(student.leggiStudenti());
 			table.setModel(modelStud);
+			TableRowSorter myTableRowSorter = new TableRowSorter(modelStud);
+			table.setRowSorter(myTableRowSorter);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -172,10 +174,10 @@ public class Controller {
 		modelStud.remove(row);
 	}
 
-	public void insertCourse(String name, String description, String maxStudents, String themeArea) {
+	public void insertCourse(String name, String description, String maxStudents, String themeArea, String date) {
 		course = new CorsoDAOImpl();
 		try {
-			course.inserisciCorso(name, description, maxStudents, themeArea);
+			course.inserisciCorso(name, description, maxStudents, themeArea, date);
 			JOptionPane.showMessageDialog(null, "Inserimento effettuato", "Conferma", JOptionPane.INFORMATION_MESSAGE);
 
 		} catch (SQLException e) {
@@ -188,6 +190,8 @@ public class Controller {
 		try {
 			model = new CourseTableModel(course.leggiCorsi());
 			table.setModel(model);
+			TableRowSorter myTableRowSorter = new TableRowSorter(model);
+			table.setRowSorter(myTableRowSorter);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -243,11 +247,11 @@ public class Controller {
 	}
 
 	public void updateCourse(JTable table, String nome, String maxPartecipanti,
-			String descrizione) {
+			String descrizione, String dataInizio ) {
 		try {
 			int rigaSelected = table.getSelectedRow();
 			int theID = (int) model.getValueAt(rigaSelected, 0);
-			course.aggiornaCorso(theID, nome, maxPartecipanti, descrizione);
+			course.aggiornaCorso(theID, nome, maxPartecipanti, descrizione,dataInizio);
 
 			model.setValueAt(nome, rigaSelected, 1);
 			model.setValueAt(maxPartecipanti, rigaSelected, 2);
@@ -605,6 +609,30 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void getDataInizioCorso(String id, JTextField dataInizio) {
+		Connessione connessione = null;
+		try {
+		connessione = Connessione.getInstance();
+		Connection con = connessione.getConnection();
+		
+		PreparedStatement mostraData;
+		int idCorso = Integer.parseInt(id);
+
+			System.out.println("Mostrando data inizio... ");
+
+			mostraData = con.prepareStatement("SELECT  data_inizio FROM corso where corso.id = " + idCorso);
+			ResultSet risultato = mostraData.executeQuery();
+			
+			while (risultato.next()) {
+				dataInizio.setText(risultato.getString(1));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

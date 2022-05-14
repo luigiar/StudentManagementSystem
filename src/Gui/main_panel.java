@@ -14,7 +14,8 @@ import java.awt.SystemColor;
 
 public class main_panel extends JPanel {
 	Controller theController;
-
+	private JLabel totalCourse_label; 
+	private JLabel stdPresence_label;
 	public main_panel(Controller c) {
 		theController = c;
 		setBackground(new Color(255, 215, 0));
@@ -46,25 +47,31 @@ public class main_panel extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 		
-		JLabel stdPresence_label = new JLabel("Studenti presenti :");
+		stdPresence_label = new JLabel("Studenti presenti :");
 		stdPresence_label.setForeground(SystemColor.desktop);
 		stdPresence_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		stdPresence_label.setBounds(10, 11, 147, 24);
 		panel.add(stdPresence_label);
-		c.showTotalStudentsNumber(stdPresence_label);
 		
-		JLabel totalCourse_label = new JLabel("Corsi presenti :");
+		totalCourse_label = new JLabel("Corsi presenti :");
 		totalCourse_label.setForeground(Color.BLACK);
 		totalCourse_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		totalCourse_label.setBounds(516, 11, 147, 24);
 		panel.add(totalCourse_label);
-		c.showTotalCourseNumber(totalCourse_label);
 		
+		showElementsMainPanel();
+
 		Image imgHome = new ImageIcon(this.getClass().getResource("/homeImm.jpg")).getImage();
 		JLabel homeImm_label = new JLabel("");
 		homeImm_label.setIcon(new ImageIcon(imgHome));
 		homeImm_label.setBounds(0, 111, 663, 379);
 		add(homeImm_label);
-
 	}
+	
+	public void showElementsMainPanel() {
+		theController.showTotalStudentsNumber(stdPresence_label);
+		theController.showTotalCourseNumber(totalCourse_label);
+		
+	}
+	
 }

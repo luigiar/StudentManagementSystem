@@ -114,6 +114,7 @@ public class PanelAggiornaStudente extends JPanel {
 			}
 		};
 		table.setModel(registrationStudent);
+		table.getTableHeader().setReorderingAllowed(false);
 		String[] colonne = { "Corso ID", "Nome corso", "Media presenze" };
 		registrationStudent.setColumnIdentifiers(colonne);
 		table.addMouseListener(new MouseAdapter() {

@@ -6,9 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import DAO.CorsoDAO;
 import Entità.AreeTematiche;
@@ -21,17 +25,20 @@ public class CorsoDAOImpl implements CorsoDAO {
 	PreparedStatement inserisciCorsoStm, aggiornaCorsoStm, aggiornaDettagliCorsoStm, inserisciAreaStm, mostraAree,
 			aggiornaArea;
 	Statement deleteCourseST = null;
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 	@Override
-	public void inserisciCorso(String nome, String descrizione, String massimoPartecipanti, String areaTematica)
-			throws SQLException {
+	public void inserisciCorso(String nome, String descrizione, String massimoPartecipanti, String areaTematica,
+			String data_inizio) throws SQLException {
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
 		System.out.println("connessione insert corso eseguita");
 		try {
-			String inserimentoSql = "INSERT INTO corso(nome,descrizione,max_partecipanti,aree_tematiche) VALUES (?, ?, ? ,?)";
+			String inserimentoSql = "INSERT INTO corso(nome,descrizione,max_partecipanti,aree_tematiche,data_inizio) VALUES (?, ?, ? ,?, ?)";
 			// conversione valori
 			int numeroMaxPartecipanti = Integer.parseInt(massimoPartecipanti);
+			Date date = simpleDateFormat.parse(data_inizio);
+			java.sql.Date dataSQL = new java.sql.Date(date.getTime());
 
 			inserisciCorsoStm = conn.prepareStatement(inserimentoSql);
 			System.out.println("inserendo corsi nella tabella");
@@ -39,10 +46,14 @@ public class CorsoDAOImpl implements CorsoDAO {
 			inserisciCorsoStm.setString(2, descrizione);
 			inserisciCorsoStm.setInt(3, numeroMaxPartecipanti);
 			inserisciCorsoStm.setString(4, areaTematica);
+			inserisciCorsoStm.setDate(5, dataSQL);
 			inserisciCorsoStm.executeUpdate();
 			System.out.println("Corsi Inseriti correttamente");
 
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			// blocco per chiudere risorse
@@ -174,31 +185,49 @@ public class CorsoDAOImpl implements CorsoDAO {
 	}
 
 	@Override
-	public void aggiornaCorso(int id, String nome, String maxPartecipanti, String descrizione) throws SQLException {
+	public void aggiornaCorso(int id, String nome, String maxPartecipanti, String descrizione, String dataInizio) throws SQLException {
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
 
-		String updateSql = "UPDATE corso SET nome = ?, max_partecipanti = ?, descrizione = ? WHERE id = " + id;
+		String updateSql = "UPDATE corso SET nome = ?, max_partecipanti = ?, descrizione = ?, data_inizio = ? WHERE id = " + id;
 
 		try {
 			int numeroPartecipantiMax = Integer.parseInt(maxPartecipanti);
+			Date date = simpleDateFormat.parse(dataInizio);
+			java.sql.Date dataSQL = new java.sql.Date(date.getTime());
+			
 			aggiornaCorsoStm = conn.prepareStatement(updateSql);
 			System.out.println("Aggiornamento corso...");
 			aggiornaCorsoStm.setString(1, nome);
 			aggiornaCorsoStm.setInt(2, numeroPartecipantiMax);
 			aggiornaCorsoStm.setString(3, descrizione);
+			aggiornaCorsoStm.setDate(4, dataSQL);
 
 			aggiornaCorsoStm.executeUpdate();
 			System.out.println("Corso aggiornato correttamente");
-			aggiornaCorsoStm.close();
+			
+			SQLWarning warning = aggiornaCorsoStm.getWarnings();
+
+			if (warning != null) {
+				String errore = warning.toString();
+				errore = errore.substring(errore.lastIndexOf(": ") + 1).strip();
+				JOptionPane.showMessageDialog(null, errore, "Attenzione", JOptionPane.WARNING_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "Aggiornamento Effettuato", "Conferma",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
 
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			// blocco per chiudere risorse
 			try {
 				if (aggiornaCorsoStm != null)
 					conn.close();
+				System.out.println("connessione chiusa correttamente");
 			} catch (SQLException se) {
 				// non fa nulla
 			}
@@ -368,7 +397,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 		String updateSql = "UPDATE corso SET aree_tematiche = ? where corso.id = " + id;
 
 		try {
-			
+
 			aggiornaArea = conn.prepareStatement(updateSql);
 			System.out.println("Aggiornamento area tematica...");
 			aggiornaArea.setString(1, areaTematica);
@@ -376,7 +405,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 			aggiornaArea.executeUpdate();
 			System.out.println("Area aggiornata correttamente");
 			aggiornaArea.close();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -53,7 +53,7 @@ public class GestisciRegistrazione extends JDialog {
 		contentPanel.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Rgistrazione Admin");
+		JLabel lblNewLabel = new JLabel("Registrazione Admin");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel.setBounds(199, 11, 167, 19);

@@ -10,6 +10,7 @@ public class Corso {
 	private  int maxPartecipanti;
 	private ArrayList<Lezione> numeroLezioni = new ArrayList<>(20);
 	private String areeTematiche;
+	private String dataInizio;
 	private int presenzeObbligatorie;
 
 	// Costruttori
@@ -33,6 +34,7 @@ public class Corso {
 		this.descrizione = descrizione;
 		this.maxPartecipanti = maxPartecipanti;
 		this.areeTematiche = areeTematiche;
+
 	}
 
 	// Getter e setter
@@ -90,6 +92,14 @@ public class Corso {
 
 	public void setPresenzeObbligatorie(int presenzeObbligatorie) {
 		this.presenzeObbligatorie = presenzeObbligatorie;
+	}
+
+	public String getData_inizio() {
+		return dataInizio;
+	}
+
+	public void setDataInizio(String dataInizio) {
+		this.dataInizio = dataInizio;
 	}
 
 }

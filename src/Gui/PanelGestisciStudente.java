@@ -158,6 +158,7 @@ public class PanelGestisciStudente extends JPanel {
 			}
 		});
 		table.setBackground(new Color(230, 230, 250));
+		table.getTableHeader().setReorderingAllowed(false);
 		scrollPane.setViewportView(table);
 
 		JLabel lblNome = new JLabel("Nome :");

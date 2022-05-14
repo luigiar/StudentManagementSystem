@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import Controller.Controller;
 
@@ -25,10 +26,13 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ListSelectionModel;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 
 public class PanelGestisciCorso extends JPanel {
 	private JTextField textField_nomeCorso;
@@ -38,6 +42,8 @@ public class PanelGestisciCorso extends JPanel {
 	private JComboBox comboBox_areaTematica;
 	DefaultTableCellRenderer cellRender;
 	private Controller theController;
+	private JDateChooser dateChooser;
+	private JTextFieldDateEditor editor;
 
 	/**
 	 * Create the panel.
@@ -68,11 +74,10 @@ public class PanelGestisciCorso extends JPanel {
 		table = new JTable();
 		table.setDefaultRenderer(Object.class, cell);
 		table.setBounds(10, 221, 612, -209);
+		table.getTableHeader().setReorderingAllowed(false);
 
 		table.setBackground(new Color(230, 230, 250));
-//		c.displayCourse(table);
 		scrollPane.setViewportView(table);
-//		setGrandezzaColonneTable();
 
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -82,6 +87,7 @@ public class PanelGestisciCorso extends JPanel {
 				textField_nomeCorso.setText((model.getValueAt(rigaSelected, 1)).toString());
 				textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 2)).toString());
 				textArea_descrizione.setText((model.getValueAt(rigaSelected, 4)).toString());
+				c.getDataInizioCorso(table.getValueAt(rigaSelected, 0).toString(), editor);
 				setGrandezzaColonneTable();
 			}
 		});
@@ -96,6 +102,13 @@ public class PanelGestisciCorso extends JPanel {
 		textField_nomeCorso.setColumns(10);
 		textField_nomeCorso.setBounds(20, 318, 113, 20);
 		add(textField_nomeCorso);
+		
+		dateChooser = new JDateChooser();
+		dateChooser.setBounds(419, 318, 128, 20);
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		editor = (JTextFieldDateEditor) dateChooser.getDateEditor();
+		editor.setEditable(false);
+		add(dateChooser);
 
 		JLabel lblDescrizione = new JLabel("Descrizione :");
 		lblDescrizione.setHorizontalAlignment(SwingConstants.LEFT);
@@ -136,15 +149,12 @@ public class PanelGestisciCorso extends JPanel {
 				int rigaPressed = table.getSelectedRow();
 				if (rigaPressed >= 0) {
 					if (textField_nomeCorso.getText().isBlank() || textFieldPartecipanti.getText().isBlank()
-							|| textArea_descrizione.getText().isBlank()) {
+							|| textArea_descrizione.getText().isBlank() || editor.getText().isBlank()) {
 						JOptionPane.showMessageDialog(null, "Aggiornamento non valido!", "Errore",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						c.updateCourse(table, textField_nomeCorso.getText(), textFieldPartecipanti.getText(),
-								textArea_descrizione.getText());
-
-						JOptionPane.showMessageDialog(null, "Aggiornamento effettuato", "Conferma",
-								JOptionPane.INFORMATION_MESSAGE);
+								textArea_descrizione.getText(), editor.getText());
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso", "Attenzione",
@@ -278,16 +288,24 @@ public class PanelGestisciCorso extends JPanel {
 		textFieldPartecipanti.setColumns(10);
 		textFieldPartecipanti.setBounds(229, 318, 120, 20);
 		add(textFieldPartecipanti);
+		
+		JLabel lblDataInizio = new JLabel("Data Inizio");
+		lblDataInizio.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDataInizio.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblDataInizio.setBounds(419, 290, 120, 17);
+		add(lblDataInizio);
+		
 
 	}
 
 	public void clearTextField() {
 		if (!textField_nomeCorso.getText().isBlank() || !textFieldPartecipanti.getText().isBlank()
-				|| !textArea_descrizione.getText().isBlank()) {
+				|| !textArea_descrizione.getText().isBlank() || !dateChooser.equals(null)) {
 
 			textField_nomeCorso.setText("");
 			textFieldPartecipanti.setText("");
 			textArea_descrizione.setText("");
+			dateChooser.setCalendar(null);
 			table.clearSelection();
 		}
 	}

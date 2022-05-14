@@ -122,6 +122,7 @@ public class PanelAggiungiStudente extends JPanel {
 
 		table = new JTable();
 		table.setBackground(new Color(230, 230, 250));
+		table.getTableHeader().setReorderingAllowed(false);
 		scrollPane.setViewportView(table);
 
 		JButton insert_button = new JButton("Inserisci");

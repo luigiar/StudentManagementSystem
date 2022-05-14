@@ -238,6 +238,7 @@ public class MainFrame extends JFrame {
 		home_panel.addMouseListener(new PanelButtonMouseAdapter(home_panel) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(panelHome);
+				panelHome.showElementsMainPanel();
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
 				panelGestisciStudente.resetAggiorna();

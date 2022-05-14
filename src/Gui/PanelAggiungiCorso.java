@@ -26,6 +26,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 
 public class PanelAggiungiCorso extends JPanel {
 	private JTextField textField_nomeCorso;
@@ -36,6 +38,8 @@ public class PanelAggiungiCorso extends JPanel {
 	DefaultTableCellRenderer cellRender;
 	private Controller theController;
 	CourseTableModel modelCourse;
+	private JLabel lblDataInizio;
+	private JDateChooser dateChooser;
 
 	/**
 	 * Create the panel.
@@ -68,6 +72,7 @@ public class PanelAggiungiCorso extends JPanel {
 		table.setDefaultRenderer(Object.class, cell);
 		table.setBackground(new Color(230, 230, 250));
 		table.setBounds(10, 221, 612, -209);
+		table.getTableHeader().setReorderingAllowed(false);
 
 		scrollPane.setViewportView(table);
 
@@ -96,18 +101,26 @@ public class PanelAggiungiCorso extends JPanel {
 		scrollPane_descrizione.setViewportView(textArea_descrizione);
 		textArea_descrizione.setLineWrap(true);
 
+		dateChooser = new JDateChooser();
+		dateChooser.setBounds(235, 404, 128, 20);
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateChooser.getDateEditor();
+		editor.setEditable(false);
+		add(dateChooser);
+		
 		JButton insert_button = new JButton("Inserisci");
 		insert_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (textField_nomeCorso.getText().isBlank() || comboBox.getSelectedItem().equals("---Seleziona Area")
 						|| textField_maxPartecipanti.getText().isBlank() || textArea_descrizione.getText().isBlank()
-						|| comboBox.getSelectedItem().equals("Aggiungi Area")) {
+						|| comboBox.getSelectedItem().equals("Aggiungi Area")
+						|| editor.getText().isBlank()) {
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi!", "Errore",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 
 					c.insertCourse(textField_nomeCorso.getText(), textArea_descrizione.getText(),
-							textField_maxPartecipanti.getText(), comboBox.getSelectedItem().toString());
+							textField_maxPartecipanti.getText(), comboBox.getSelectedItem().toString(), editor.getText());
 
 					c.addCourseToTableView(table, textField_nomeCorso, textField_maxPartecipanti, comboBox,
 							textArea_descrizione);
@@ -199,16 +212,24 @@ public class PanelAggiungiCorso extends JPanel {
 		textField_maxPartecipanti.setColumns(10);
 		textField_maxPartecipanti.setBounds(20, 404, 120, 20);
 		add(textField_maxPartecipanti);
+		
+		
+		lblDataInizio = new JLabel("Data Inizio");
+		lblDataInizio.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDataInizio.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblDataInizio.setBounds(235, 378, 120, 17);
+		add(lblDataInizio);
 
 	}
 
 	public void clearTextField() {
 		if (!textField_nomeCorso.getText().isBlank() || !textField_maxPartecipanti.getText().isBlank()
-				|| !textArea_descrizione.getText().isBlank()) {
+				|| !textArea_descrizione.getText().isBlank() || !dateChooser.equals(null)) {
 
 			textField_nomeCorso.setText("");
 			textField_maxPartecipanti.setText("");
 			textArea_descrizione.setText("");
+			dateChooser.setCalendar(null);
 		}
 		table.clearSelection();
 	}

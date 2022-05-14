@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -33,7 +34,7 @@ public class PanelDettagliCorso extends JPanel {
 	private JTextField textField_NumLezioni;
 	private JTextField textField_PresenzeObbligatorie;
 	Image search = new ImageIcon(this.getClass().getResource("/searchImm.png")).getImage();
-	private JTextField textField;
+	private JTextField textField_cercaCorso;
 	private JTable table;
 	private DefaultTableModel model;
 	private DefaultTableCellRenderer cellRender;
@@ -64,11 +65,13 @@ public class PanelDettagliCorso extends JPanel {
 		panel.add(lblDettagliCorso);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(10, 241, 632, 226);
+		scrollPane.setBounds(10, 241, 620, 227);
 		add(scrollPane);
 
 		table = new JTable();
 		table.setBounds(10, 221, 612, -209);
+		table.setBackground(new Color(230, 230, 250));
+		table.getTableHeader().setReorderingAllowed(false);
 		model = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -76,24 +79,21 @@ public class PanelDettagliCorso extends JPanel {
 				return false;
 			}
 		};
-		Object[] colonne = { "Nome corso", "Data inizio", "Num lezioni", "Ore totali", "Max studenti a lezione",
-				"Min studenti a lezione", "Riempimento medio" };
+		Object[] colonne = { "Nome corso", "Max studenti a lezione", "Min studenti a lezione", "Riempimento medio",
+				"Data inizio" };
 		Object[] riga = new Object[5];
 		model.setColumnIdentifiers(colonne);
 		table.setModel(model);
+		TableRowSorter myRowSorter = new TableRowSorter(model);
+		table.setRowSorter(myRowSorter);
+		model.addRow(new Object[] { "Medicina", "60", "30", "25%", "2022-05-14" });
+		model.addRow(new Object[] { "Areonautica", "50", "20", "30%", "2022-05-13" });
+		model.addRow(new Object[] { "Parkour", "100", "80", "60%", "2022-05-12" });
+		model.addRow(new Object[] { "Storia", "20", "10", "20%", "2022-05-11" });
+		model.addRow(new Object[] { "Educazione Sessuale", "30", "25", "50%", "2022-05-09" });
+		model.addRow(new Object[] { "Pullappare", "60", "40", "35%", "2022-05-07" });
+		model.addRow(new Object[] { "Salto della corda", "100", "60", "80%", "2022-05-06" });
 		scrollPane.setViewportView(table);
-
-		// set della grandezza delle colonne
-		cellRender = new DefaultTableCellRenderer();
-		cellRender.setHorizontalAlignment(JLabel.CENTER);
-		table.getColumnModel().getColumn(0).setCellRenderer(cellRender);
-		table.getColumnModel().getColumn(0).setPreferredWidth(85);
-		table.getColumnModel().getColumn(1).setPreferredWidth(80);
-		table.getColumnModel().getColumn(2).setPreferredWidth(80);
-		table.getColumnModel().getColumn(3).setPreferredWidth(70);
-		table.getColumnModel().getColumn(4).setPreferredWidth(150);
-		table.getColumnModel().getColumn(5).setPreferredWidth(150);
-		table.getColumnModel().getColumn(6).setPreferredWidth(150);
 
 		JLabel lblSelezionaCorso = new JLabel("Seleziona corso :");
 		lblSelezionaCorso.setHorizontalAlignment(SwingConstants.LEFT);
@@ -138,24 +138,29 @@ public class PanelDettagliCorso extends JPanel {
 		add(textField_PresenzeObbligatorie);
 		textField_PresenzeObbligatorie.setColumns(10);
 
-		JPanel panel_cercaCorso = new JPanel();
-		panel_cercaCorso.setBounds(0, 201, 112, 29);
-		panel_cercaCorso.setBackground(new Color(255, 165, 0));
-		add(panel_cercaCorso);
-		panel_cercaCorso.setLayout(null);
-		panel_cercaCorso.addMouseListener(new PanelButtonMouseAdapter(panel_cercaCorso));
+		JButton button_cercaCorso = new JButton();
+		button_cercaCorso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String cercaTesto = textField_cercaCorso.getText();
+				myRowSorter.setRowFilter(new TableRowFilter(cercaTesto));
+			}
+		});
+		button_cercaCorso.setBounds(383, 201, 112, 29);
+		button_cercaCorso.setBackground(new Color(255, 165, 0));
+		add(button_cercaCorso);
+		button_cercaCorso.setLayout(null);
 
 		JLabel lblCercaCorso = new JLabel("Cerca Corso");
 
 		lblCercaCorso.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCercaCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblCercaCorso.setBounds(10, 0, 72, 30);
-		panel_cercaCorso.add(lblCercaCorso);
+		button_cercaCorso.add(lblCercaCorso);
 
 		JLabel lblSearch = new JLabel("");
 		lblSearch.setBounds(80, 0, 49, 30);
 		lblSearch.setIcon(new ImageIcon(search));
-		panel_cercaCorso.add(lblSearch);
+		button_cercaCorso.add(lblSearch);
 
 		JButton button_GestisciLezione = new JButton();
 		button_GestisciLezione.setToolTipText("Clicca per aggiungere una lezione");
@@ -169,17 +174,17 @@ public class PanelDettagliCorso extends JPanel {
 				showJDialogLesson();
 			}
 		});
-		
+
 		lblLezioniPresenti = new JLabel("");
 		lblLezioniPresenti.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLezioniPresenti.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblLezioniPresenti.setBounds(228, 158, 117, 17);
 		add(lblLezioniPresenti);
 
-		textField = new JTextField();
-		textField.setBounds(132, 201, 96, 22);
-		add(textField);
-		textField.setColumns(10);
+		textField_cercaCorso = new JTextField();
+		textField_cercaCorso.setBounds(228, 208, 145, 22);
+		add(textField_cercaCorso);
+		textField_cercaCorso.setColumns(10);
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(255, 255, 0));
@@ -212,8 +217,6 @@ public class PanelDettagliCorso extends JPanel {
 		lbl_introPanel.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lbl_introPanel.setBounds(10, 68, 312, 23);
 		add(lbl_introPanel);
-		
-
 
 	}
 
@@ -223,42 +226,43 @@ public class PanelDettagliCorso extends JPanel {
 		lblLezioniPresenti.setText("");
 		comboBoxCorsi.setSelectedIndex(-1);
 	}
-	
-	public void showJDialogLesson() {
-		if(comboBoxCorsi.getSelectedItem() != null) {
-			String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
-			String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
-				GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(theController, codiceCorso);
-				lezione.setVisible(true);
-				if(!lezione.isVisible()) {
-					clearFields();
-				}
-		}else {
-			JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso!", "Attenzione",
-			JOptionPane.WARNING_MESSAGE);
-		}
-			
-	}
-	
-	public void updateDetails() {
-		if(comboBoxCorsi.getSelectedItem() != null) {
-			String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
-			String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
-		if(theController.checkNumberLesson(codiceCorso, lessonCreable,textField_NumLezioni.getText())) {
-			theController.updateDetailsCourse(textField_NumLezioni.getText(), textField_PresenzeObbligatorie.getText(),
-			codiceCorso);
 
-		}else {
-			JOptionPane.showMessageDialog(null, "Il numero delle lezioni inserito è inferiore a quelle già presenti.", "Attenzione",
-			JOptionPane.WARNING_MESSAGE);
-		}
-				
-		}else {
+	public void showJDialogLesson() {
+		if (comboBoxCorsi.getSelectedItem() != null) {
+			String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
+			String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
+			GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(theController, codiceCorso);
+			lezione.setVisible(true);
+			if (!lezione.isVisible()) {
+				clearFields();
+			}
+		} else {
 			JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso!", "Attenzione",
-			JOptionPane.WARNING_MESSAGE);
+					JOptionPane.WARNING_MESSAGE);
+		}
+
+	}
+
+	public void updateDetails() {
+		if (comboBoxCorsi.getSelectedItem() != null) {
+			String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
+			String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
+			if (theController.checkNumberLesson(codiceCorso, lessonCreable, textField_NumLezioni.getText())) {
+				theController.updateDetailsCourse(textField_NumLezioni.getText(),
+						textField_PresenzeObbligatorie.getText(), codiceCorso);
+
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Il numero delle lezioni inserito \nè inferiore di quelle già presenti.", "Attenzione",
+						JOptionPane.WARNING_MESSAGE);
+			}
+
+		} else {
+			JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso!", "Attenzione",
+					JOptionPane.WARNING_MESSAGE);
 		}
 	}
-	
+
 	public void showElementsPanelDettagliCorso() {
 		comboBoxCorsi.removeAllItems();
 		theController.mostraCorsiComboBox(comboBoxCorsi);

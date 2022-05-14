@@ -9,7 +9,7 @@ import Entità.Studente;
 
 public interface CorsoDAO {
 
-	public void inserisciCorso(String nome, String descrizione, String massimoPartecipanti, String areaTematica) throws SQLException;
+	public void inserisciCorso(String nome, String descrizione, String massimoPartecipanti, String areaTematica, String data_inizio) throws SQLException;
 	
 	public ArrayList<Corso> leggiCorsi() throws SQLException;
 	
@@ -17,7 +17,7 @@ public interface CorsoDAO {
 	
 	public void eliminaCorso(int id) throws SQLException;
 	
-	public void aggiornaCorso(int id, String nome, String massimoPartecipanti ,String descrizione) throws SQLException;
+	public void aggiornaCorso(int id, String nome, String massimoPartecipanti ,String descrizione, String dataInizio) throws SQLException;
 	
 	public void aggiornaArea(String areaTematica, int id) throws SQLException;
 	
@@ -28,5 +28,5 @@ public interface CorsoDAO {
 	public void creaAreaTematica(String areaTematica) throws SQLException;
 	
 	public ArrayList<AreeTematiche> mostraAreeTematiche() throws SQLException;
-	
+		
 }
