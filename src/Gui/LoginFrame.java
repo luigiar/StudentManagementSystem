@@ -33,9 +33,6 @@ public class LoginFrame extends JFrame {
 	private JPasswordField pwdPassword;
 	private JLabel loginMessageLabel = new JLabel("");
 	private MainFrame mainFrame;
-	private JTextField textField_codiceFiscale;
-	private JTextField textField_Password;
-	private JTextField textField_confirmPassword;
 	private boolean exist = false;
 
 	/**
@@ -133,7 +130,8 @@ public class LoginFrame extends JFrame {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (pwdPassword.getText().equals("")) {
+				String password = String.valueOf(pwdPassword.getPassword());
+				if (password.equals("")) {
 					pwdPassword.setText("Password");
 					pwdPassword.setEchoChar((char) 0);
 				}
@@ -150,14 +148,15 @@ public class LoginFrame extends JFrame {
 		login_panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (c.isAdminExists(txtUsername.getText(), pwdPassword.getText(), exist)) {
+				String password = String.valueOf(pwdPassword.getPassword());
+				if (c.isAdminExists(txtUsername.getText(), password, exist)) {
 					mainFrame = new MainFrame(c);
 					mainFrame.setVisible(true);
 					LoginFrame.this.dispose();
 					loginMessageLabel.setText("");
 					JOptionPane.showMessageDialog(null, "Login eseguito");
 				} else if (txtUsername.getText().equals("") || txtUsername.getText().equals("Username")
-						|| pwdPassword.getText().equals("") || pwdPassword.getText().equals("Password")) {
+						|| password.equals("") || password.equals("Password")) {
 					loginMessageLabel.setText("Per favore, tutti i campi sono richiesti!");
 				} else {
 					loginMessageLabel.setText("Username e password non corrispondono!");

@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
+
+import javax.swing.JOptionPane;
 
 import DAO.AdminDAO;
 import dbSettings.Connessione;
@@ -25,6 +28,17 @@ public class AdminDAOImpl implements AdminDAO {
 		inserisciAdmin.setString(1, username);
 		inserisciAdmin.setString(2, password);
 		inserisciAdmin.executeUpdate();
+		
+		SQLWarning warning = inserisciAdmin.getWarnings();
+
+		if (warning != null) {
+			String errore = warning.toString();
+			errore = errore.substring(errore.lastIndexOf(": ") + 1).strip();
+			JOptionPane.showMessageDialog(null, errore, "Attenzione", JOptionPane.WARNING_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "Registrazione effettuata!", "Conferma",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
 		// blocco per chiudere risorse
 		try {
 			if (inserisciAdmin != null)
