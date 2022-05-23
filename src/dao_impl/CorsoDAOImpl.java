@@ -1,5 +1,6 @@
 package dao_impl;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import DAO.CorsoDAO;
 import Entità.AreeTematiche;
@@ -185,17 +188,19 @@ public class CorsoDAOImpl implements CorsoDAO {
 	}
 
 	@Override
-	public void aggiornaCorso(int id, String nome, String maxPartecipanti, String descrizione, String dataInizio) throws SQLException {
+	public void aggiornaCorso(int id, String nome, String maxPartecipanti, String descrizione, String dataInizio)
+			throws SQLException {
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
 
-		String updateSql = "UPDATE corso SET nome = ?, max_partecipanti = ?, descrizione = ?, data_inizio = ? WHERE id = " + id;
+		String updateSql = "UPDATE corso SET nome = ?, max_partecipanti = ?, descrizione = ?, data_inizio = ? WHERE id = "
+				+ id;
 
 		try {
 			int numeroPartecipantiMax = Integer.parseInt(maxPartecipanti);
 			Date date = simpleDateFormat.parse(dataInizio);
 			java.sql.Date dataSQL = new java.sql.Date(date.getTime());
-			
+
 			aggiornaCorsoStm = conn.prepareStatement(updateSql);
 			System.out.println("Aggiornamento corso...");
 			aggiornaCorsoStm.setString(1, nome);
@@ -205,7 +210,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 
 			aggiornaCorsoStm.executeUpdate();
 			System.out.println("Corso aggiornato correttamente");
-			
+
 			SQLWarning warning = aggiornaCorsoStm.getWarnings();
 
 			if (warning != null) {
@@ -422,6 +427,32 @@ public class CorsoDAOImpl implements CorsoDAO {
 			} catch (SQLException se) {
 				se.printStackTrace();
 			}
+		}
+
+	}
+
+	@Override
+	public void mostraDettagliCorsi(JTable table) throws SQLException {
+		Connessione connect = Connessione.getInstance();
+		conn = connect.getConnection();
+
+		CallableStatement mostraDettagli;
+
+		mostraDettagli = conn.prepareCall("{call get_details_course}");
+		
+		System.out.println("calcolando dettagli corsi...");
+		ResultSet result = mostraDettagli.executeQuery();
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+		while (result.next()) {
+			int id = result.getInt("id_corso");
+			String nome = result.getString("nome_corso");
+			int max_presenze = result.getInt("massimo_presenze");
+			int min_presenze = result.getInt("minimo_presenze");
+			float media_presenze = result.getFloat("media_presenze");
+			String data = result.getString("data_lezione");
+			
+			model.addRow(new Object[] {id,nome, max_presenze, min_presenze, media_presenze, data});
 		}
 
 	}

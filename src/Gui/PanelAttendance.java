@@ -73,6 +73,11 @@ public class PanelAttendance extends JPanel {
 		add(lbl_lezioni);
 
 		comboBoxLezioni = new JComboBox();
+		comboBoxLezioni.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				model.setRowCount(0);
+			}
+		});
 		comboBoxLezioni.setBounds(153, 162, 163, 22);
 		add(comboBoxLezioni);
 		modelComboBox = new DefaultComboBoxModel();
@@ -201,7 +206,7 @@ public class PanelAttendance extends JPanel {
 					String lezioneSelected = comboBoxLezioni.getSelectedItem().toString();
 					dataLezioneSelected = lezioneSelected.substring(lezioneSelected.lastIndexOf(": ") + 1).strip();
 					idLezioneSelected = lezioneSelected
-							.substring(lezioneSelected.indexOf("e ") + 1, lezioneSelected.indexOf(" :")).strip();
+							.substring(lezioneSelected.indexOf("D ") + 1, lezioneSelected.indexOf(" :")).strip();
 					mostraTabellaStudentiIscritti();
 				}
 			}

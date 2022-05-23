@@ -84,6 +84,7 @@ public class PanelAggiornaStudente extends JPanel {
 				String nomeCorso = comboBoxCorsi.getSelectedItem().toString();
 				nomeCorso = nomeCorso.replaceAll("[0-9]", "");
 				textField_nomeCorso.setText(nomeCorso);
+
 				int input = JOptionPane.showConfirmDialog(null, campiCorso, "Iscrivere lo studente al corso seguente? ",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (input == JOptionPane.OK_OPTION) {
@@ -187,7 +188,7 @@ public class PanelAggiornaStudente extends JPanel {
 		deleteCourse_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!textField_idCorso.getText().isBlank() && !textField_nameCourse.getText().isBlank()) {
-					c.removeTableDataStudent(table, textField_idCorso.getText(),textField_id.getText());
+					c.removeTableDataStudent(table, textField_idCorso.getText(), textField_id.getText());
 					JOptionPane.showMessageDialog(null, "Icrizione al corso rimossa", "Conferma",
 							JOptionPane.INFORMATION_MESSAGE);
 					clearTextField();
@@ -235,7 +236,7 @@ public class PanelAggiornaStudente extends JPanel {
 		textField_idCorso.setText("");
 		textField_nameCourse.setText("");
 	}
-	
+
 	public void showElementsPanelAggiornaStudente() {
 		comboBoxCorsi.removeAllItems();
 		theController.mostraCorsiComboBox(comboBoxCorsi);

@@ -58,7 +58,7 @@ public class GestisciLezioneJDialog extends JDialog {
 		JPanel panel_GestioneLezioni = new JPanel();
 		panel_GestioneLezioni.setLayout(null);
 		panel_GestioneLezioni.setBackground(new Color(255, 165, 0));
-		panel_GestioneLezioni.setBounds(0, 0, 423, 57);
+		panel_GestioneLezioni.setBounds(0, 0, 409, 57);
 		contentPanel.add(panel_GestioneLezioni);
 		
 		JLabel lblGestioneLezioni = new JLabel("Gestione Lezioni");

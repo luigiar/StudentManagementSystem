@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JTable;
+
 import Entità.Studente;
 import Gui.PanelAggiungiStudente;
 
@@ -23,6 +25,8 @@ public interface StudenteDAO {
 	public ArrayList<Studente> leggiStudenti() throws SQLException;
 	
 	public int getLastID(int id) throws SQLException;
+	
+	public void mostraStudentiIdonei(int idCorso,JTable table) throws SQLException;
 	
 	
 }

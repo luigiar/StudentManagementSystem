@@ -1,5 +1,6 @@
 package dao_impl;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.StudenteDAO;
@@ -176,6 +178,31 @@ public class StudenteDAOImpl implements StudenteDAO {
 	@Override
 	public void aggiornaStudente(Studente studente) throws SQLException {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mostraStudentiIdonei(int idCorso,JTable table) throws SQLException {
+		Connessione connect = Connessione.getInstance();
+		conn = connect.getConnection();
+
+		CallableStatement mostraStudenti;
+
+		mostraStudenti = conn.prepareCall("{call get_studenti_idonei(?)}");
+		mostraStudenti.setInt(1, idCorso);
+		System.out.println("calcolando studenti idonei...");
+		ResultSet result = mostraStudenti.executeQuery();
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+		while (result.next()) {
+			int id = result.getInt("id_studente");
+			String nome = result.getString("nome");
+			String cognome = result.getString("cognome");
+			int presenze = result.getInt("presenze");
+
+			
+			model.addRow(new Object[] {id,nome,cognome, presenze});
+		}
 		
 	}
 

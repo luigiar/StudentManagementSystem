@@ -31,6 +31,8 @@ import java.sql.SQLException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import java.awt.Button;
+import java.awt.Label;
 
 public class GestisciRegistrazione extends JDialog {
 
@@ -71,20 +73,28 @@ public class GestisciRegistrazione extends JDialog {
 		contentPanel.add(panel_Username);
 		panel_Username.setLayout(null);
 
-		JLabel label_usrnNotAva = new JLabel("L'username non \u00E8 disponibile!");
-		label_usrnNotAva.setForeground(Color.RED);
-		label_usrnNotAva.setHorizontalAlignment(SwingConstants.CENTER);
-		label_usrnNotAva.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
-		label_usrnNotAva.setBounds(170, 131, 169, 12);
-		label_usrnNotAva.setVisible(false);
-		contentPanel.add(label_usrnNotAva);
+		JLabel label_userNotAvaiable = new JLabel("L'username non \u00E8 disponibile!");
+		label_userNotAvaiable.setForeground(Color.RED);
+		label_userNotAvaiable.setHorizontalAlignment(SwingConstants.CENTER);
+		label_userNotAvaiable.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		label_userNotAvaiable.setBounds(170, 131, 169, 12);
+		label_userNotAvaiable.setVisible(false);
+		contentPanel.add(label_userNotAvaiable);
+
+		JLabel label_avaiable = new JLabel("Disponibile!");
+		label_avaiable.setForeground(new Color(0, 255, 0));
+		label_avaiable.setBounds(181, 138, 144, 12);
+		label_avaiable.setVisible(false);
+		contentPanel.add(label_avaiable);
 
 		txtUsername = new JTextField();
 		txtUsername.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyReleased(KeyEvent e) {
-				String username = txtUsername.getText();
-				c.isAvaiableUsername(username, txtUsername, label_usrnNotAva);
+			public void keyPressed(KeyEvent e) {
+				txtUsername.setForeground(Color.BLACK);
+				label_avaiable.setVisible(false);
+				label_userNotAvaiable.setVisible(false);
+
 			}
 		});
 		txtUsername.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -208,6 +218,23 @@ public class GestisciRegistrazione extends JDialog {
 		lblRegistratiPerAccedere.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblRegistratiPerAccedere.setBounds(10, 52, 286, 26);
 		contentPanel.add(lblRegistratiPerAccedere);
+
+		Button button_checkAvaiable = new Button("Verifica disponibilt\u00E0");
+		button_checkAvaiable.setForeground(new Color(0, 0, 0));
+		button_checkAvaiable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String username = txtUsername.getText();
+				c.isAvaiableUsername(username, txtUsername, label_userNotAvaiable, label_avaiable);
+				if (label_avaiable.isVisible()) {
+					if (txtUsername.getText().equals("  Username") || txtUsername.getText().isBlank()) {
+						label_avaiable.setVisible(false);
+					}
+				}
+			}
+		});
+		button_checkAvaiable.setBackground(new Color(255, 140, 0));
+		button_checkAvaiable.setBounds(345, 110, 113, 22);
+		contentPanel.add(button_checkAvaiable);
 
 	}
 

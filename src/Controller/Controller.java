@@ -298,7 +298,7 @@ public class Controller {
 			for (Lezione l : lezioni) {
 				int codiceLezione = l.getCodiceLezione();
 				String dataInizio = l.getDataInizio();
-				modelComboBox.addElement("Lezione " + codiceLezione + " : " + dataInizio);
+				modelComboBox.addElement("Lezione ID " + codiceLezione + " : " + dataInizio);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -425,7 +425,7 @@ public class Controller {
 			int idStudent = Integer.parseInt(idStudente);
 			rimuoviCorsoRegistrato = conn.prepareCall("{call delete_registered_course(?,?)}");
 			rimuoviCorsoRegistrato.setInt(1, idCorso);
-			rimuoviCorsoRegistrato.setInt(1, idStudent);
+			rimuoviCorsoRegistrato.setInt(2, idStudent);
 			rimuoviCorsoRegistrato.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -450,6 +450,7 @@ public class Controller {
 			java.sql.Date dataSQL = new java.sql.Date(date.getTime());
 			int id = Integer.parseInt(idCorso);
 			int id_lesson = Integer.parseInt(idLezione);
+			
 			mostraStudentiIscritti = conn.prepareCall("{call get_data_table(?,?,?)}");
 			mostraStudentiIscritti.setInt(1, id);
 			mostraStudentiIscritti.setDate(2, dataSQL);
@@ -635,18 +636,47 @@ public class Controller {
 
 	}
 	
-	public void isAvaiableUsername(String username, JTextField user, JLabel message) {
+	public void isAvaiableUsername(String username, JTextField user, JLabel message, JLabel messageAvaiable) {
 		Connessione connessione = null;
 		try {
 			connessione = Connessione.getInstance();
 			Connection con = connessione.getConnection();
 			
-			admin.isUsernameAvaiable(username, user, message);
+			admin.isUsernameAvaiable(username, user, message, messageAvaiable);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+	}
+	
+	public void showCoursesDetails(JTable table) {
+		Connessione connessione = null;
+		
+		try {
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+			
+			course.mostraDettagliCorsi(table);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void showStudentsAllowed(String idCorso,JTable table) {
+		Connessione connessione = null;
+		
+		try {
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+			int id = Integer.parseInt(idCorso);
+			
+			student.mostraStudentiIdonei(id,table);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

@@ -11,6 +11,6 @@ public interface AdminDAO {
 	
 	public boolean loginAdmin(String username, String password, boolean value) throws SQLException;
 	
-	public void isUsernameAvaiable(String username, JTextField user, JLabel message) throws SQLException;
+	public void isUsernameAvaiable(String username, JTextField user, JLabel message, JLabel messageAvaiable) throws SQLException;
 }
 

@@ -81,7 +81,7 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public void isUsernameAvaiable(String username,JTextField user, JLabel message) throws SQLException {
+	public void isUsernameAvaiable(String username,JTextField user, JLabel message, JLabel messageAvaiable) throws SQLException {
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
 		try {
@@ -95,10 +95,12 @@ public class AdminDAOImpl implements AdminDAO {
 				System.out.println(yes);
 				user.setForeground(Color.RED);
 				message.setVisible(true);
+				messageAvaiable.setVisible(false);
 			}else {
 				System.out.println("nessun utente");
 				user.setForeground(Color.BLACK);
 				message.setVisible(false);
+				messageAvaiable.setVisible(true);
 			}
 			
 			

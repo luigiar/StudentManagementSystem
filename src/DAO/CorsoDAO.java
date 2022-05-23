@@ -3,6 +3,8 @@ package DAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JTable;
+
 import Entità.AreeTematiche;
 import Entità.Corso;
 import Entità.Studente;
@@ -28,5 +30,7 @@ public interface CorsoDAO {
 	public void creaAreaTematica(String areaTematica) throws SQLException;
 	
 	public ArrayList<AreeTematiche> mostraAreeTematiche() throws SQLException;
+	
+	public void mostraDettagliCorsi(JTable table)throws SQLException;
 		
 }

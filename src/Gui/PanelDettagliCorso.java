@@ -39,10 +39,10 @@ public class PanelDettagliCorso extends JPanel {
 	private JTextField textField_cercaCorso;
 	private JTable table;
 	private DefaultTableModel model;
-	private DefaultTableCellRenderer cellRender;
 	private JLabel lblLezioniPresenti;
 	private Controller theController;
 	private JComboBox comboBoxCorsi;
+	private JLabel lblMostraStudentiIdonei;
 	private boolean lessonCreable = false;
 
 	/**
@@ -60,6 +60,12 @@ public class PanelDettagliCorso extends JPanel {
 		panel.setBounds(0, 0, 673, 57);
 		add(panel);
 
+		lblMostraStudentiIdonei = new JLabel("Visualizza studenti idonei per : ");
+		lblMostraStudentiIdonei.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMostraStudentiIdonei.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblMostraStudentiIdonei.setBounds(10, 514, 312, 17);
+		add(lblMostraStudentiIdonei);
+
 		JLabel lblDettagliCorso = new JLabel("Dettagli Corso");
 		lblDettagliCorso.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDettagliCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 15));
@@ -67,10 +73,18 @@ public class PanelDettagliCorso extends JPanel {
 		panel.add(lblDettagliCorso);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(10, 241, 620, 227);
+		scrollPane.setBounds(10, 241, 630, 227);
 		add(scrollPane);
 
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = table.getSelectedRow();
+				lblMostraStudentiIdonei.setText("Visualizza studenti idonei per : "
+						+ model.getValueAt(row, 0).toString() + " " + model.getValueAt(row, 1));
+			}
+		});
 		table.setBounds(10, 221, 612, -209);
 		table.setBackground(new Color(230, 230, 250));
 		table.getTableHeader().setReorderingAllowed(false);
@@ -81,20 +95,13 @@ public class PanelDettagliCorso extends JPanel {
 				return false;
 			}
 		};
-		Object[] colonne = { "Nome corso", "Max studenti a lezione", "Min studenti a lezione", "Riempimento medio",
+		Object[] colonne = { "ID", "Nome corso", "Max studenti a lezione", "Min studenti a lezione", "Media presenze",
 				"Data inizio" };
 		Object[] riga = new Object[5];
 		model.setColumnIdentifiers(colonne);
 		table.setModel(model);
 		TableRowSorter myRowSorter = new TableRowSorter(model);
 		table.setRowSorter(myRowSorter);
-		model.addRow(new Object[] { "Medicina", "60", "30", "25%", "2022-05-14" });
-		model.addRow(new Object[] { "Areonautica", "50", "20", "30%", "2022-05-13" });
-		model.addRow(new Object[] { "Parkour", "100", "80", "60%", "2022-05-12" });
-		model.addRow(new Object[] { "Storia", "20", "10", "20%", "2022-05-11" });
-		model.addRow(new Object[] { "Educazione Sessuale", "30", "25", "50%", "2022-05-09" });
-		model.addRow(new Object[] { "Pullappare", "60", "40", "35%", "2022-05-07" });
-		model.addRow(new Object[] { "Salto della corda", "100", "60", "80%", "2022-05-06" });
 		scrollPane.setViewportView(table);
 
 		JLabel lblSelezionaCorso = new JLabel("Seleziona corso :");
@@ -187,8 +194,9 @@ public class PanelDettagliCorso extends JPanel {
 				} else {
 					updateDetails();
 					comboBoxCorsi.setSelectedIndex(-1);
-					clearFields();
-
+					textField_NumLezioni.setText("");
+					textField_PresenzeObbligatorie.setText("");
+					lblLezioniPresenti.setText("");
 				}
 			}
 		});
@@ -215,6 +223,32 @@ public class PanelDettagliCorso extends JPanel {
 		lblSearch.setBounds(26, 200, 42, 30);
 		lblSearch.setIcon(new ImageIcon(search));
 
+		JButton add_button_1 = new JButton("Mostra");
+		add_button_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (!lblMostraStudentiIdonei.getText().equals("Visualizza studenti idonei per : ")) {
+					String corsoSelezionato = lblMostraStudentiIdonei.getText();
+					String codiceCorso = corsoSelezionato.replaceAll("[^0-9]", "");
+
+					StudentiIdoneiJDialog studenti = new StudentiIdoneiJDialog(c, codiceCorso);
+					studenti.setVisible(true);
+
+					if (!studenti.isVisible()) {
+						lblMostraStudentiIdonei.setText("Visualizza studenti idonei per : ");
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso dalla tabella!",
+							"Attenzione", JOptionPane.WARNING_MESSAGE);
+				}
+
+			}
+		});
+		add_button_1.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		add_button_1.setBackground(new Color(65, 105, 225));
+		add_button_1.setBounds(337, 512, 96, 21);
+		add(add_button_1);
+
 	}
 
 	public void clearFields() {
@@ -222,6 +256,9 @@ public class PanelDettagliCorso extends JPanel {
 		textField_PresenzeObbligatorie.setText("");
 		lblLezioniPresenti.setText("");
 		comboBoxCorsi.setSelectedIndex(-1);
+		model.setRowCount(0);
+		table.clearSelection();
+		lblMostraStudentiIdonei.setText("Visualizza studenti idonei per : ");
 	}
 
 	public void showJDialogLesson() {
@@ -231,7 +268,10 @@ public class PanelDettagliCorso extends JPanel {
 			GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(theController, codiceCorso);
 			lezione.setVisible(true);
 			if (!lezione.isVisible()) {
-				clearFields();
+				textField_NumLezioni.setText("");
+				textField_PresenzeObbligatorie.setText("");
+				lblLezioniPresenti.setText("");
+				comboBoxCorsi.setSelectedIndex(-1);
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso!", "Attenzione",
@@ -264,6 +304,16 @@ public class PanelDettagliCorso extends JPanel {
 		comboBoxCorsi.removeAllItems();
 		theController.mostraCorsiComboBox(comboBoxCorsi);
 		comboBoxCorsi.setSelectedIndex(-1);
-		clearFields();
+		textField_NumLezioni.setText("");
+		textField_PresenzeObbligatorie.setText("");
+		lblLezioniPresenti.setText("");
+		theController.showCoursesDetails(table);
+		setGrandezzaColonneTable();
+	}
+
+	public void setGrandezzaColonneTable() {
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(2).setPreferredWidth(100);
+		table.getColumnModel().getColumn(3).setPreferredWidth(100);
 	}
 }

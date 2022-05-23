@@ -109,7 +109,7 @@ public class MainFrame extends JFrame {
 		
 		addStudent_panel.setBackground(new Color(255, 215, 0));
 		addStudent_panel.addMouseListener(new PanelButtonMouseAdapter(addStudent_panel) {
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				menuSelected(panelAggiungiStudente);
 				panelAggiungiStudente.showElementsPanelAggiungiStudente();
 				panelGestisciCorso.clearTextField();
@@ -353,6 +353,7 @@ public class MainFrame extends JFrame {
 				panelGestisciStudente.resetAggiorna();
 				panelAggiungiCorso.clearTextField();
 				panelGestisciCorso.clearTextField();
+				panelDettagliCorso.clearFields();
 			}
 		});
 	
