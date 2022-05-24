@@ -24,7 +24,7 @@ import Gui.GestisciLezioneJDialog;
 import dbSettings.Connessione;
 
 public class LezioneDAOImpl implements LezioneDAO {
-	PreparedStatement mostraLezioni, inserisciLezione,mostraDettagliLezione;
+	PreparedStatement mostraLezioni, inserisciLezione, mostraDettagliLezione, updateDettagliLezione;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 
@@ -128,13 +128,13 @@ public class LezioneDAOImpl implements LezioneDAO {
 		Connessione connect = Connessione.getInstance();
 		Connection conn = connect.getConnection();
 		ArrayList<Lezione> lezioni = new ArrayList<Lezione>();
-		
-		
-		String mostraSql = "select titolo, descrizione, durata, ora_inizio from lezione where lezione_id = " +lezioneID;
+
+		String mostraSql = "select titolo, descrizione, durata, ora_inizio from lezione where lezione_id = "
+				+ lezioneID;
 		mostraDettagliLezione = conn.prepareStatement(mostraSql);
-		
+
 		ResultSet risultato = mostraDettagliLezione.executeQuery();
-		while(risultato.next()) {
+		while (risultato.next()) {
 			Lezione lezione = new Lezione();
 			lezione.setTitolo(risultato.getString(1));
 			lezione.setDescrizione(risultato.getString(2));
@@ -147,5 +147,45 @@ public class LezioneDAOImpl implements LezioneDAO {
 			lezioni.add(lezione);
 		}
 		return lezioni;
+	}
+
+	@Override
+	public void updateElemetsLesson(int lezioneID, String titolo, String descrizione, String durata, String oraInizio)
+			throws SQLException {
+		Connessione connect = Connessione.getInstance();
+		Connection conn = connect.getConnection();
+
+		String aggiornaSql = "update lezione set titolo = ?, descrizione = ?, durata = ?, ora_inizio = ? where lezione_id = "
+				+ lezioneID;
+
+		try {
+			java.sql.Time timeDurata = new java.sql.Time(sdf.parse(durata).getTime());
+			java.sql.Time timeValue = new java.sql.Time(sdf.parse(oraInizio).getTime());
+
+			updateDettagliLezione = conn.prepareStatement(aggiornaSql);
+			updateDettagliLezione.setString(1, titolo);
+			updateDettagliLezione.setString(2, descrizione);
+			updateDettagliLezione.setTime(3, timeDurata);
+			updateDettagliLezione.setTime(4, timeValue);
+			System.out.println("aggiornando dettagli lezione...");
+			updateDettagliLezione.executeUpdate();
+			System.out.println("lezione aggiornata");
+
+			JOptionPane.showMessageDialog(null, "Lezione aggiornata correttamente");
+			
+		} catch (DateTimeParseException exceptionTime) {
+			JOptionPane.showMessageDialog(null, "Inserisci un formato corretto per l'ora", "Attenzione",
+					JOptionPane.WARNING_MESSAGE);
+		} catch (NumberFormatException exceptionDurata) {
+			JOptionPane.showMessageDialog(null, "Durata della lezione inserita non corretta", "Attenzione",
+					JOptionPane.WARNING_MESSAGE);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null, "Inserisci un formato corretto", "Attenzione",
+					JOptionPane.WARNING_MESSAGE);
+			e1.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

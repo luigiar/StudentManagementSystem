@@ -90,7 +90,7 @@ public class PanelAttendance extends JPanel {
 				}
 			}
 		});
-		comboBoxLezioni.setBounds(145, 154, 163, 22);
+		comboBoxLezioni.setBounds(145, 154, 188, 22);
 		add(comboBoxLezioni);
 		modelComboBox = new DefaultComboBoxModel();
 		comboBoxLezioni.setModel(modelComboBox);
@@ -226,7 +226,7 @@ public class PanelAttendance extends JPanel {
 		btn_aggiungiCorso.setToolTipText("Clicca per visualizzare gli studenti");
 		btn_aggiungiCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
 		btn_aggiungiCorso.setBackground(new Color(255, 165, 0));
-		btn_aggiungiCorso.setBounds(325, 154, 136, 21);
+		btn_aggiungiCorso.setBounds(343, 154, 136, 21);
 		add(btn_aggiungiCorso);
 
 		JLabel label_dettagliLezione = new JLabel(">>Dettagli della lezione selezionata");
@@ -288,6 +288,32 @@ public class PanelAttendance extends JPanel {
 		lblDuration.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblDuration.setBounds(567, 445, 55, 17);
 		add(lblDuration);
+
+		JButton btn_editDetails = new JButton("Modifica");
+		btn_editDetails.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (textField_titoloLezione.getText().isBlank() || textArea_descrizione.getText().isBlank()
+						|| textField_durataLezione.getText().isBlank() || textField_oraInizio.getText().isBlank()) {
+					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi!", "Errore",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					c.updateElementsLesson(idLezioneSelected, textField_titoloLezione.getText(),
+							textArea_descrizione.getText(), textField_durataLezione.getText(),
+							textField_oraInizio.getText());
+
+					textField_titoloLezione.setText("");
+					textArea_descrizione.setText("");
+					textField_durataLezione.setText("");
+					textField_oraInizio.setText("");
+				}
+
+			}
+		});
+		btn_editDetails.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		btn_editDetails.setBackground(new Color(255, 127, 80));
+		btn_editDetails.setBounds(526, 519, 96, 21);
+		add(btn_editDetails);
 	}
 
 	public void mostraLezioni() {

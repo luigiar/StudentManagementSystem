@@ -14,5 +14,7 @@ public interface LezioneDAO {
 	
 	public boolean checkLessonsNumber(int corsoID, boolean value, int numeroLezioni) throws SQLException;
 	
-	public ArrayList<Lezione> showElementsLesson(int lezioneID)throws SQLException;
+	public ArrayList<Lezione> showElementsLesson(int lezioneID) throws SQLException;
+	
+	public void updateElemetsLesson(int lezioneID, String titolo, String descrizione, String durata, String oraInizio) throws SQLException;
 }

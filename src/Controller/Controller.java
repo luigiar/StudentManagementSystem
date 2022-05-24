@@ -246,12 +246,11 @@ public class Controller {
 		}
 	}
 
-	public void updateCourse(JTable table, String nome, String maxPartecipanti,
-			String descrizione, String dataInizio ) {
+	public void updateCourse(JTable table, String nome, String maxPartecipanti, String descrizione, String dataInizio) {
 		try {
 			int rigaSelected = table.getSelectedRow();
 			int theID = (int) model.getValueAt(rigaSelected, 0);
-			course.aggiornaCorso(theID, nome, maxPartecipanti, descrizione,dataInizio);
+			course.aggiornaCorso(theID, nome, maxPartecipanti, descrizione, dataInizio);
 
 			model.setValueAt(nome, rigaSelected, 1);
 			model.setValueAt(maxPartecipanti, rigaSelected, 2);
@@ -262,10 +261,10 @@ public class Controller {
 		}
 
 	}
-	
-	public void updateAreaTematica(String areaTematica,String idCorso) {
+
+	public void updateAreaTematica(String areaTematica, String idCorso) {
 		int id = Integer.parseInt(idCorso);
-		
+
 		try {
 			course.aggiornaArea(areaTematica, id);
 
@@ -274,6 +273,7 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+
 	public void mostraCorsiComboBox(JComboBox comboBox) {
 		try {
 			ArrayList<Corso> corsi = course.displayCorsiComboBox();
@@ -450,7 +450,7 @@ public class Controller {
 			java.sql.Date dataSQL = new java.sql.Date(date.getTime());
 			int id = Integer.parseInt(idCorso);
 			int id_lesson = Integer.parseInt(idLezione);
-			
+
 			mostraStudentiIscritti = conn.prepareCall("{call get_data_table(?,?,?)}");
 			mostraStudentiIscritti.setInt(1, id);
 			mostraStudentiIscritti.setDate(2, dataSQL);
@@ -597,7 +597,7 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void mostraAreeComboBox(JComboBox comboBox) {
 		try {
 			ArrayList<AreeTematiche> aree = course.mostraAreeTematiche();
@@ -611,21 +611,21 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void getDataInizioCorso(String id, JTextField dataInizio) {
 		Connessione connessione = null;
 		try {
-		connessione = Connessione.getInstance();
-		Connection con = connessione.getConnection();
-		
-		PreparedStatement mostraData;
-		int idCorso = Integer.parseInt(id);
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+
+			PreparedStatement mostraData;
+			int idCorso = Integer.parseInt(id);
 
 			System.out.println("Mostrando data inizio... ");
 
 			mostraData = con.prepareStatement("SELECT  data_inizio FROM corso where corso.id = " + idCorso);
 			ResultSet risultato = mostraData.executeQuery();
-			
+
 			while (risultato.next()) {
 				dataInizio.setText(risultato.getString(1));
 			}
@@ -635,61 +635,62 @@ public class Controller {
 		}
 
 	}
-	
+
 	public void isAvaiableUsername(String username, JTextField user, JLabel message, JLabel messageAvaiable) {
 		Connessione connessione = null;
 		try {
 			connessione = Connessione.getInstance();
 			Connection con = connessione.getConnection();
-			
+
 			admin.isUsernameAvaiable(username, user, message, messageAvaiable);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void showCoursesDetails(JTable table) {
 		Connessione connessione = null;
-		
+
 		try {
 			connessione = Connessione.getInstance();
 			Connection con = connessione.getConnection();
-			
+
 			course.mostraDettagliCorsi(table);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public void showStudentsAllowed(String idCorso,JTable table) {
+
+	public void showStudentsAllowed(String idCorso, JTable table) {
 		Connessione connessione = null;
-		
+
 		try {
 			connessione = Connessione.getInstance();
 			Connection con = connessione.getConnection();
 			int id = Integer.parseInt(idCorso);
-			
-			student.mostraStudentiIdonei(id,table);
+
+			student.mostraStudentiIdonei(id, table);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public void showLessonElements(String id, JTextField titolo, JTextArea descrizione, JTextField durata, JTextField oraInizio) {
+
+	public void showLessonElements(String id, JTextField titolo, JTextArea descrizione, JTextField durata,
+			JTextField oraInizio) {
 		Connessione connessione = null;
-		
+
 		try {
 			connessione = Connessione.getInstance();
 			Connection con = connessione.getConnection();
 			int idLezione = Integer.parseInt(id);
-			
+
 			ArrayList<Lezione> dettagliLezione = lesson.showElementsLesson(idLezione);
-			for(Lezione l : dettagliLezione) {
+			for (Lezione l : dettagliLezione) {
 				titolo.setText(l.getTitolo());
 				descrizione.setText(l.getDescrizione());
 				durata.setText(l.getDurata());
@@ -699,8 +700,21 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+	}
+
+	public void updateElementsLesson(String id,String titolo, String descrizione, String durata, String oraInizio) {
+		Connessione connessione = null;
+
+		try {
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+			int idLezione = Integer.parseInt(id);
+			
+			lesson.updateElemetsLesson(idLezione, titolo, descrizione, durata, oraInizio);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
