@@ -252,6 +252,12 @@ public class PanelDettagliCorso extends JPanel {
 		add_button_1.setBackground(new Color(65, 105, 225));
 		add_button_1.setBounds(337, 512, 96, 21);
 		add(add_button_1);
+		
+		JLabel lblselezionaUnCorso = new JLabel(">>Seleziona un corso dalla tabella");
+		lblselezionaUnCorso.setHorizontalAlignment(SwingConstants.LEFT);
+		lblselezionaUnCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblselezionaUnCorso.setBounds(10, 473, 251, 17);
+		add(lblselezionaUnCorso);
 
 	}
 

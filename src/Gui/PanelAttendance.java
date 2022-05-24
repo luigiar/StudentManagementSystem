@@ -229,7 +229,7 @@ public class PanelAttendance extends JPanel {
 		btn_aggiungiCorso.setBounds(325, 154, 136, 21);
 		add(btn_aggiungiCorso);
 
-		JLabel label_dettagliLezione = new JLabel("Dettagli della lezione selezionata");
+		JLabel label_dettagliLezione = new JLabel(">>Dettagli della lezione selezionata");
 		label_dettagliLezione.setHorizontalAlignment(SwingConstants.LEFT);
 		label_dettagliLezione.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		label_dettagliLezione.setBounds(10, 411, 236, 23);
