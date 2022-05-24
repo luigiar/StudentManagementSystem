@@ -6,7 +6,6 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Color;
-import javax.swing.SwingConstants;
 
 import Controller.Controller;
 

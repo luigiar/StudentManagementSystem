@@ -63,7 +63,7 @@ public class PanelAggiungiCorso extends JPanel {
 		panel.add(lblNewCourse);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(10, 68, 632, 234);
+		scrollPane.setBounds(10, 68, 632, 213);
 		add(scrollPane);
 
 		TestCellRenderer cell = new TestCellRenderer();
@@ -170,7 +170,7 @@ public class PanelAggiungiCorso extends JPanel {
 		addArea_button.setToolTipText("Aggiungi area");
 		addArea_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rigaPressed = table.getSelectedRow();
+				int rigaPressed = table.convertRowIndexToModel(table.getSelectedRow());
 				if (rigaPressed >= 0) {
 					if (comboBox.getSelectedItem().toString().equals("---Seleziona Area")
 							|| comboBox.getSelectedItem().toString().equals("Aggiungi Area")) {

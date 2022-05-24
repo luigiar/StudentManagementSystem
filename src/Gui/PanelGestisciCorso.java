@@ -82,7 +82,7 @@ public class PanelGestisciCorso extends JPanel {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int rigaSelected = table.getSelectedRow();
+				int rigaSelected = table.convertRowIndexToModel(table.getSelectedRow());
 				CourseTableModel model = (CourseTableModel) table.getModel();
 				textField_nomeCorso.setText((model.getValueAt(rigaSelected, 1)).toString());
 				textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 2)).toString());
@@ -119,7 +119,7 @@ public class PanelGestisciCorso extends JPanel {
 		JButton delete_button = new JButton("Elimina");
 		delete_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rigaPressed = table.getSelectedRow();
+				int rigaPressed = table.convertRowIndexToModel(table.getSelectedRow());
 				if (rigaPressed >= 0) {
 					int input = JOptionPane.showConfirmDialog(null, "Vuoi procedere?", "Seleziona un'opzione",
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -146,7 +146,7 @@ public class PanelGestisciCorso extends JPanel {
 		JButton update_button = new JButton("Aggiorna");
 		update_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rigaPressed = table.getSelectedRow();
+				int rigaPressed = table.convertRowIndexToModel(table.getSelectedRow());
 				if (rigaPressed >= 0) {
 					if (textField_nomeCorso.getText().isBlank() || textFieldPartecipanti.getText().isBlank()
 							|| textArea_descrizione.getText().isBlank() || editor.getText().isBlank()) {
@@ -209,7 +209,7 @@ public class PanelGestisciCorso extends JPanel {
 		JButton addArea_button = new JButton("Aggiungi");
 		addArea_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rigaPressed = table.getSelectedRow();
+				int rigaPressed = table.convertRowIndexToModel(table.getSelectedRow());
 				if (rigaPressed >= 0) {
 					if (comboBox_areaTematica.getSelectedItem().toString().equals("---Seleziona Area")
 							|| comboBox_areaTematica.getSelectedItem().toString().equals("Aggiungi Area")) {
@@ -243,7 +243,7 @@ public class PanelGestisciCorso extends JPanel {
 		JButton editArea_button = new JButton("Modifica");
 		editArea_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rigaPressed = table.getSelectedRow();
+				int rigaPressed = table.convertRowIndexToModel(table.getSelectedRow());
 				if (rigaPressed >= 0) {
 					String input = JOptionPane.showInputDialog(null, "Modifica l'area per questo corso",
 							table.getValueAt(rigaPressed, 3));

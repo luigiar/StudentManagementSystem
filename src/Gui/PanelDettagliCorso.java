@@ -80,7 +80,8 @@ public class PanelDettagliCorso extends JPanel {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int row = table.getSelectedRow();
+				int row = table.convertRowIndexToModel(table.getSelectedRow());
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				lblMostraStudentiIdonei.setText("Visualizza studenti idonei per : "
 						+ model.getValueAt(row, 0).toString() + " " + model.getValueAt(row, 1));
 			}
@@ -307,7 +308,14 @@ public class PanelDettagliCorso extends JPanel {
 		textField_NumLezioni.setText("");
 		textField_PresenzeObbligatorie.setText("");
 		lblLezioniPresenti.setText("");
-		theController.showCoursesDetails(table);
+
+		if (table.getRowCount() == 0) {
+			theController.showCoursesDetails(table);
+		} else {
+			model = (DefaultTableModel) table.getModel();
+			model.setRowCount(0);
+			theController.showCoursesDetails(table);
+		}
 		setGrandezzaColonneTable();
 	}
 

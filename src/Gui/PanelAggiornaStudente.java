@@ -8,22 +8,18 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.Controller;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -77,6 +73,7 @@ public class PanelAggiornaStudente extends JPanel {
 		btn_aggiungiCorso.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+
 				String corsoID = comboBoxCorsi.getSelectedItem().toString();
 				corsoID = corsoID.replaceAll("[^0-9]", "");
 				textField_codiceCorso.setText(corsoID);

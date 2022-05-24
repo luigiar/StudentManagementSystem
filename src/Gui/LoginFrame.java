@@ -21,8 +21,6 @@ import Controller.Controller;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.UIManager;
-import java.awt.SystemColor;
-import javax.swing.JButton;
 
 public class LoginFrame extends JFrame {
 

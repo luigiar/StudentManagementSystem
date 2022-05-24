@@ -64,8 +64,7 @@ public class PanelGestisciStudente extends JPanel {
 		JButton delete_button = new JButton("Elimina");
 		delete_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				int rigaPressed = table.getSelectedRow();
+				int rigaPressed = table.convertRowIndexToModel(table.getSelectedRow());
 				if (rigaPressed >= 0) {
 					int input = JOptionPane.showConfirmDialog(null, "Vuoi procedere?", "Seleziona un'opzione",
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -148,8 +147,8 @@ public class PanelGestisciStudente extends JPanel {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int rigaSelected = table.convertRowIndexToModel(table.getSelectedRow());
 				StudenteTableModel model = (StudenteTableModel) table.getModel();
-				int rigaSelected = table.getSelectedRow();
 				txtId.setText((model.getValueAt(rigaSelected, 0)).toString());
 				textFieldNome.setText((model.getValueAt(rigaSelected, 1)).toString());
 				txtCognome.setText((model.getValueAt(rigaSelected, 2)).toString());
