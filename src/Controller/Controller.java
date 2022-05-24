@@ -679,5 +679,28 @@ public class Controller {
 		}
 		
 	}
+	
+	public void showLessonElements(String id, JTextField titolo, JTextArea descrizione, JTextField durata, JTextField oraInizio) {
+		Connessione connessione = null;
+		
+		try {
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+			int idLezione = Integer.parseInt(id);
+			
+			ArrayList<Lezione> dettagliLezione = lesson.showElementsLesson(idLezione);
+			for(Lezione l : dettagliLezione) {
+				titolo.setText(l.getTitolo());
+				descrizione.setText(l.getDescrizione());
+				durata.setText(l.getDurata());
+				oraInizio.setText(l.getOraInizio());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
 
 }

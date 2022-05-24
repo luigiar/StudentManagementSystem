@@ -5,10 +5,11 @@ public class Lezione {
 	
 	private String descrizione;
 	private String dataInizio;
-	private double oraInizio;
+	private String oraInizio;
 	private int codiceLezione;
 	private String titolo;
 	private boolean presenza;
+	private String durata;
 	
 	
 	public String getTitolo() {
@@ -29,10 +30,10 @@ public class Lezione {
 	public void setDataInizio(String dataInizio) {
 		this.dataInizio = dataInizio;
 	}
-	public double getOraInizio() {
+	public String getOraInizio() {
 		return oraInizio;
 	}
-	public void setOraInizio(double oraInizio) {
+	public void setOraInizio(String oraInizio) {
 		this.oraInizio = oraInizio;
 	}
 	public int getCodiceLezione() {
@@ -46,5 +47,11 @@ public class Lezione {
 	}
 	public void setPresenza(boolean presenza) {
 		this.presenza = presenza;
+	}
+	public String getDurata() {
+		return durata;
+	}
+	public void setDurata(String durata) {
+		this.durata = durata;
 	}
 }

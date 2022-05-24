@@ -24,7 +24,7 @@ import Gui.GestisciLezioneJDialog;
 import dbSettings.Connessione;
 
 public class LezioneDAOImpl implements LezioneDAO {
-	PreparedStatement mostraLezioni, inserisciLezione;
+	PreparedStatement mostraLezioni, inserisciLezione,mostraDettagliLezione;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 
@@ -66,8 +66,7 @@ public class LezioneDAOImpl implements LezioneDAO {
 			Date date = simpleDateFormat.parse(dataInizio);
 			java.sql.Date dataSQL = new java.sql.Date(date.getTime());
 			int id = Integer.parseInt(idCorso);
-			int durataLezione = Integer.parseInt(durata);
-			LocalTime time = LocalTime.parse(oraInizio);
+			java.sql.Time timeDurata = new java.sql.Time(sdf.parse(durata).getTime());
 			java.sql.Time timeValue = new java.sql.Time(sdf.parse(oraInizio).getTime());
 
 			inserisciLezione = conn.prepareStatement(sqlInsert);
@@ -75,7 +74,7 @@ public class LezioneDAOImpl implements LezioneDAO {
 			inserisciLezione.setInt(2, id);
 			inserisciLezione.setString(3, titolo);
 			inserisciLezione.setString(4, descrizione);
-			inserisciLezione.setInt(5, durataLezione);
+			inserisciLezione.setTime(5, timeDurata);
 			inserisciLezione.setTime(6, timeValue);
 			inserisciLezione.executeUpdate();
 
@@ -122,5 +121,31 @@ public class LezioneDAOImpl implements LezioneDAO {
 
 		return value;
 
+	}
+
+	@Override
+	public ArrayList<Lezione> showElementsLesson(int lezioneID) throws SQLException {
+		Connessione connect = Connessione.getInstance();
+		Connection conn = connect.getConnection();
+		ArrayList<Lezione> lezioni = new ArrayList<Lezione>();
+		
+		
+		String mostraSql = "select titolo, descrizione, durata, ora_inizio from lezione where lezione_id = " +lezioneID;
+		mostraDettagliLezione = conn.prepareStatement(mostraSql);
+		
+		ResultSet risultato = mostraDettagliLezione.executeQuery();
+		while(risultato.next()) {
+			Lezione lezione = new Lezione();
+			lezione.setTitolo(risultato.getString(1));
+			lezione.setDescrizione(risultato.getString(2));
+			Time durataTime = risultato.getTime(3);
+			String durata = String.valueOf(durataTime);
+			lezione.setDurata(durata);
+			Time timeOraInizio = risultato.getTime(4);
+			String oraInizio = String.valueOf(timeOraInizio);
+			lezione.setOraInizio(oraInizio);
+			lezioni.add(lezione);
+		}
+		return lezioni;
 	}
 }

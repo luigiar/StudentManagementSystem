@@ -67,11 +67,11 @@ public class GestisciLezioneJDialog extends JDialog {
 		lblGestioneLezioni.setBounds(109, 11, 197, 28);
 		panel_GestioneLezioni.add(lblGestioneLezioni);
 		
-		JLabel lblLezionenumero = new JLabel("Titolo :");
-		lblLezionenumero.setHorizontalAlignment(SwingConstants.LEFT);
-		lblLezionenumero.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
-		lblLezionenumero.setBounds(10, 68, 128, 17);
-		contentPanel.add(lblLezionenumero);
+		JLabel lblTitolo = new JLabel("Titolo :");
+		lblTitolo.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTitolo.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblTitolo.setBounds(10, 68, 128, 17);
+		contentPanel.add(lblTitolo);
 		
 		textField_titolo = new JTextField();
 		textField_titolo.setColumns(10);
@@ -131,17 +131,17 @@ public class GestisciLezioneJDialog extends JDialog {
 		JTextFieldDateEditor editor = (JTextFieldDateEditor) dateChooser.getDateEditor();
 		editor.setEditable(false);
 		
-		JButton btnNewButton = new JButton("Salva");
-		btnNewButton.addMouseListener(new MouseAdapter() {
+		JButton btnSalva = new JButton("Salva");
+		btnSalva.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 			c.insertLesson(editor.getText(),corsoID,textField_titolo.getText(), textArea_descrizione.getText(), textFieldDurataLezione.getText(),textField_oraInizio.getText());
 			}
 		});
-		btnNewButton.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		btnNewButton.setBackground(new Color(102, 204, 51));
-		btnNewButton.setBounds(305, 313, 89, 23);
-		contentPanel.add(btnNewButton);
+		btnSalva.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
+		btnSalva.setBackground(new Color(102, 204, 51));
+		btnSalva.setBounds(305, 313, 89, 23);
+		contentPanel.add(btnSalva);
 		
 		JLabel lblDuration = new JLabel("h.");
 		lblDuration.setHorizontalAlignment(SwingConstants.LEFT);

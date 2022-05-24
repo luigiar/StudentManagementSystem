@@ -27,6 +27,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.JTextArea;
 
 public class PanelAttendance extends JPanel {
 	private JTable table;
@@ -40,6 +41,10 @@ public class PanelAttendance extends JPanel {
 	private JButton btn_salva;
 	DefaultComboBoxModel modelComboBox;
 	String dataLezioneSelected, idLezioneSelected, idStudente, presenza;
+	private JTextField textField_titoloLezione;
+	private JTextField textField_durataLezione;
+	private JTextField textField_oraInizio;
+	private JTextArea textArea_descrizione;
 
 	public PanelAttendance(Controller c) {
 		theController = c;
@@ -69,16 +74,23 @@ public class PanelAttendance extends JPanel {
 		JLabel lbl_lezioni = new JLabel("Seleziona una lezione");
 		lbl_lezioni.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_lezioni.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		lbl_lezioni.setBounds(20, 161, 115, 22);
+		lbl_lezioni.setBounds(10, 153, 115, 22);
 		add(lbl_lezioni);
 
 		comboBoxLezioni = new JComboBox();
 		comboBoxLezioni.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				model.setRowCount(0);
+				if (comboBoxLezioni.getSelectedItem() != null) {
+					String lezioneSelected = comboBoxLezioni.getSelectedItem().toString();
+					idLezioneSelected = lezioneSelected
+							.substring(lezioneSelected.indexOf("D ") + 1, lezioneSelected.indexOf(" :")).strip();
+					c.showLessonElements(idLezioneSelected, textField_titoloLezione, textArea_descrizione,
+							textField_durataLezione, textField_oraInizio);
+				}
 			}
 		});
-		comboBoxLezioni.setBounds(153, 162, 163, 22);
+		comboBoxLezioni.setBounds(145, 154, 163, 22);
 		add(comboBoxLezioni);
 		modelComboBox = new DefaultComboBoxModel();
 		comboBoxLezioni.setModel(modelComboBox);
@@ -121,12 +133,12 @@ public class PanelAttendance extends JPanel {
 
 		});
 		btn_mostraLezioni.setBackground(new Color(0, 139, 139));
-		btn_mostraLezioni.setBounds(281, 98, 75, 23);
+		btn_mostraLezioni.setBounds(325, 98, 75, 23);
 		add(btn_mostraLezioni);
 
 		JScrollPane scrollPane = new JScrollPane((Component) null);
 		scrollPane.setBackground(Color.WHITE);
-		scrollPane.setBounds(10, 217, 632, 231);
+		scrollPane.setBounds(10, 197, 632, 210);
 		add(scrollPane);
 
 		model = new DefaultTableModel() {
@@ -191,7 +203,7 @@ public class PanelAttendance extends JPanel {
 				clearFields();
 			}
 		});
-		comboBoxCorsi.setBounds(135, 98, 136, 22);
+		comboBoxCorsi.setBounds(135, 98, 163, 22);
 		add(comboBoxCorsi);
 		table.getTableHeader().setReorderingAllowed(false);
 
@@ -214,8 +226,68 @@ public class PanelAttendance extends JPanel {
 		btn_aggiungiCorso.setToolTipText("Clicca per visualizzare gli studenti");
 		btn_aggiungiCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
 		btn_aggiungiCorso.setBackground(new Color(255, 165, 0));
-		btn_aggiungiCorso.setBounds(326, 162, 136, 21);
+		btn_aggiungiCorso.setBounds(325, 154, 136, 21);
 		add(btn_aggiungiCorso);
+
+		JLabel label_dettagliLezione = new JLabel("Dettagli della lezione selezionata");
+		label_dettagliLezione.setHorizontalAlignment(SwingConstants.LEFT);
+		label_dettagliLezione.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		label_dettagliLezione.setBounds(10, 411, 236, 23);
+		add(label_dettagliLezione);
+
+		JLabel lblTitoloLezione = new JLabel("Titolo :");
+		lblTitoloLezione.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTitoloLezione.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblTitoloLezione.setBounds(20, 445, 67, 17);
+		add(lblTitoloLezione);
+
+		textField_titoloLezione = new JTextField();
+		textField_titoloLezione.setColumns(10);
+		textField_titoloLezione.setBounds(95, 445, 151, 20);
+		add(textField_titoloLezione);
+
+		JLabel lblDurataLezione = new JLabel("Durata Lezione :");
+		lblDurataLezione.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDurataLezione.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblDurataLezione.setBounds(346, 445, 115, 17);
+		add(lblDurataLezione);
+
+		textField_durataLezione = new JTextField();
+		textField_durataLezione.setColumns(10);
+		textField_durataLezione.setBounds(471, 444, 86, 20);
+		add(textField_durataLezione);
+
+		JLabel lblDescrizione = new JLabel("Descrizione : ");
+		lblDescrizione.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDescrizione.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblDescrizione.setBounds(20, 489, 79, 17);
+		add(lblDescrizione);
+
+		JLabel lblOraInizio = new JLabel("Ora inizio :");
+		lblOraInizio.setHorizontalAlignment(SwingConstants.LEFT);
+		lblOraInizio.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblOraInizio.setBounds(346, 491, 93, 17);
+		add(lblOraInizio);
+
+		textField_oraInizio = new JTextField();
+		textField_oraInizio.setToolTipText("hh:mm");
+		textField_oraInizio.setColumns(10);
+		textField_oraInizio.setBounds(471, 488, 86, 20);
+		add(textField_oraInizio);
+
+		JScrollPane scrollPane_descrizione = new JScrollPane();
+		scrollPane_descrizione.setBounds(105, 482, 170, 57);
+		add(scrollPane_descrizione);
+
+		textArea_descrizione = new JTextArea();
+		textArea_descrizione.setLineWrap(true);
+		scrollPane_descrizione.setViewportView(textArea_descrizione);
+
+		JLabel lblDuration = new JLabel("h.");
+		lblDuration.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDuration.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblDuration.setBounds(567, 445, 55, 17);
+		add(lblDuration);
 	}
 
 	public void mostraLezioni() {
@@ -241,6 +313,10 @@ public class PanelAttendance extends JPanel {
 		if (comboBoxLezioni.getSelectedIndex() >= 0 || table.getRowCount() > 0 || comboBoxLezioni.getItemCount() > -1) {
 			modelComboBox.removeAllElements();
 			model.setRowCount(0);
+			textField_titoloLezione.setText("");
+			textArea_descrizione.setText("");
+			textField_durataLezione.setText("");
+			textField_oraInizio.setText("");
 		}
 
 	}
@@ -250,5 +326,4 @@ public class PanelAttendance extends JPanel {
 		theController.mostraCorsiComboBox(comboBoxCorsi);
 		comboBoxCorsi.setSelectedIndex(-1);
 	}
-
 }

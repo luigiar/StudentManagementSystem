@@ -76,7 +76,9 @@ public class PanelDettagliCorso extends JPanel {
 		scrollPane.setBounds(10, 241, 630, 227);
 		add(scrollPane);
 
+		TestCellRenderer cell = new TestCellRenderer();
 		table = new JTable();
+		table.setDefaultRenderer(Object.class, cell);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -84,6 +86,7 @@ public class PanelDettagliCorso extends JPanel {
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				lblMostraStudentiIdonei.setText("Visualizza studenti idonei per : "
 						+ model.getValueAt(row, 0).toString() + " " + model.getValueAt(row, 1));
+				lblMostraStudentiIdonei.setToolTipText(model.getValueAt(row, 1).toString());
 			}
 		});
 		table.setBounds(10, 221, 612, -209);
