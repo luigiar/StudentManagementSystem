@@ -85,9 +85,7 @@ public class PanelAggiornaStudente extends JPanel {
 				int input = JOptionPane.showConfirmDialog(null, campiCorso, "Iscrivere lo studente al corso seguente? ",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (input == JOptionPane.OK_OPTION) {
-					c.addCourseToStudent(comboBoxCorsi, textField_id.getText(), corsoID);
-					c.addTableDataStudentToTableView(table, textField_codiceCorso.getText(),
-							textField_nomeCorso.getText());
+					c.addCourseToStudent(table,textField_id.getText(), corsoID,nomeCorso);
 				} else {
 					JOptionPane.showMessageDialog(null, "Iscrizione Annullata");
 				}
@@ -238,4 +236,5 @@ public class PanelAggiornaStudente extends JPanel {
 		comboBoxCorsi.removeAllItems();
 		theController.mostraCorsiComboBox(comboBoxCorsi);
 	}
+
 }

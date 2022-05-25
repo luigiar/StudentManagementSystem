@@ -6,6 +6,7 @@ import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -306,26 +307,35 @@ public class Controller {
 		}
 	}
 
-	public void addCourseToStudent(JComboBox comboBox, String idStudente, String idCorso) {
-		DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
+	public void addCourseToStudent(JTable table, String idStudente, String idCorso, String nomeCorso) {
 		Connessione connect = null;
 		try {
 			connect = Connessione.getInstance();
 
 			Connection conn = connect.getConnection();
-
-			PreparedStatement inserimentoCorso;
-
-			String inserimentoSql = "INSERT INTO registrazione (studente_id, corso_id) VALUES (?, ?)";
+			CallableStatement inserimentoCorso;
 
 			int theStudentID = Integer.parseInt(idStudente);
 			int theCourseID = Integer.parseInt(idCorso);
 
-			inserimentoCorso = conn.prepareStatement(inserimentoSql);
-			inserimentoCorso.setInt(1, theStudentID);
-			inserimentoCorso.setInt(2, theCourseID);
-			JOptionPane.showMessageDialog(null, "Iscrizione effettuata");
+			inserimentoCorso = conn.prepareCall("{call insert_registration(?,?)}");
+
+			inserimentoCorso.setInt(1, theCourseID);
+			inserimentoCorso.setInt(2, theStudentID);
 			inserimentoCorso.executeUpdate();
+
+			SQLWarning warning = inserimentoCorso.getWarnings();
+
+			if (warning != null) {
+				String errore = warning.toString();
+				errore = errore.substring(errore.lastIndexOf(": ") + 1).strip();
+				JOptionPane.showMessageDialog(null, errore, "Attenzione", JOptionPane.WARNING_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "Iscrizione Effettuata", "Conferma",
+						JOptionPane.INFORMATION_MESSAGE);
+				DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
+				registrationStudent.addRow(new Object[] { idCorso, nomeCorso });
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -340,54 +350,19 @@ public class Controller {
 			connect = Connessione.getInstance();
 			Connection conn = connect.getConnection();
 			int id = Integer.parseInt(idStudente);
-			PreparedStatement mostraCorsi;
-			String mostraSql = "SELECT DISTINCT registrazione.corso_id, corso.nome "
-					+ "FROM corso, registrazione, studente " + "WHERE corso.id = registrazione.corso_id "
-					+ "AND registrazione.studente_id = " + id;
 
-			mostraCorsi = conn.prepareStatement(mostraSql);
+			CallableStatement mostraCorsi;
+			mostraCorsi = conn.prepareCall("{call show_table_student_course(?)}");
+			mostraCorsi.setInt(1, id);
 			ResultSet risultato = mostraCorsi.executeQuery();
 			while (risultato.next()) {
 				int idCorso = risultato.getInt(1);
 				String nomeCorso = risultato.getString(2);
 				registrationStudent.addRow(new Object[] { idCorso, nomeCorso });
 			}
-		} catch (NumberFormatException ec) {
-			JOptionPane.showMessageDialog(null, "Inserire un formato corretto", "Attenzione",
-					JOptionPane.WARNING_MESSAGE);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-// da fare procedura show con function nel database al posto di confrontare con java
-//	public void showTableDataStudent(String idStudente, JTable table) {
-//		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
-//		Connessione connect = null;
-//		try {
-//			connect = Connessione.getInstance();
-//			Connection conn = connect.getConnection();
-//			int id = Integer.parseInt(idStudente);
-//			
-//			CallableStatement mostraCorsi;
-//			mostraCorsi = conn.prepareCall("{call show_table_student_course(?)}");
-//			mostraCorsi.setInt(1, id);
-//			ResultSet risultato = mostraCorsi.executeQuery();
-//			while (risultato.next()) {
-//				int idCorso = risultato.getInt(1);
-//				System.out.println(idCorso);
-//				String nomeCorso = risultato.getString(2);
-//				System.out.println(nomeCorso);
-//				registrationStudent.addRow(new Object[] { idCorso, nomeCorso });
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
-
-	public void addTableDataStudentToTableView(JTable table, String nomeCorso, String codiceCorso) {
-		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
-		registrationStudent.addRow(new Object[] { nomeCorso, codiceCorso });
 	}
 
 	public void registraAdmin(String username, String password) {
@@ -702,14 +677,14 @@ public class Controller {
 		}
 	}
 
-	public void updateElementsLesson(String id,String titolo, String descrizione, String durata, String oraInizio) {
+	public void updateElementsLesson(String id, String titolo, String descrizione, String durata, String oraInizio) {
 		Connessione connessione = null;
 
 		try {
 			connessione = Connessione.getInstance();
 			Connection con = connessione.getConnection();
 			int idLezione = Integer.parseInt(id);
-			
+
 			lesson.updateElemetsLesson(idLezione, titolo, descrizione, durata, oraInizio);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

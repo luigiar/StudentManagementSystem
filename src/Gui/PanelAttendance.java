@@ -298,14 +298,17 @@ public class PanelAttendance extends JPanel {
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi!", "Errore",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					c.updateElementsLesson(idLezioneSelected, textField_titoloLezione.getText(),
-							textArea_descrizione.getText(), textField_durataLezione.getText(),
-							textField_oraInizio.getText());
+					if (comboBoxLezioni.getSelectedItem() != null) {
+						c.updateElementsLesson(idLezioneSelected, textField_titoloLezione.getText(),
+								textArea_descrizione.getText(), textField_durataLezione.getText(),
+								textField_oraInizio.getText());
 
-					textField_titoloLezione.setText("");
-					textArea_descrizione.setText("");
-					textField_durataLezione.setText("");
-					textField_oraInizio.setText("");
+						textField_titoloLezione.setText("");
+						textArea_descrizione.setText("");
+						textField_durataLezione.setText("");
+						textField_oraInizio.setText("");
+						comboBoxLezioni.setSelectedIndex(-1);
+					}
 				}
 
 			}

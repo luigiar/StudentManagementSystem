@@ -88,7 +88,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 			System.out.println("Mostrando elementi tabella corsi... ");
 			mostraCorsi = conn.createStatement();
 
-			String selezionaCorsiSql = "SELECT id,nome,descrizione,max_partecipanti,aree_tematiche FROM corso";
+			String selezionaCorsiSql = "SELECT id, nome, descrizione, max_partecipanti, aree_tematiche FROM corso order by id";
 			ResultSet risultato = mostraCorsi.executeQuery(selezionaCorsiSql);
 
 			while (risultato.next()) {
@@ -257,7 +257,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 			System.out.println("Mostrando elementi comboBox corsi... ");
 			mostraCorsi = conn.createStatement();
 
-			String selezionaCorsiSql = "SELECT id, nome FROM corso";
+			String selezionaCorsiSql = "SELECT id, nome FROM corso order by id";
 			ResultSet risultato = mostraCorsi.executeQuery(selezionaCorsiSql);
 
 			while (risultato.next()) {

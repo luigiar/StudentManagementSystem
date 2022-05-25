@@ -35,7 +35,8 @@ public class LezioneDAOImpl implements LezioneDAO {
 		Connection conn = connection.getConnection();
 
 		try {
-			mostraLezioni = conn.prepareStatement("SELECT lezione_id, data_inizio FROM lezione WHERE corso_id = " + id);
+			mostraLezioni = conn.prepareStatement("SELECT lezione_id, data_inizio FROM lezione WHERE corso_id = " + id
+					+ "order by data_inizio");
 			ResultSet risultato = mostraLezioni.executeQuery();
 			while (risultato.next()) {
 
@@ -96,7 +97,8 @@ public class LezioneDAOImpl implements LezioneDAO {
 			JOptionPane.showMessageDialog(null, "Durata della lezione inserita non corretta", "Attenzione",
 					JOptionPane.WARNING_MESSAGE);
 		} catch (ParseException e1) {
-			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Inserisci un formato corretto hh:mm", "Attenzione",
+					JOptionPane.WARNING_MESSAGE);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -172,7 +174,7 @@ public class LezioneDAOImpl implements LezioneDAO {
 			System.out.println("lezione aggiornata");
 
 			JOptionPane.showMessageDialog(null, "Lezione aggiornata correttamente");
-			
+
 		} catch (DateTimeParseException exceptionTime) {
 			JOptionPane.showMessageDialog(null, "Inserisci un formato corretto per l'ora", "Attenzione",
 					JOptionPane.WARNING_MESSAGE);
@@ -180,9 +182,8 @@ public class LezioneDAOImpl implements LezioneDAO {
 			JOptionPane.showMessageDialog(null, "Durata della lezione inserita non corretta", "Attenzione",
 					JOptionPane.WARNING_MESSAGE);
 		} catch (ParseException e1) {
-			JOptionPane.showMessageDialog(null, "Inserisci un formato corretto", "Attenzione",
+			JOptionPane.showMessageDialog(null, "Inserisci un formato corretto hh:mm", "Attenzione",
 					JOptionPane.WARNING_MESSAGE);
-			e1.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

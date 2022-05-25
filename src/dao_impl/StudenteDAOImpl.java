@@ -111,7 +111,7 @@ public class StudenteDAOImpl implements StudenteDAO {
 			System.out.println("Mostrando elementi tabella studenti... ");
 			mostraStudentiST = conn.createStatement();
 
-			String selezionaStudentiSQL = "SELECT * FROM studente";
+			String selezionaStudentiSQL = "SELECT * FROM studente order by id";
 			ResultSet result = mostraStudentiST.executeQuery(selezionaStudentiSQL);
 
 			while (result.next()) {
