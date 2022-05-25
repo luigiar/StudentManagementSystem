@@ -196,11 +196,16 @@ public class PanelDettagliCorso extends JPanel {
 					JOptionPane.showMessageDialog(null, "Completa prima tutti i campi!", "Attenzione",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
-					updateDetails();
-					comboBoxCorsi.setSelectedIndex(-1);
-					textField_NumLezioni.setText("");
-					textField_PresenzeObbligatorie.setText("");
-					lblLezioniPresenti.setText("");
+					int numeroPresenze = Integer.parseInt(textField_PresenzeObbligatorie.getText());
+					int numeroLezioni = Integer.parseInt(textField_NumLezioni.getText());
+					if (numeroPresenze > numeroLezioni) {
+						JOptionPane.showMessageDialog(null,
+								"Numero presenze obbligatorie è maggiore\n del numero di lezioni!", "Attenzione",
+								JOptionPane.WARNING_MESSAGE);
+					} else {
+						updateDetails();
+
+					}
 				}
 			}
 		});
@@ -252,7 +257,7 @@ public class PanelDettagliCorso extends JPanel {
 		add_button_1.setBackground(new Color(65, 105, 225));
 		add_button_1.setBounds(337, 512, 96, 21);
 		add(add_button_1);
-		
+
 		JLabel lblselezionaUnCorso = new JLabel(">>Seleziona un corso dalla tabella");
 		lblselezionaUnCorso.setHorizontalAlignment(SwingConstants.LEFT);
 		lblselezionaUnCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
@@ -278,10 +283,7 @@ public class PanelDettagliCorso extends JPanel {
 			GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(theController, codiceCorso);
 			lezione.setVisible(true);
 			if (!lezione.isVisible()) {
-				textField_NumLezioni.setText("");
-				textField_PresenzeObbligatorie.setText("");
-				lblLezioniPresenti.setText("");
-				comboBoxCorsi.setSelectedIndex(-1);
+				theController.showNumberOfLessons(lblLezioniPresenti, codiceCorso);
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso!", "Attenzione",
@@ -297,6 +299,11 @@ public class PanelDettagliCorso extends JPanel {
 			if (theController.checkNumberLesson(codiceCorso, lessonCreable, textField_NumLezioni.getText())) {
 				theController.updateDetailsCourse(textField_NumLezioni.getText(),
 						textField_PresenzeObbligatorie.getText(), codiceCorso);
+
+				comboBoxCorsi.setSelectedIndex(-1);
+				textField_NumLezioni.setText("");
+				textField_PresenzeObbligatorie.setText("");
+				lblLezioniPresenti.setText("");
 
 			} else {
 				JOptionPane.showMessageDialog(null,
