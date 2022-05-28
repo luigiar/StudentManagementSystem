@@ -55,7 +55,8 @@ public class StudenteTableModel extends AbstractTableModel {
 
 	public void add(Studente riga) {
 		studenti.add(riga);
-		fireTableRowsInserted(getRowCount(), getColumnCount());
+//		fireTableRowsInserted(getRowCount(), getColumnCount());
+		this.fireTableStructureChanged();
 	}
 
 	@Override
@@ -80,12 +81,14 @@ public class StudenteTableModel extends AbstractTableModel {
 			studenti.get(rowIndex).setGenere(aValue.toString());
 			break;
 		}
-		fireTableCellUpdated(rowIndex, columnIndex);
+//		fireTableCellUpdated(rowIndex, columnIndex);
+		 this.fireTableStructureChanged();
 	}
 
 	public void remove(int riga) {
 		studenti.remove(riga);
-		fireTableRowsDeleted(getRowCount(), getColumnCount());
+//		fireTableRowsDeleted(getRowCount(), getColumnCount());
+		this.fireTableStructureChanged();
 	}
 
 }

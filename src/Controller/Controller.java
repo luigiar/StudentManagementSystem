@@ -162,7 +162,7 @@ public class Controller {
 	}
 
 	public void deleteStudent(JTable table) {
-		int row = table.getSelectedRow();
+		int row = table.convertRowIndexToModel(table.getSelectedRow());
 		String deleteCell = table.getValueAt(row, 0).toString();
 		int theID = Integer.parseInt(deleteCell);
 
@@ -208,21 +208,26 @@ public class Controller {
 			Corso c = new Corso(id, nome.getText(), descrizione.getText(), maxPart,
 					areaTematica.getSelectedItem().toString());
 			model.add(c);
+			System.out.println("Dopo " + model.getRowCount());
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void deleteCourse(JTable table) {
+		CourseTableModel model = (CourseTableModel) table.getModel();
 		int row = table.getSelectedRow();
-		String deleteCell = table.getValueAt(row, 0).toString();
+		int rowModel = table.convertRowIndexToModel(row);
+		String deleteCell = table.getValueAt(rowModel, 0).toString();
 		int theID = Integer.parseInt(deleteCell);
 		try {
 			course.eliminaCorso(theID);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		model.remove(row);
+		model.remove(rowModel);
+
 	}
 
 	public void updateDetailsCourse(String numeroLezioni, String presenzeObbligatorie, String id) {
@@ -249,13 +254,14 @@ public class Controller {
 
 	public void updateCourse(JTable table, String nome, String maxPartecipanti, String descrizione, String dataInizio) {
 		try {
+			boolean isUpdated = false;
 			int rigaSelected = table.getSelectedRow();
 			int theID = (int) model.getValueAt(rigaSelected, 0);
-			course.aggiornaCorso(theID, nome, maxPartecipanti, descrizione, dataInizio);
-
-			model.setValueAt(nome, rigaSelected, 1);
-			model.setValueAt(maxPartecipanti, rigaSelected, 2);
-			model.setValueAt(descrizione, rigaSelected, 4);
+			if (course.aggiornaCorso(isUpdated, theID, nome, maxPartecipanti, descrizione, dataInizio)) {
+				model.setValueAt(nome, rigaSelected, 1);
+				model.setValueAt(maxPartecipanti, rigaSelected, 2);
+				model.setValueAt(descrizione, rigaSelected, 4);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -334,7 +340,7 @@ public class Controller {
 				JOptionPane.showMessageDialog(null, "Iscrizione Effettuata", "Conferma",
 						JOptionPane.INFORMATION_MESSAGE);
 				DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
-				registrationStudent.addRow(new Object[] { idCorso, nomeCorso });
+				registrationStudent.addRow(new Object[] { idCorso, nomeCorso, "0%" });
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -358,7 +364,8 @@ public class Controller {
 			while (risultato.next()) {
 				int idCorso = risultato.getInt(1);
 				String nomeCorso = risultato.getString(2);
-				registrationStudent.addRow(new Object[] { idCorso, nomeCorso });
+				int percentualePresenze = risultato.getInt(3);
+				registrationStudent.addRow(new Object[] { idCorso, nomeCorso, percentualePresenze + "%" });
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -155,6 +155,7 @@ public class PanelGestisciCorso extends JPanel {
 					} else {
 						c.updateCourse(table, textField_nomeCorso.getText(), textFieldPartecipanti.getText(),
 								textArea_descrizione.getText(), editor.getText());
+						setGrandezzaColonneTable();
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso", "Attenzione",

@@ -8,6 +8,7 @@ import javax.swing.JTable;
 import Entità.AreeTematiche;
 import Entità.Corso;
 import Entità.Studente;
+import Gui.CourseTableModel;
 
 public interface CorsoDAO {
 
@@ -19,7 +20,7 @@ public interface CorsoDAO {
 	
 	public void eliminaCorso(int id) throws SQLException;
 	
-	public void aggiornaCorso(int id, String nome, String massimoPartecipanti ,String descrizione, String dataInizio) throws SQLException;
+	public boolean aggiornaCorso(boolean isUpdate,int id, String nome, String massimoPartecipanti ,String descrizione, String dataInizio) throws SQLException;
 	
 	public void aggiornaArea(String areaTematica, int id) throws SQLException;
 	

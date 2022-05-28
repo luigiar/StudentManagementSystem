@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import DAO.CorsoDAO;
 import Entità.AreeTematiche;
 import Entità.Corso;
+import Gui.CourseTableModel;
 import dbSettings.Connessione;
 
 public class CorsoDAOImpl implements CorsoDAO {
@@ -188,7 +189,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 	}
 
 	@Override
-	public void aggiornaCorso(int id, String nome, String maxPartecipanti, String descrizione, String dataInizio)
+	public boolean aggiornaCorso(boolean isUpdated, int id, String nome, String maxPartecipanti, String descrizione, String dataInizio)
 			throws SQLException {
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
@@ -207,9 +208,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 			aggiornaCorsoStm.setInt(2, numeroPartecipantiMax);
 			aggiornaCorsoStm.setString(3, descrizione);
 			aggiornaCorsoStm.setDate(4, dataSQL);
-
 			aggiornaCorsoStm.executeUpdate();
-			System.out.println("Corso aggiornato correttamente");
 
 			SQLWarning warning = aggiornaCorsoStm.getWarnings();
 
@@ -220,7 +219,9 @@ public class CorsoDAOImpl implements CorsoDAO {
 			} else {
 				JOptionPane.showMessageDialog(null, "Aggiornamento Effettuato", "Conferma",
 						JOptionPane.INFORMATION_MESSAGE);
+				isUpdated = true;
 			}
+			return isUpdated;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -243,6 +244,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 				se.printStackTrace();
 			}
 		}
+		return isUpdated;
 	}
 
 	@Override

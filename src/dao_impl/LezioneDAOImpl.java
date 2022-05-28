@@ -80,7 +80,7 @@ public class LezioneDAOImpl implements LezioneDAO {
 			inserisciLezione.executeUpdate();
 
 			SQLWarning warning = inserisciLezione.getWarnings();
-
+			
 			if (warning != null) {
 				String errore = warning.toString();
 				errore = errore.substring(errore.lastIndexOf(": ") + 1).strip();

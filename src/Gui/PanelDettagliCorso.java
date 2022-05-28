@@ -274,16 +274,18 @@ public class PanelDettagliCorso extends JPanel {
 		model.setRowCount(0);
 		table.clearSelection();
 		lblMostraStudentiIdonei.setText("Visualizza studenti idonei per : ");
+		lblMostraStudentiIdonei.setToolTipText(null);
 	}
 
 	public void showJDialogLesson() {
 		if (comboBoxCorsi.getSelectedItem() != null) {
 			String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
 			String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
-			GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(theController, codiceCorso);
+			GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(theController, codiceCorso,table);
 			lezione.setVisible(true);
 			if (!lezione.isVisible()) {
 				theController.showNumberOfLessons(lblLezioniPresenti, codiceCorso);
+				mostraTabellaCorsi();
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso!", "Attenzione",
@@ -324,7 +326,16 @@ public class PanelDettagliCorso extends JPanel {
 		textField_NumLezioni.setText("");
 		textField_PresenzeObbligatorie.setText("");
 		lblLezioniPresenti.setText("");
+		mostraTabellaCorsi();
+	}
 
+	public void setGrandezzaColonneTable() {
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(2).setPreferredWidth(100);
+		table.getColumnModel().getColumn(3).setPreferredWidth(100);
+	}
+	
+	public void mostraTabellaCorsi() {
 		if (table.getRowCount() == 0) {
 			theController.showCoursesDetails(table);
 		} else {
@@ -333,11 +344,5 @@ public class PanelDettagliCorso extends JPanel {
 			theController.showCoursesDetails(table);
 		}
 		setGrandezzaColonneTable();
-	}
-
-	public void setGrandezzaColonneTable() {
-		table.getColumnModel().getColumn(0).setPreferredWidth(50);
-		table.getColumnModel().getColumn(2).setPreferredWidth(100);
-		table.getColumnModel().getColumn(3).setPreferredWidth(100);
 	}
 }

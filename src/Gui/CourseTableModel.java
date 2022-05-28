@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
-
 import Entità.Corso;
 
 public class CourseTableModel extends AbstractTableModel {
@@ -56,7 +55,8 @@ public class CourseTableModel extends AbstractTableModel {
 
 	public void add(Corso riga) {
 		this.corsi.add(riga);
-		this.fireTableRowsInserted(getRowCount(), getColumnCount());
+//		this.fireTableRowsInserted(getRowCount(), getColumnCount());
+		this.fireTableStructureChanged();
 	}
 
 	@Override
@@ -81,11 +81,13 @@ public class CourseTableModel extends AbstractTableModel {
 			corsi.get(rowIndex).setDescrizione(aValue.toString());
 			break;
 		}
-		fireTableCellUpdated(rowIndex, columnIndex);
+//		fireTableCellUpdated(rowIndex, columnIndex);
+		 this.fireTableStructureChanged();
 	}
 	
 	public void remove(int riga) {
 		 this.corsi.remove(riga);
-		 this.fireTableRowsDeleted(getRowCount(), getColumnCount());
+//		 this.fireTableRowsDeleted(getRowCount(), getColumnCount());
+		 this.fireTableStructureChanged();
 	}	
 }

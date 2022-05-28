@@ -27,6 +27,7 @@ public interface StudenteDAO {
 	public int getLastID(int id) throws SQLException;
 	
 	public void mostraStudentiIdonei(int idCorso,JTable table) throws SQLException;
+	 
 	
 	
 }

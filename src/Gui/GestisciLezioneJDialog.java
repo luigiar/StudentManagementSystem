@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
@@ -37,11 +38,10 @@ public class GestisciLezioneJDialog extends JDialog {
 	private JTextArea textArea_descrizione;
 	private JDateChooser dateChooser;
 	private Controller theController;
-	
 	/**
 	 * Create the dialog.
 	 */
-	public GestisciLezioneJDialog(Controller c, String corsoID) {
+	public GestisciLezioneJDialog(Controller c, String corsoID, JTable table) {
 		theController = c;
 		setTitle("Aggiungi delle lezioni");
 		setModal(true);

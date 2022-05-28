@@ -98,7 +98,7 @@ public class PanelAggiornaStudente extends JPanel {
 		add(btn_aggiungiCorso);
 
 		JScrollPane scrollPane = new JScrollPane((Component) null);
-		scrollPane.setBounds(157, 195, 350, 186);
+		scrollPane.setBounds(137, 196, 413, 186);
 		add(scrollPane);
 
 		table = new JTable();
@@ -111,7 +111,7 @@ public class PanelAggiornaStudente extends JPanel {
 		};
 		table.setModel(registrationStudent);
 		table.getTableHeader().setReorderingAllowed(false);
-		String[] colonne = { "Corso ID", "Nome corso", "Media presenze" };
+		String[] colonne = { "Corso ID", "Nome corso", "Percentuale Frequenza" };
 		registrationStudent.setColumnIdentifiers(colonne);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -204,7 +204,7 @@ public class PanelAggiornaStudente extends JPanel {
 		JLabel lbl_corsiIscritti = new JLabel("Corsi iscritti :");
 		lbl_corsiIscritti.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_corsiIscritti.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		lbl_corsiIscritti.setBounds(69, 188, 78, 28);
+		lbl_corsiIscritti.setBounds(68, 166, 78, 28);
 		add(lbl_corsiIscritti);
 
 	}
