@@ -60,7 +60,7 @@ public class PanelAggiornaStudente extends JPanel {
 		add(lbl_iscriviStudente);
 
 		comboBoxCorsi = new JComboBox();
-		comboBoxCorsi.setBounds(205, 133, 136, 22);
+		comboBoxCorsi.setBounds(205, 133, 186, 22);
 		textField_codiceCorso = new JTextField();
 		textField_nomeCorso = new JTextField();
 		textField_codiceCorso.setEditable(false);
@@ -69,6 +69,7 @@ public class PanelAggiornaStudente extends JPanel {
 		add(comboBoxCorsi);
 
 		JButton btn_aggiungiCorso = new JButton("Iscrivi");
+
 		Object[] campiCorso = { "Codice corso", textField_codiceCorso, "Nome corso", textField_nomeCorso };
 		btn_aggiungiCorso.addMouseListener(new MouseAdapter() {
 			@Override
@@ -94,11 +95,11 @@ public class PanelAggiornaStudente extends JPanel {
 		btn_aggiungiCorso.setToolTipText("Clicca per iscrivere lo studente al corso");
 		btn_aggiungiCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
 		btn_aggiungiCorso.setBackground(new Color(102, 204, 51));
-		btn_aggiungiCorso.setBounds(364, 133, 96, 21);
+		btn_aggiungiCorso.setBounds(401, 133, 96, 21);
 		add(btn_aggiungiCorso);
 
 		JScrollPane scrollPane = new JScrollPane((Component) null);
-		scrollPane.setBounds(137, 196, 413, 186);
+		scrollPane.setBounds(156, 196, 294, 186);
 		add(scrollPane);
 
 		table = new JTable();
@@ -111,7 +112,7 @@ public class PanelAggiornaStudente extends JPanel {
 		};
 		table.setModel(registrationStudent);
 		table.getTableHeader().setReorderingAllowed(false);
-		String[] colonne = { "Corso ID", "Nome corso", "Percentuale Frequenza" };
+		String[] colonne = { "Corso ID", "Nome corso" };
 		registrationStudent.setColumnIdentifiers(colonne);
 		table.addMouseListener(new MouseAdapter() {
 			@Override

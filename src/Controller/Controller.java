@@ -364,8 +364,7 @@ public class Controller {
 			while (risultato.next()) {
 				int idCorso = risultato.getInt(1);
 				String nomeCorso = risultato.getString(2);
-				int percentualePresenze = risultato.getInt(3);
-				registrationStudent.addRow(new Object[] { idCorso, nomeCorso, percentualePresenze + "%" });
+				registrationStudent.addRow(new Object[] { idCorso, nomeCorso});
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

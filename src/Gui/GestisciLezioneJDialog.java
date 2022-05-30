@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
+import java.awt.SystemColor;
 
 public class GestisciLezioneJDialog extends JDialog {
 
@@ -38,6 +39,7 @@ public class GestisciLezioneJDialog extends JDialog {
 	private JTextArea textArea_descrizione;
 	private JDateChooser dateChooser;
 	private Controller theController;
+	private JTextField textFiedDataInizioCorso;
 	/**
 	 * Create the dialog.
 	 */
@@ -54,6 +56,7 @@ public class GestisciLezioneJDialog extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		setLocationRelativeTo(null);
+
 		
 		JPanel panel_GestioneLezioni = new JPanel();
 		panel_GestioneLezioni.setLayout(null);
@@ -148,6 +151,21 @@ public class GestisciLezioneJDialog extends JDialog {
 		lblDuration.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblDuration.setBounds(244, 113, 55, 17);
 		contentPanel.add(lblDuration);
+		
+		JLabel lblDataInizioCorso = new JLabel("Data Inizio corso : ");
+		lblDataInizioCorso.setForeground(SystemColor.textHighlight);
+		lblDataInizioCorso.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDataInizioCorso.setFont(new Font("Yu Gothic UI", Font.BOLD, 11));
+		lblDataInizioCorso.setBounds(10, 318, 151, 17);
+		contentPanel.add(lblDataInizioCorso);
+		
+		textFiedDataInizioCorso = new JTextField();
+		textFiedDataInizioCorso.setEditable(false);
+		textFiedDataInizioCorso.setToolTipText("hh:mm");
+		textFiedDataInizioCorso.setColumns(10);
+		textFiedDataInizioCorso.setBounds(10, 335, 86, 20);
+		contentPanel.add(textFiedDataInizioCorso);
+		c.getDataInizioCorso(corsoID,textFiedDataInizioCorso);
 		
 		}
 }

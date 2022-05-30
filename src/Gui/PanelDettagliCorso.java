@@ -126,7 +126,7 @@ public class PanelDettagliCorso extends JPanel {
 			}
 		});
 		comboBoxCorsi.setToolTipText("Scegli un corso");
-		comboBoxCorsi.setBounds(132, 114, 145, 22);
+		comboBoxCorsi.setBounds(132, 114, 181, 22);
 		add(comboBoxCorsi);
 
 		JLabel lblNumeroLezioni = new JLabel("Numero lezioni :");
