@@ -26,6 +26,7 @@ import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
 import DAO.AdminDAO;
+import DAO.AreaTematicaDAO;
 import DAO.CorsoDAO;
 import DAO.LezioneDAO;
 import DAO.StudenteDAO;
@@ -38,6 +39,7 @@ import Gui.LoginFrame;
 import Gui.MainFrame;
 import Gui.StudenteTableModel;
 import dao_impl.AdminDAOImpl;
+import dao_impl.AreaTematicaDAOImpl;
 import dao_impl.CorsoDAOImpl;
 import dao_impl.LezioneDAOImpl;
 import dao_impl.StudenteDAOImpl;
@@ -52,6 +54,7 @@ public class Controller {
 	CorsoDAO course = new CorsoDAOImpl();
 	AdminDAO admin = new AdminDAOImpl();
 	LezioneDAO lesson = new LezioneDAOImpl();
+	AreaTematicaDAO area = new AreaTematicaDAOImpl();
 	private CourseTableModel model;
 	private StudenteTableModel modelStud;
 
@@ -273,7 +276,7 @@ public class Controller {
 		int id = Integer.parseInt(idCorso);
 
 		try {
-			course.aggiornaArea(areaTematica, id);
+			area.aggiornaArea(areaTematica, id);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -572,7 +575,7 @@ public class Controller {
 		try {
 			connessione = Connessione.getInstance();
 			Connection con = connessione.getConnection();
-			course.creaAreaTematica(areaTematica);
+			area.creaAreaTematica(areaTematica);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -581,7 +584,7 @@ public class Controller {
 
 	public void mostraAreeComboBox(JComboBox comboBox) {
 		try {
-			ArrayList<AreeTematiche> aree = course.mostraAreeTematiche();
+			ArrayList<AreeTematiche> aree = area.mostraAreeTematiche();
 			DefaultComboBoxModel modelComboBox = (DefaultComboBoxModel) comboBox.getModel();
 			for (AreeTematiche a : aree) {
 				String nomeArea = a.getNome();

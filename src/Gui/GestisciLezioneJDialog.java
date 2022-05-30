@@ -161,7 +161,6 @@ public class GestisciLezioneJDialog extends JDialog {
 		
 		textFiedDataInizioCorso = new JTextField();
 		textFiedDataInizioCorso.setEditable(false);
-		textFiedDataInizioCorso.setToolTipText("hh:mm");
 		textFiedDataInizioCorso.setColumns(10);
 		textFiedDataInizioCorso.setBounds(10, 335, 86, 20);
 		contentPanel.add(textFiedDataInizioCorso);

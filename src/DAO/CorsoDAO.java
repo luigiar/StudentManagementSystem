@@ -22,15 +22,9 @@ public interface CorsoDAO {
 	
 	public boolean aggiornaCorso(boolean isUpdate,int id, String nome, String massimoPartecipanti ,String descrizione, String dataInizio) throws SQLException;
 	
-	public void aggiornaArea(String areaTematica, int id) throws SQLException;
-	
 	public ArrayList<Corso> displayCorsiComboBox() throws SQLException;
 	
 	public void aggiornaDettagliCorso(int numeroLezioni, int presenzeObbligatorie,int idCorso) throws SQLException;
-	
-	public void creaAreaTematica(String areaTematica) throws SQLException;
-	
-	public ArrayList<AreeTematiche> mostraAreeTematiche() throws SQLException;
 	
 	public void mostraDettagliCorsi(JTable table)throws SQLException;
 		
