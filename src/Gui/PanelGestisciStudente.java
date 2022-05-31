@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.SystemColor;
 
 public class PanelGestisciStudente extends JPanel {
 	private Controller theController;
@@ -54,11 +55,14 @@ public class PanelGestisciStudente extends JPanel {
 
 		panel_gestisciStudente = new JPanel();
 		panelAggiornaStudente = new PanelAggiornaStudente(c);
-		JButton update_button = new JButton("Aggiorna");
+		JButton update_button = new JButton("Dettagli");
 		update_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (!textFieldNome.getText().isBlank() && !txtCognome.getText().isBlank() && !txtDate.getText().isBlank()
+						&& !txtId.getText().isBlank()) {
 				panelAggiornaStudente.showElementsPanelAggiornaStudente();
 				panelAggiornaStudente.setStudentDetails(txtId.getText(), textFieldNome.getText(), txtCognome.getText());
+				}
 			}
 		});
 		JButton delete_button = new JButton("Elimina");
@@ -218,7 +222,7 @@ public class PanelGestisciStudente extends JPanel {
 			}
 		});
 		update_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		update_button.setBackground(new Color(255, 51, 51));
+		update_button.setBackground(new Color(123, 104, 238));
 		update_button.setBounds(434, 461, 89, 29);
 		panel_gestisciStudente.add(update_button);
 

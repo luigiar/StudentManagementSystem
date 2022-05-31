@@ -46,7 +46,7 @@ public class MainFrame extends JFrame {
 	private final JPanel mainContent_panel = new JPanel();
 	private final JPanel panelAttendance = new JPanel();
 	
-	private main_panel panelHome; 
+	private MainPanel panelHome; 
 	private PanelAggiungiStudente panelAggiungiStudente;
 	private PanelGestisciStudente panelGestisciStudente;
 	private PanelAggiungiCorso panelAggiungiCorso;
@@ -79,7 +79,7 @@ public class MainFrame extends JFrame {
 
 		setLocationRelativeTo(null);
 		
-		panelHome = new main_panel(c);
+		panelHome = new MainPanel(c);
 		panelHome.setBounds(0, 0, 648, 554);
 		panelAggiungiStudente = new PanelAggiungiStudente(c);
 		panelAggiungiStudente.setBounds(0, 0, 648, 554);

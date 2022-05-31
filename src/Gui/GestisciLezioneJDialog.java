@@ -160,6 +160,7 @@ public class GestisciLezioneJDialog extends JDialog {
 		contentPanel.add(lblDataInizioCorso);
 		
 		textFiedDataInizioCorso = new JTextField();
+		textFiedDataInizioCorso.setForeground(SystemColor.textHighlight);
 		textFiedDataInizioCorso.setEditable(false);
 		textFiedDataInizioCorso.setColumns(10);
 		textFiedDataInizioCorso.setBounds(10, 335, 86, 20);

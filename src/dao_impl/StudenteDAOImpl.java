@@ -262,6 +262,7 @@ public class StudenteDAOImpl implements StudenteDAO {
 				boolean presenza = result.getBoolean("presenza");
 				model.addRow(new Object[] { idStudente, nome, cognome, data, presenza });
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -315,6 +316,7 @@ public class StudenteDAOImpl implements StudenteDAO {
 				String nomeCorso = risultato.getString(2);
 				registrationStudent.addRow(new Object[] { idCorso, nomeCorso });
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
