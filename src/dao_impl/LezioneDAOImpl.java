@@ -16,7 +16,9 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import DAO.LezioneDAO;
 import Entità.Lezione;
@@ -35,8 +37,8 @@ public class LezioneDAOImpl implements LezioneDAO {
 		Connection conn = connection.getConnection();
 
 		try {
-			mostraLezioni = conn.prepareStatement("SELECT lezione_id, data_inizio FROM lezione WHERE corso_id = " + id
-					+ "order by data_inizio");
+			mostraLezioni = conn.prepareStatement(
+					"SELECT lezione_id, data_inizio FROM lezione WHERE corso_id = " + id + "order by data_inizio");
 			ResultSet risultato = mostraLezioni.executeQuery();
 			while (risultato.next()) {
 
@@ -80,7 +82,7 @@ public class LezioneDAOImpl implements LezioneDAO {
 			inserisciLezione.executeUpdate();
 
 			SQLWarning warning = inserisciLezione.getWarnings();
-			
+
 			if (warning != null) {
 				String errore = warning.toString();
 				errore = errore.substring(errore.lastIndexOf(": ") + 1).strip();
@@ -185,6 +187,60 @@ public class LezioneDAOImpl implements LezioneDAO {
 			JOptionPane.showMessageDialog(null, "Inserisci un formato corretto hh:mm", "Attenzione",
 					JOptionPane.WARNING_MESSAGE);
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void showNumberOfLessons(JLabel label, String idCorso) throws SQLException {
+		Connessione connessione = null;
+		try {
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+
+			int id = Integer.parseInt(idCorso);
+			PreparedStatement show;
+			String mostraNumeroLezioni = "select count(lezione_id) from lezione where corso_id = " + id;
+			show = con.prepareStatement(mostraNumeroLezioni);
+
+			ResultSet risultato = show.executeQuery();
+			while (risultato.next()) {
+				label.setText("Lezioni presenti : " + risultato.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void getDetailLesson(String idCorso, JTextField numeroLezioni, JTextField presenzeObbligatorie)
+			throws SQLException {
+		Connessione connect = null;
+
+		try {
+			connect = Connessione.getInstance();
+			Connection conn = connect.getConnection();
+
+			int id = Integer.parseInt(idCorso);
+			PreparedStatement insert = null;
+			String mostraDettagli = "select numero_lezioni, presenze_obbligatorie from corso where corso.id = " + id;
+			insert = conn.prepareStatement(mostraDettagli);
+
+			ResultSet risultato = insert.executeQuery();
+			while (risultato.next()) {
+				int numLezioni = risultato.getInt(1);
+				String lezioni = Integer.toString(numLezioni);
+				numeroLezioni.setText(lezioni);
+
+				int numPresenzeObbligatorie = risultato.getInt(2);
+				String presenze = Integer.toString(numPresenzeObbligatorie);
+				presenzeObbligatorie.setText(presenze);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

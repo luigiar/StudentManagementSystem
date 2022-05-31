@@ -184,7 +184,7 @@ public class PanelAggiornaStudente extends JPanel {
 		deleteCourse_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!textField_idCorso.getText().isBlank() && !textField_nameCourse.getText().isBlank()) {
-					c.removeTableDataStudent(table, textField_idCorso.getText(), textField_id.getText());
+					c.deteleCourseEnrollment(table, textField_idCorso.getText(), textField_id.getText());
 					JOptionPane.showMessageDialog(null, "Icrizione al corso rimossa", "Conferma",
 							JOptionPane.INFORMATION_MESSAGE);
 					clearTextField();
@@ -219,7 +219,7 @@ public class PanelAggiornaStudente extends JPanel {
 
 	public void showTableData() {
 		if (table.getRowCount() == 0)
-			theController.showTableDataStudent(textField_id.getText(), table);
+			theController.getStudentEnrolment(textField_id.getText(), table);
 	}
 
 	public void clearTableData() {

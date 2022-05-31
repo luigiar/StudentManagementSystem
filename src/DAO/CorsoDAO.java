@@ -3,7 +3,9 @@ package DAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import Entità.AreeTematiche;
 import Entità.Corso;
@@ -26,6 +28,10 @@ public interface CorsoDAO {
 	
 	public void aggiornaDettagliCorso(int numeroLezioni, int presenzeObbligatorie,int idCorso) throws SQLException;
 	
-	public void mostraDettagliCorsi(JTable table)throws SQLException;
+	public void mostraDettagliCorsi(JTable table) throws SQLException;
+	
+	public void getDataInizioCorso(String id, JTextField dataInizio) throws SQLException;
+	
+	public void showTotalCourseNumber(JLabel label) throws SQLException;
 		
 }

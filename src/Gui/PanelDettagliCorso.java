@@ -120,7 +120,7 @@ public class PanelDettagliCorso extends JPanel {
 				if (comboBoxCorsi.getSelectedIndex() != -1) {
 					String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
 					String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
-					c.showDetailLesson(codiceCorso, textField_NumLezioni, textField_PresenzeObbligatorie);
+					c.getDetailLesson(codiceCorso, textField_NumLezioni, textField_PresenzeObbligatorie);
 					c.showNumberOfLessons(lblLezioniPresenti, codiceCorso);
 				}
 			}

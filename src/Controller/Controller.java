@@ -48,7 +48,7 @@ import dbSettings.DBBuilder;
 
 public class Controller {
 	// Riferimenti al Login e Main Frame
-	LoginFrame lf;
+	LoginFrame loginFrame;
 	MainFrame hm;
 	StudenteDAO student = new StudenteDAOImpl();
 	CorsoDAO course = new CorsoDAOImpl();
@@ -82,48 +82,26 @@ public class Controller {
 
 	// launcher finestre
 	public Controller() {
-		lf = new LoginFrame(this);
-		lf.setVisible(true);
+		loginFrame = new LoginFrame(this);
+		loginFrame.setVisible(true);
 	}
 
 	public void showTotalStudentsNumber(JLabel label) {
-		Connessione connessione = null;
 		try {
-			connessione = Connessione.getInstance();
-			Connection con = connessione.getConnection();
-
-			PreparedStatement show;
-			String mostraStudenti = "select count(*) from studente";
-			show = con.prepareStatement(mostraStudenti);
-
-			ResultSet risultato = show.executeQuery();
-			while (risultato.next()) {
-				label.setText("Studenti presenti : " + risultato.getInt(1));
-			}
+			student.showTotalStudentsNumber(label);
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	public void showTotalCourseNumber(JLabel label) {
-		Connessione connessione = null;
 		try {
-			connessione = Connessione.getInstance();
-			Connection con = connessione.getConnection();
-
-			PreparedStatement show;
-			String mostraCorsi = "select count(*) from corso";
-			show = con.prepareStatement(mostraCorsi);
-
-			ResultSet risultato = show.executeQuery();
-			while (risultato.next()) {
-				label.setText("Corsi presenti : " + risultato.getInt(1));
-			}
+			course.showTotalCourseNumber(label);
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	public void insertStudent(String name, String surname, String date, String genere) {
@@ -179,13 +157,9 @@ public class Controller {
 	}
 
 	public void insertCourse(String name, String description, String maxStudents, String themeArea, String date) {
-		course = new CorsoDAOImpl();
 		try {
 			course.inserisciCorso(name, description, maxStudents, themeArea, date);
-			JOptionPane.showMessageDialog(null, "Inserimento effettuato", "Conferma", JOptionPane.INFORMATION_MESSAGE);
-
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -317,59 +291,19 @@ public class Controller {
 	}
 
 	public void addCourseToStudent(JTable table, String idStudente, String idCorso, String nomeCorso) {
-		Connessione connect = null;
 		try {
-			connect = Connessione.getInstance();
-
-			Connection conn = connect.getConnection();
-			CallableStatement inserimentoCorso;
-
-			int theStudentID = Integer.parseInt(idStudente);
-			int theCourseID = Integer.parseInt(idCorso);
-
-			inserimentoCorso = conn.prepareCall("{call insert_registration(?,?)}");
-
-			inserimentoCorso.setInt(1, theCourseID);
-			inserimentoCorso.setInt(2, theStudentID);
-			inserimentoCorso.executeUpdate();
-
-			SQLWarning warning = inserimentoCorso.getWarnings();
-
-			if (warning != null) {
-				String errore = warning.toString();
-				errore = errore.substring(errore.lastIndexOf(": ") + 1).strip();
-				JOptionPane.showMessageDialog(null, errore, "Attenzione", JOptionPane.WARNING_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(null, "Iscrizione Effettuata", "Conferma",
-						JOptionPane.INFORMATION_MESSAGE);
-				DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
-				registrationStudent.addRow(new Object[] { idCorso, nomeCorso, "0%" });
-			}
+			student.addCourseToStudent(table, idStudente, idCorso, nomeCorso);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
-	public void showTableDataStudent(String idStudente, JTable table) {
-		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
-		Connessione connect = null;
+	public void getStudentEnrolment(String idStudente, JTable table) {
 		try {
-			connect = Connessione.getInstance();
-			Connection conn = connect.getConnection();
-			int id = Integer.parseInt(idStudente);
-
-			CallableStatement mostraCorsi;
-			mostraCorsi = conn.prepareCall("{call show_table_student_course(?)}");
-			mostraCorsi.setInt(1, id);
-			ResultSet risultato = mostraCorsi.executeQuery();
-			while (risultato.next()) {
-				int idCorso = risultato.getInt(1);
-				String nomeCorso = risultato.getString(2);
-				registrationStudent.addRow(new Object[] { idCorso, nomeCorso});
-			}
+			student.getStudentEnrolment(idStudente, table);
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -396,88 +330,28 @@ public class Controller {
 
 	}
 
-	public void removeTableDataStudent(JTable table, String id, String idStudente) {
-		Connessione connect = null;
-
+	public void deteleCourseEnrollment(JTable table, String id, String idStudente) {
 		try {
-			connect = Connessione.getInstance();
-			Connection conn = connect.getConnection();
-
-			CallableStatement rimuoviCorsoRegistrato;
-
-			int idCorso = Integer.parseInt(id);
-			int idStudent = Integer.parseInt(idStudente);
-			rimuoviCorsoRegistrato = conn.prepareCall("{call delete_registered_course(?,?)}");
-			rimuoviCorsoRegistrato.setInt(1, idCorso);
-			rimuoviCorsoRegistrato.setInt(2, idStudent);
-			rimuoviCorsoRegistrato.executeUpdate();
+			student.deteleCourseEnrollment(table, id, idStudente);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
-		int row = table.getSelectedRow();
-		registrationStudent.removeRow(row);
 	}
 
 	public void showStudentEnrolledTable(String idCorso, String data_lezione, String idLezione, JTable table) {
-		Connessione connect = null;
-
 		try {
-			connect = Connessione.getInstance();
-			Connection conn = connect.getConnection();
-			CallableStatement mostraStudentiIscritti;
-
-			// conversione string in date
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = (Date) simpleDateFormat.parse(data_lezione);
-			java.sql.Date dataSQL = new java.sql.Date(date.getTime());
-			int id = Integer.parseInt(idCorso);
-			int id_lesson = Integer.parseInt(idLezione);
-
-			mostraStudentiIscritti = conn.prepareCall("{call get_data_table(?,?,?)}");
-			mostraStudentiIscritti.setInt(1, id);
-			mostraStudentiIscritti.setDate(2, dataSQL);
-			mostraStudentiIscritti.setInt(3, id_lesson);
-			ResultSet result = mostraStudentiIscritti.executeQuery();
-			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			while (result.next()) {
-				int idStudente = result.getInt("idStudente");
-				String nome = result.getString("nome");
-				String cognome = result.getString("cognome");
-				String data = result.getString("data_lezione");
-				boolean presenza = result.getBoolean("presenza");
-				model.addRow(new Object[] { idStudente, nome, cognome, data, presenza });
-			}
+			student.showStudentEnrolledTable(idCorso, data_lezione, idLezione, table);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-
 	}
 
 	public void updateAttendanceStudents(String idCorso, String idStudente, String idLezione, String presenza,
 			JTable table) {
-		Connessione connect = null;
 		try {
-			connect = Connessione.getInstance();
-			Connection conn = connect.getConnection();
-			CallableStatement aggiornaPresenza;
-
-			int codiceCorso = Integer.parseInt(idCorso);
-			int codiceStudente = Integer.parseInt(idStudente);
-			int codiceLezione = Integer.parseInt(idLezione);
-			boolean presence = Boolean.parseBoolean(presenza);
-			aggiornaPresenza = conn.prepareCall("{call update_presence(?,?,?,?)}");
-			aggiornaPresenza.setInt(1, codiceCorso);
-			aggiornaPresenza.setInt(2, codiceStudente);
-			aggiornaPresenza.setInt(3, codiceLezione);
-			aggiornaPresenza.setBoolean(4, presence);
-			aggiornaPresenza.executeUpdate();
-
+			student.updateAttendanceStudents(idCorso, idStudente, idLezione, presenza, table);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -485,29 +359,9 @@ public class Controller {
 
 	}
 
-	public void showDetailLesson(String idCorso, JTextField numeroLezioni, JTextField presenzeObbligatorie) {
-		Connessione connect = null;
-
+	public void getDetailLesson(String idCorso, JTextField numeroLezioni, JTextField presenzeObbligatorie) {
 		try {
-			connect = Connessione.getInstance();
-			Connection conn = connect.getConnection();
-
-			int id = Integer.parseInt(idCorso);
-			PreparedStatement insert = null;
-			String mostraDettagli = "select numero_lezioni, presenze_obbligatorie from corso where corso.id = " + id;
-			insert = conn.prepareStatement(mostraDettagli);
-
-			ResultSet risultato = insert.executeQuery();
-			while (risultato.next()) {
-				int numLezioni = risultato.getInt(1);
-				String lezioni = Integer.toString(numLezioni);
-				numeroLezioni.setText(lezioni);
-
-				int numPresenzeObbligatorie = risultato.getInt(2);
-				String presenze = Integer.toString(numPresenzeObbligatorie);
-				presenzeObbligatorie.setText(presenze);
-			}
-
+			lesson.getDetailLesson(idCorso, numeroLezioni, presenzeObbligatorie);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -517,7 +371,6 @@ public class Controller {
 
 	public void insertLesson(String dataInizio, String idCorso, String titolo, String descrizione, String durata,
 			String oraInizio) {
-
 		try {
 			if (dataInizio.isBlank() || idCorso.isBlank() || titolo.isBlank() || durata.isBlank()
 					|| oraInizio.isBlank()) {
@@ -550,20 +403,8 @@ public class Controller {
 	}
 
 	public void showNumberOfLessons(JLabel label, String idCorso) {
-		Connessione connessione = null;
 		try {
-			connessione = Connessione.getInstance();
-			Connection con = connessione.getConnection();
-
-			int id = Integer.parseInt(idCorso);
-			PreparedStatement show;
-			String mostraNumeroLezioni = "select count(lezione_id) from lezione where corso_id = " + id;
-			show = con.prepareStatement(mostraNumeroLezioni);
-
-			ResultSet risultato = show.executeQuery();
-			while (risultato.next()) {
-				label.setText("Lezioni presenti : " + risultato.getInt(1));
-			}
+			lesson.showNumberOfLessons(label, idCorso);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -571,10 +412,7 @@ public class Controller {
 	}
 
 	public void insertThematicArea(String areaTematica) {
-		Connessione connessione = null;
 		try {
-			connessione = Connessione.getInstance();
-			Connection con = connessione.getConnection();
 			area.creaAreaTematica(areaTematica);
 
 		} catch (SQLException e) {
@@ -597,22 +435,8 @@ public class Controller {
 	}
 
 	public void getDataInizioCorso(String id, JTextField dataInizio) {
-		Connessione connessione = null;
 		try {
-			connessione = Connessione.getInstance();
-			Connection con = connessione.getConnection();
-
-			PreparedStatement mostraData;
-			int idCorso = Integer.parseInt(id);
-
-			System.out.println("Mostrando data inizio... ");
-
-			mostraData = con.prepareStatement("SELECT  data_inizio FROM corso where corso.id = " + idCorso);
-			ResultSet risultato = mostraData.executeQuery();
-
-			while (risultato.next()) {
-				dataInizio.setText(risultato.getString(1));
-			}
+			course.getDataInizioCorso(id, dataInizio);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -621,11 +445,7 @@ public class Controller {
 	}
 
 	public void isAvaiableUsername(String username, JTextField user, JLabel message, JLabel messageAvaiable) {
-		Connessione connessione = null;
 		try {
-			connessione = Connessione.getInstance();
-			Connection con = connessione.getConnection();
-
 			admin.isUsernameAvaiable(username, user, message, messageAvaiable);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -634,12 +454,7 @@ public class Controller {
 	}
 
 	public void showCoursesDetails(JTable table) {
-		Connessione connessione = null;
-
 		try {
-			connessione = Connessione.getInstance();
-			Connection con = connessione.getConnection();
-
 			course.mostraDettagliCorsi(table);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -649,11 +464,7 @@ public class Controller {
 	}
 
 	public void showStudentsAllowed(String idCorso, JTable table) {
-		Connessione connessione = null;
-
 		try {
-			connessione = Connessione.getInstance();
-			Connection con = connessione.getConnection();
 			int id = Integer.parseInt(idCorso);
 
 			student.mostraStudentiIdonei(id, table);
@@ -666,11 +477,7 @@ public class Controller {
 
 	public void showLessonElements(String id, JTextField titolo, JTextArea descrizione, JTextField durata,
 			JTextField oraInizio) {
-		Connessione connessione = null;
-
 		try {
-			connessione = Connessione.getInstance();
-			Connection con = connessione.getConnection();
 			int idLezione = Integer.parseInt(id);
 
 			ArrayList<Lezione> dettagliLezione = lesson.showElementsLesson(idLezione);
@@ -687,11 +494,7 @@ public class Controller {
 	}
 
 	public void updateElementsLesson(String id, String titolo, String descrizione, String durata, String oraInizio) {
-		Connessione connessione = null;
-
 		try {
-			connessione = Connessione.getInstance();
-			Connection con = connessione.getConnection();
 			int idLezione = Integer.parseInt(id);
 
 			lesson.updateElemetsLesson(idLezione, titolo, descrizione, durata, oraInizio);

@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -27,7 +28,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 
 	Connection conn = null;
 	PreparedStatement inserisciCorsoStm, aggiornaCorsoStm, aggiornaDettagliCorsoStm, inserisciAreaStm, mostraAree,
-			aggiornaArea;
+			aggiornaArea, mostraData;
 	Statement deleteCourseST = null;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -52,8 +53,12 @@ public class CorsoDAOImpl implements CorsoDAO {
 			inserisciCorsoStm.setString(4, areaTematica);
 			inserisciCorsoStm.setDate(5, dataSQL);
 			inserisciCorsoStm.executeUpdate();
+			JOptionPane.showMessageDialog(null, "Inserimento effettuato", "Conferma", JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("Corsi Inseriti correttamente");
 
+		} catch (NumberFormatException e1) {
+			JOptionPane.showMessageDialog(null, "Formato inserito non corretto", "Attenzione",
+					JOptionPane.WARNING_MESSAGE);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
@@ -189,8 +194,8 @@ public class CorsoDAOImpl implements CorsoDAO {
 	}
 
 	@Override
-	public boolean aggiornaCorso(boolean isUpdated, int id, String nome, String maxPartecipanti, String descrizione, String dataInizio)
-			throws SQLException {
+	public boolean aggiornaCorso(boolean isUpdated, int id, String nome, String maxPartecipanti, String descrizione,
+			String dataInizio) throws SQLException {
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
 
@@ -223,6 +228,9 @@ public class CorsoDAOImpl implements CorsoDAO {
 			}
 			return isUpdated;
 
+		} catch (NumberFormatException e1) {
+			JOptionPane.showMessageDialog(null, "Formato inserito non corretto", "Attenzione",
+					JOptionPane.WARNING_MESSAGE);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
@@ -324,8 +332,6 @@ public class CorsoDAOImpl implements CorsoDAO {
 		}
 	}
 
-
-
 	@Override
 	public void mostraDettagliCorsi(JTable table) throws SQLException {
 		Connessione connect = Connessione.getInstance();
@@ -334,7 +340,7 @@ public class CorsoDAOImpl implements CorsoDAO {
 		CallableStatement mostraDettagli;
 
 		mostraDettagli = conn.prepareCall("{call get_details_course}");
-		
+
 		System.out.println("calcolando dettagli corsi...");
 		ResultSet result = mostraDettagli.executeQuery();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -346,8 +352,54 @@ public class CorsoDAOImpl implements CorsoDAO {
 			int min_presenze = result.getInt("minimo_presenze");
 			float media_presenze = result.getFloat("media_presenze");
 			String data = result.getString("data_lezione");
-			
-			model.addRow(new Object[] {id,nome, max_presenze, min_presenze, media_presenze, data});
+
+			model.addRow(new Object[] { id, nome, max_presenze, min_presenze, media_presenze, data });
+		}
+
+	}
+
+	@Override
+	public void getDataInizioCorso(String id, JTextField dataInizio) throws SQLException {
+		Connessione connessione = null;
+		try {
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+
+			PreparedStatement mostraData;
+			int idCorso = Integer.parseInt(id);
+
+			System.out.println("Mostrando data inizio... ");
+
+			mostraData = con.prepareStatement("SELECT  data_inizio FROM corso where corso.id = " + idCorso);
+			ResultSet risultato = mostraData.executeQuery();
+
+			while (risultato.next()) {
+				dataInizio.setText(risultato.getString(1));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void showTotalCourseNumber(JLabel label) throws SQLException {
+		Connessione connessione = null;
+		try {
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+
+			PreparedStatement show;
+			String mostraCorsi = "select count(*) from corso";
+			show = con.prepareStatement(mostraCorsi);
+
+			ResultSet risultato = show.executeQuery();
+			while (risultato.next()) {
+				label.setText("Corsi presenti : " + risultato.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 	}
