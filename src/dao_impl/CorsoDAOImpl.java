@@ -1,5 +1,6 @@
 package dao_impl;
 
+import java.awt.SystemColor;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -402,6 +403,30 @@ public class CorsoDAOImpl implements CorsoDAO {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void showNumberOfStudentEnrolled(JLabel label,String idCorso) throws SQLException {
+		Connessione connessione = null;
+		try {
+			connessione = Connessione.getInstance();
+			Connection con = connessione.getConnection();
+
+			int id = Integer.parseInt(idCorso);
+			PreparedStatement show;
+			String mostraNumeroStudenti = "select count(studente_id) from registrazione where corso_id = " + id;
+			show = con.prepareStatement(mostraNumeroStudenti);
+
+			ResultSet risultato = show.executeQuery();
+			while (risultato.next()) {
+				label.setForeground(SystemColor.textHighlight);
+				label.setText("Studenti iscritti : " + risultato.getInt(1));
+				System.out.println("mostrando numero iscrizioni...");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

@@ -33,6 +33,7 @@ import java.util.List;
 import javax.swing.ListSelectionModel;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
+import java.awt.SystemColor;
 
 public class PanelGestisciCorso extends JPanel {
 	private JTextField textField_nomeCorso;
@@ -44,6 +45,7 @@ public class PanelGestisciCorso extends JPanel {
 	private Controller theController;
 	private JDateChooser dateChooser;
 	private JTextFieldDateEditor editor;
+	private JLabel lblStudentiIscritti;
 
 	/**
 	 * Create the panel.
@@ -88,6 +90,7 @@ public class PanelGestisciCorso extends JPanel {
 					textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 2)).toString());
 					textArea_descrizione.setText((model.getValueAt(rigaSelected, 4)).toString());
 					c.getDataInizioCorso(table.getValueAt(rigaSelected, 0).toString(), editor);
+					c.showNumberOfStudentEnrolled(lblStudentiIscritti, model.getValueAt(rigaSelected, 0).toString());
 					setGrandezzaColonneTable();
 			}
 		});
@@ -299,6 +302,12 @@ public class PanelGestisciCorso extends JPanel {
 		lblDataInizio.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblDataInizio.setBounds(419, 290, 120, 17);
 		add(lblDataInizio);
+		
+		lblStudentiIscritti = new JLabel();
+		lblStudentiIscritti.setHorizontalAlignment(SwingConstants.LEFT);
+		lblStudentiIscritti.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
+		lblStudentiIscritti.setBounds(392, 389, 190, 17);
+		add(lblStudentiIscritti);
 
 	}
 
@@ -311,6 +320,7 @@ public class PanelGestisciCorso extends JPanel {
 			textArea_descrizione.setText("");
 			dateChooser.setCalendar(null);
 			table.clearSelection();
+			lblStudentiIscritti.setText("");
 		}
 	}
 

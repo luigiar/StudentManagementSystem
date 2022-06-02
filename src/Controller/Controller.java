@@ -503,5 +503,14 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+	
+	public void showNumberOfStudentEnrolled(JLabel label, String idCorso) {
+		try {
+			course.showNumberOfStudentEnrolled(label, idCorso);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 }

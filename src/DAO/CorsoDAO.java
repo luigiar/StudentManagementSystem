@@ -33,5 +33,7 @@ public interface CorsoDAO {
 	public void getDataInizioCorso(String id, JTextField dataInizio) throws SQLException;
 	
 	public void showTotalCourseNumber(JLabel label) throws SQLException;
+	
+	public void showNumberOfStudentEnrolled(JLabel label, String idCorso)throws SQLException;
 		
 }
