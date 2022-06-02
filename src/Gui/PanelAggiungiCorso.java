@@ -170,8 +170,9 @@ public class PanelAggiungiCorso extends JPanel {
 		addArea_button.setToolTipText("Aggiungi area");
 		addArea_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rigaPressed = table.convertRowIndexToModel(table.getSelectedRow());
-				if (rigaPressed >= 0) {
+				int row = table.getSelectedRow();
+				if (row >= 0) {
+					int rigaPressed = table.convertRowIndexToModel(row);
 					if (comboBox.getSelectedItem().toString().equals("---Seleziona Area")
 							|| comboBox.getSelectedItem().toString().equals("Aggiungi Area")) {
 						JOptionPane.showMessageDialog(null, "Inserimento non valido!", "Errore",

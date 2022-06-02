@@ -82,7 +82,6 @@ public class PanelGestisciCorso extends JPanel {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 					int rigaSelected = table.convertRowIndexToModel(table.getSelectedRow());
 					CourseTableModel model = (CourseTableModel) table.getModel();
 					textField_nomeCorso.setText((model.getValueAt(rigaSelected, 1)).toString());
@@ -120,8 +119,9 @@ public class PanelGestisciCorso extends JPanel {
 		JButton delete_button = new JButton("Elimina");
 		delete_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rigaPressed = table.convertRowIndexToModel(table.getSelectedRow());
-				if (rigaPressed >= 0) {
+				int row = table.getSelectedRow();
+				if (row >= 0) {
+					int rigaPressedModel = table.convertRowIndexToModel(row);
 					int input = JOptionPane.showConfirmDialog(null, "Vuoi procedere?", "Seleziona un'opzione",
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if (input == JOptionPane.YES_OPTION) {
@@ -147,8 +147,9 @@ public class PanelGestisciCorso extends JPanel {
 		JButton update_button = new JButton("Aggiorna");
 		update_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rigaPressed = table.convertRowIndexToModel(table.getSelectedRow());
-				if (rigaPressed >= 0) {
+				int row = table.getSelectedRow();
+				if (row >= 0) {
+					int rigaPressedModel = table.convertRowIndexToModel(row);
 					if (textField_nomeCorso.getText().isBlank() || textFieldPartecipanti.getText().isBlank()
 							|| textArea_descrizione.getText().isBlank() || editor.getText().isBlank()) {
 						JOptionPane.showMessageDialog(null, "Aggiornamento non valido!", "Errore",
@@ -157,7 +158,6 @@ public class PanelGestisciCorso extends JPanel {
 						c.updateCourse(table, textField_nomeCorso.getText(), textFieldPartecipanti.getText(),
 								textArea_descrizione.getText(), editor.getText());
 						setGrandezzaColonneTable();
-						clearTextField();
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso", "Attenzione",
@@ -212,8 +212,9 @@ public class PanelGestisciCorso extends JPanel {
 		JButton addArea_button = new JButton("Aggiungi");
 		addArea_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rigaPressed = table.convertRowIndexToModel(table.getSelectedRow());
-				if (rigaPressed >= 0) {
+				int row = table.getSelectedRow();
+				if (row >= 0) {
+					int rigaPressed = table.convertRowIndexToModel(row);
 					if (comboBox_areaTematica.getSelectedItem().toString().equals("---Seleziona Area")
 							|| comboBox_areaTematica.getSelectedItem().toString().equals("Aggiungi Area")) {
 						JOptionPane.showMessageDialog(null, "Inserimento non valido!", "Errore",
@@ -246,8 +247,9 @@ public class PanelGestisciCorso extends JPanel {
 		JButton editArea_button = new JButton("Modifica");
 		editArea_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rigaPressed = table.convertRowIndexToModel(table.getSelectedRow());
-				if (rigaPressed >= 0) {
+				int row = table.getSelectedRow();
+				if (row >= 0) {
+					int rigaPressed = table.convertRowIndexToModel(row);
 					String input = JOptionPane.showInputDialog(null, "Modifica l'area per questo corso",
 							table.getValueAt(rigaPressed, 3));
 					if (input == null) {

@@ -68,8 +68,9 @@ public class PanelGestisciStudente extends JPanel {
 		JButton delete_button = new JButton("Elimina");
 		delete_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rigaPressed = table.convertRowIndexToModel(table.getSelectedRow());
-				if (rigaPressed >= 0) {
+				int row = table.getSelectedRow();
+				if (row >= 0) {
+					int rigaPressedModel = table.convertRowIndexToModel(row);
 					int input = JOptionPane.showConfirmDialog(null, "Vuoi procedere?", "Seleziona un'opzione",
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if (input == JOptionPane.YES_OPTION) {
@@ -81,7 +82,7 @@ public class PanelGestisciStudente extends JPanel {
 								JOptionPane.INFORMATION_MESSAGE);
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso", "Attenzione",
+					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima uno studente", "Attenzione",
 							JOptionPane.WARNING_MESSAGE);
 				}
 			}

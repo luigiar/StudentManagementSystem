@@ -187,7 +187,6 @@ public class Controller {
 			Corso c = new Corso(id, nome.getText(), descrizione.getText(), maxPart,
 					areaTematica.getSelectedItem().toString());
 			modelCourse.add(c);
-			System.out.println("Dopo " + modelCourse.getRowCount());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
