@@ -85,7 +85,7 @@ public class PanelDettagliCorso extends JPanel {
 				int row = table.convertRowIndexToModel(table.getSelectedRow());
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				lblMostraStudentiIdonei.setText("Visualizza studenti idonei per : "
-						+ model.getValueAt(row, 0).toString() + " " + model.getValueAt(row, 1));
+						+ model.getValueAt(row, 0).toString() + " - " + model.getValueAt(row, 1));
 				lblMostraStudentiIdonei.setToolTipText(model.getValueAt(row, 1).toString());
 			}
 		});
@@ -119,7 +119,7 @@ public class PanelDettagliCorso extends JPanel {
 			public void itemStateChanged(ItemEvent e) {
 				if (comboBoxCorsi.getSelectedIndex() != -1) {
 					String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
-					String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
+					String codiceCorso = corsoSelected.substring(0,corsoSelected.indexOf(" -"));
 					c.getDetailLesson(codiceCorso, textField_NumLezioni, textField_PresenzeObbligatorie);
 					c.showNumberOfLessons(lblLezioniPresenti, codiceCorso);
 				}
@@ -238,7 +238,7 @@ public class PanelDettagliCorso extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (!lblMostraStudentiIdonei.getText().equals("Visualizza studenti idonei per : ")) {
 					String corsoSelezionato = lblMostraStudentiIdonei.getText();
-					String codiceCorso = corsoSelezionato.replaceAll("[^0-9]", "");
+					String codiceCorso = corsoSelezionato.substring(corsoSelezionato.lastIndexOf(":") +1,corsoSelezionato.indexOf(" -")).strip();
 
 					StudentiIdoneiJDialog studenti = new StudentiIdoneiJDialog(c, codiceCorso);
 					studenti.setVisible(true);
@@ -280,7 +280,7 @@ public class PanelDettagliCorso extends JPanel {
 	public void showJDialogLesson() {
 		if (comboBoxCorsi.getSelectedItem() != null) {
 			String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
-			String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
+			String codiceCorso = corsoSelected.substring(0,corsoSelected.indexOf(" -"));
 			GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(theController, codiceCorso,table);
 			lezione.setVisible(true);
 			if (!lezione.isVisible()) {
@@ -297,7 +297,7 @@ public class PanelDettagliCorso extends JPanel {
 	public void updateDetails() {
 		if (comboBoxCorsi.getSelectedItem() != null) {
 			String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
-			String codiceCorso = corsoSelected.replaceAll("[^0-9]", "");
+			String codiceCorso = corsoSelected.substring(0,corsoSelected.indexOf(" -"));
 			if (theController.checkNumberLesson(codiceCorso, lessonCreable, textField_NumLezioni.getText())) {
 				theController.updateDetailsCourse(textField_NumLezioni.getText(),
 						textField_PresenzeObbligatorie.getText(), codiceCorso);

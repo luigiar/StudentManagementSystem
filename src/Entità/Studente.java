@@ -52,7 +52,7 @@ public class Studente {
 		this.cognome = cognome;
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 	public void setId(Integer id) {

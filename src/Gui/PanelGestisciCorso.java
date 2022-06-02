@@ -82,13 +82,14 @@ public class PanelGestisciCorso extends JPanel {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int rigaSelected = table.convertRowIndexToModel(table.getSelectedRow());
-				CourseTableModel model = (CourseTableModel) table.getModel();
-				textField_nomeCorso.setText((model.getValueAt(rigaSelected, 1)).toString());
-				textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 2)).toString());
-				textArea_descrizione.setText((model.getValueAt(rigaSelected, 4)).toString());
-				c.getDataInizioCorso(table.getValueAt(rigaSelected, 0).toString(), editor);
-				setGrandezzaColonneTable();
+
+					int rigaSelected = table.convertRowIndexToModel(table.getSelectedRow());
+					CourseTableModel model = (CourseTableModel) table.getModel();
+					textField_nomeCorso.setText((model.getValueAt(rigaSelected, 1)).toString());
+					textFieldPartecipanti.setText((model.getValueAt(rigaSelected, 2)).toString());
+					textArea_descrizione.setText((model.getValueAt(rigaSelected, 4)).toString());
+					c.getDataInizioCorso(table.getValueAt(rigaSelected, 0).toString(), editor);
+					setGrandezzaColonneTable();
 			}
 		});
 
@@ -102,7 +103,7 @@ public class PanelGestisciCorso extends JPanel {
 		textField_nomeCorso.setColumns(10);
 		textField_nomeCorso.setBounds(20, 318, 113, 20);
 		add(textField_nomeCorso);
-		
+
 		dateChooser = new JDateChooser();
 		dateChooser.setBounds(419, 318, 128, 20);
 		dateChooser.setDateFormatString("yyyy-MM-dd");
@@ -156,6 +157,7 @@ public class PanelGestisciCorso extends JPanel {
 						c.updateCourse(table, textField_nomeCorso.getText(), textFieldPartecipanti.getText(),
 								textArea_descrizione.getText(), editor.getText());
 						setGrandezzaColonneTable();
+						clearTextField();
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Per favore, seleziona prima un corso", "Attenzione",
@@ -289,13 +291,12 @@ public class PanelGestisciCorso extends JPanel {
 		textFieldPartecipanti.setColumns(10);
 		textFieldPartecipanti.setBounds(229, 318, 120, 20);
 		add(textFieldPartecipanti);
-		
+
 		JLabel lblDataInizio = new JLabel("Data Inizio");
 		lblDataInizio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDataInizio.setFont(new Font("Yu Gothic UI", Font.BOLD, 13));
 		lblDataInizio.setBounds(419, 290, 120, 17);
 		add(lblDataInizio);
-		
 
 	}
 

@@ -76,11 +76,11 @@ public class PanelAggiornaStudente extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 
 				String corsoID = comboBoxCorsi.getSelectedItem().toString();
-				corsoID = corsoID.replaceAll("[^0-9]", "");
+				corsoID = corsoID.substring(0,corsoID.indexOf(" -"));
 				textField_codiceCorso.setText(corsoID);
 
 				String nomeCorso = comboBoxCorsi.getSelectedItem().toString();
-				nomeCorso = nomeCorso.replaceAll("[0-9]", "");
+				nomeCorso = nomeCorso.substring(nomeCorso.lastIndexOf("- ") +1).strip();
 				textField_nomeCorso.setText(nomeCorso);
 
 				int input = JOptionPane.showConfirmDialog(null, campiCorso, "Iscrivere lo studente al corso seguente? ",

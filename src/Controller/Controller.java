@@ -48,15 +48,15 @@ import dbSettings.DBBuilder;
 
 public class Controller {
 	// Riferimenti al Login e Main Frame
-	LoginFrame loginFrame;
-	MainFrame hm;
-	StudenteDAO student = new StudenteDAOImpl();
-	CorsoDAO course = new CorsoDAOImpl();
-	AdminDAO admin = new AdminDAOImpl();
-	LezioneDAO lesson = new LezioneDAOImpl();
-	AreaTematicaDAO area = new AreaTematicaDAOImpl();
-	private CourseTableModel model;
-	private StudenteTableModel modelStud;
+	private LoginFrame loginFrame;
+	private MainFrame mainFrame;
+	private StudenteDAO student = new StudenteDAOImpl();
+	private CorsoDAO course = new CorsoDAOImpl();
+	private AdminDAO admin = new AdminDAOImpl();
+	private LezioneDAO lesson = new LezioneDAOImpl();
+	private AreaTematicaDAO area = new AreaTematicaDAOImpl();
+	private CourseTableModel modelCourse;
+	private StudenteTableModel modelStudent;
 
 	public static void main(String[] args) {
 
@@ -82,8 +82,10 @@ public class Controller {
 
 	// launcher finestre
 	public Controller() {
-		loginFrame = new LoginFrame(this);
-		loginFrame.setVisible(true);
+//		loginFrame = new LoginFrame(this);
+//		loginFrame.setVisible(true);
+		mainFrame = new MainFrame(this);
+		mainFrame.setVisible(true);
 	}
 
 	public void showTotalStudentsNumber(JLabel label) {
@@ -117,9 +119,9 @@ public class Controller {
 
 	public void displayStudent(JTable table) {
 		try {
-			modelStud = new StudenteTableModel(student.leggiStudenti());
-			table.setModel(modelStud);
-			TableRowSorter myTableRowSorter = new TableRowSorter(modelStud);
+			modelStudent = new StudenteTableModel(student.leggiStudenti());
+			table.setModel(modelStudent);
+			TableRowSorter myTableRowSorter = new TableRowSorter(modelStudent);
 			table.setRowSorter(myTableRowSorter);
 
 		} catch (SQLException e) {
@@ -130,12 +132,12 @@ public class Controller {
 	public void addStudentToTableView(JTable table, JTextField nome, JTextField cognome, JTextFieldDateEditor data,
 			ButtonGroup genere) {
 		try {
-			table.setModel(modelStud);
+			table.setModel(modelStudent);
 			int id = 0;
 			id = student.getLastID(id);
 			Studente s = new Studente(id, nome.getText(), cognome.getText(), data.getText().toString(),
 					genere.getSelection().getActionCommand());
-			modelStud.add(s);
+			modelStudent.add(s);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -153,7 +155,7 @@ public class Controller {
 
 			e.printStackTrace();
 		}
-		modelStud.remove(row);
+		modelStudent.remove(row);
 	}
 
 	public void insertCourse(String name, String description, String maxStudents, String themeArea, String date) {
@@ -166,9 +168,9 @@ public class Controller {
 
 	public void displayCourse(JTable table) {
 		try {
-			model = new CourseTableModel(course.leggiCorsi());
-			table.setModel(model);
-			TableRowSorter myTableRowSorter = new TableRowSorter(model);
+			modelCourse = new CourseTableModel(course.leggiCorsi());
+			table.setModel(modelCourse);
+			TableRowSorter myTableRowSorter = new TableRowSorter(modelCourse);
 			table.setRowSorter(myTableRowSorter);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -178,14 +180,14 @@ public class Controller {
 	public void addCourseToTableView(JTable table, JTextField nome, JTextField maxPartecipanti, JComboBox areaTematica,
 			JTextArea descrizione) {
 		try {
-			table.setModel(model);
+			table.setModel(modelCourse);
 			int id = 0;
 			id = course.getLastID(id);
 			int maxPart = Integer.parseInt(maxPartecipanti.getText());
 			Corso c = new Corso(id, nome.getText(), descrizione.getText(), maxPart,
 					areaTematica.getSelectedItem().toString());
-			model.add(c);
-			System.out.println("Dopo " + model.getRowCount());
+			modelCourse.add(c);
+			System.out.println("Dopo " + modelCourse.getRowCount());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -233,11 +235,11 @@ public class Controller {
 		try {
 			boolean isUpdated = false;
 			int rigaSelected = table.getSelectedRow();
-			int theID = (int) model.getValueAt(rigaSelected, 0);
+			int theID = (int) modelCourse.getValueAt(rigaSelected, 0);
 			if (course.aggiornaCorso(isUpdated, theID, nome, maxPartecipanti, descrizione, dataInizio)) {
-				model.setValueAt(nome, rigaSelected, 1);
-				model.setValueAt(maxPartecipanti, rigaSelected, 2);
-				model.setValueAt(descrizione, rigaSelected, 4);
+				modelCourse.setValueAt(nome, rigaSelected, 1);
+				modelCourse.setValueAt(maxPartecipanti, rigaSelected, 2);
+				modelCourse.setValueAt(descrizione, rigaSelected, 4);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -266,7 +268,7 @@ public class Controller {
 				String nomeCorso = c.getNome();
 				Integer codice = c.getCodiceCorso();
 				String codiceCorso = String.valueOf(codice);
-				modelComboBox.addElement(codiceCorso + " " + nomeCorso);
+				modelComboBox.addElement(codiceCorso + " - " + nomeCorso);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -466,7 +468,6 @@ public class Controller {
 	public void showStudentsAllowed(String idCorso, JTable table) {
 		try {
 			int id = Integer.parseInt(idCorso);
-
 			student.mostraStudentiIdonei(id, table);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
