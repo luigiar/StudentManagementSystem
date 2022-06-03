@@ -19,7 +19,7 @@ import dbSettings.Connessione;
 public class AdminDAOImpl implements AdminDAO {
 	Connection conn = null;
 	private PreparedStatement inserisciAdmin, checkAvaiable;
-	boolean login = false;
+	private boolean login = false;
 
 	@Override
 	public void registrationAdmin(String username, String password) throws SQLException {

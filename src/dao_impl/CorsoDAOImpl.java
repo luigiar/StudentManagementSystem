@@ -312,7 +312,11 @@ public class CorsoDAOImpl implements CorsoDAO {
 			aggiornaDettagliCorsoStm.setInt(1, numeroLezioni);
 			aggiornaDettagliCorsoStm.setInt(2, presenzeObbligatorie);
 			aggiornaDettagliCorsoStm.executeUpdate();
+			JOptionPane.showMessageDialog(null, "Aggiornamento effettuato", "Conferma",
+					JOptionPane.INFORMATION_MESSAGE);
 
+		} catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(null, "Formato inserito non corretto!", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

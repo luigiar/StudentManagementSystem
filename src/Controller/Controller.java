@@ -188,6 +188,8 @@ public class Controller {
 					areaTematica.getSelectedItem().toString());
 			modelCourse.add(c);
 
+		} catch (NumberFormatException error_format) {
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -221,10 +223,6 @@ public class Controller {
 			int presenzeNecessarie = Integer.parseInt(presenzeObbligatorie);
 
 			course.aggiornaDettagliCorso(lezioniTotali, presenzeNecessarie, codiceCorso);
-			JOptionPane.showMessageDialog(null, "Aggiornamento effettuato", "Conferma",
-					JOptionPane.INFORMATION_MESSAGE);
-		} catch (NumberFormatException ex) {
-			JOptionPane.showMessageDialog(null, "Dati inseriti non validi", "Attenzione", JOptionPane.WARNING_MESSAGE);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -293,7 +291,7 @@ public class Controller {
 
 	public void addCourseToStudent(JTable table, String idStudente, String idCorso, String nomeCorso) {
 		try {
-			student.addCourseToStudent(table, idStudente, idCorso, nomeCorso);
+			student.addCourseToStudent(table, idStudente, idCorso, nomeCorso);			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

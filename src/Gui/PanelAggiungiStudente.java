@@ -32,7 +32,7 @@ public class PanelAggiungiStudente extends JPanel {
 	private JTextField textField_cognome;
 	DefaultTableModel model;
 	private JTable table;
-	private ButtonGroup Group;
+	private ButtonGroup group;
 	private JDateChooser dateChooser;
 
 	/**
@@ -99,9 +99,9 @@ public class PanelAggiungiStudente extends JPanel {
 		rdbtn_donna.setBounds(224, 429, 76, 21);
 		add(rdbtn_donna);
 
-		Group = new ButtonGroup();
-		Group.add(rdbtn_uomo);
-		Group.add(rdbtn_donna);
+		group = new ButtonGroup();
+		group.add(rdbtn_uomo);
+		group.add(rdbtn_donna);
 
 		JPanel topPanel = new JPanel();
 		topPanel.setBackground(new Color(255, 165, 0));
@@ -129,15 +129,15 @@ public class PanelAggiungiStudente extends JPanel {
 		insert_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (textField_nome.getText().isBlank() || textField_cognome.getText().isBlank()
-						|| Group.isSelected(null) || editor.getText().isBlank()) {
+						|| group.isSelected(null) || editor.getText().isBlank()) {
 					JOptionPane.showMessageDialog(null, "Per favore, completa tutti i campi", "Errore",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 
 					c.insertStudent(textField_nome.getText(), textField_cognome.getText(), editor.getText(),
-							Group.getSelection().getActionCommand());
+							group.getSelection().getActionCommand());
 
-					c.addStudentToTableView(table, textField_nome, textField_cognome, editor, Group);
+					c.addStudentToTableView(table, textField_nome, textField_cognome, editor, group);
 
 					clearTextField();
 				}
@@ -151,11 +151,11 @@ public class PanelAggiungiStudente extends JPanel {
 	}
 
 	public void clearTextField() {
-		if (!textField_nome.getText().isBlank() || !textField_cognome.getText().isBlank() || !Group.isSelected(null)
+		if (!textField_nome.getText().isBlank() || !textField_cognome.getText().isBlank() || !group.isSelected(null)
 				|| !dateChooser.equals(null)) {
 			textField_nome.setText("");
 			textField_cognome.setText("");
-			Group.clearSelection();
+			group.clearSelection();
 			dateChooser.setCalendar(null);
 			table.clearSelection();
 		}

@@ -119,7 +119,7 @@ public class PanelDettagliCorso extends JPanel {
 			public void itemStateChanged(ItemEvent e) {
 				if (comboBoxCorsi.getSelectedIndex() != -1) {
 					String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
-					String codiceCorso = corsoSelected.substring(0,corsoSelected.indexOf(" -"));
+					String codiceCorso = corsoSelected.substring(0, corsoSelected.indexOf(" -"));
 					c.getDetailLesson(codiceCorso, textField_NumLezioni, textField_PresenzeObbligatorie);
 					c.showNumberOfLessons(lblLezioniPresenti, codiceCorso);
 				}
@@ -196,15 +196,18 @@ public class PanelDettagliCorso extends JPanel {
 					JOptionPane.showMessageDialog(null, "Completa prima tutti i campi!", "Attenzione",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
-					int numeroPresenze = Integer.parseInt(textField_PresenzeObbligatorie.getText());
-					int numeroLezioni = Integer.parseInt(textField_NumLezioni.getText());
-					if (numeroPresenze > numeroLezioni) {
-						JOptionPane.showMessageDialog(null,
-								"Numero presenze obbligatorie è maggiore\n del numero di lezioni!", "Attenzione",
-								JOptionPane.WARNING_MESSAGE);
-					} else {
-						updateDetails();
-
+					try {
+						int numeroPresenze = Integer.parseInt(textField_PresenzeObbligatorie.getText());
+						int numeroLezioni = Integer.parseInt(textField_NumLezioni.getText());
+						if (numeroPresenze > numeroLezioni) {
+							JOptionPane.showMessageDialog(null,
+									"Numero presenze obbligatorie è maggiore\n del totale delle lezioni!", "Attenzione",
+									JOptionPane.WARNING_MESSAGE);
+						} else {
+							updateDetails();
+						}
+					} catch (NumberFormatException format_error) {
+						JOptionPane.showMessageDialog(null, "Formato inserito non corretto!", "Attenzione", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
@@ -238,7 +241,8 @@ public class PanelDettagliCorso extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (!lblMostraStudentiIdonei.getText().equals("Visualizza studenti idonei per : ")) {
 					String corsoSelezionato = lblMostraStudentiIdonei.getText();
-					String codiceCorso = corsoSelezionato.substring(corsoSelezionato.lastIndexOf(":") +1,corsoSelezionato.indexOf(" -")).strip();
+					String codiceCorso = corsoSelezionato
+							.substring(corsoSelezionato.lastIndexOf(":") + 1, corsoSelezionato.indexOf(" -")).strip();
 
 					StudentiIdoneiJDialog studenti = new StudentiIdoneiJDialog(c, codiceCorso);
 					studenti.setVisible(true);
@@ -280,8 +284,8 @@ public class PanelDettagliCorso extends JPanel {
 	public void showJDialogLesson() {
 		if (comboBoxCorsi.getSelectedItem() != null) {
 			String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
-			String codiceCorso = corsoSelected.substring(0,corsoSelected.indexOf(" -"));
-			GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(theController, codiceCorso,table);
+			String codiceCorso = corsoSelected.substring(0, corsoSelected.indexOf(" -"));
+			GestisciLezioneJDialog lezione = new GestisciLezioneJDialog(theController, codiceCorso, table);
 			lezione.setVisible(true);
 			if (!lezione.isVisible()) {
 				theController.showNumberOfLessons(lblLezioniPresenti, codiceCorso);
@@ -297,7 +301,7 @@ public class PanelDettagliCorso extends JPanel {
 	public void updateDetails() {
 		if (comboBoxCorsi.getSelectedItem() != null) {
 			String corsoSelected = comboBoxCorsi.getSelectedItem().toString();
-			String codiceCorso = corsoSelected.substring(0,corsoSelected.indexOf(" -"));
+			String codiceCorso = corsoSelected.substring(0, corsoSelected.indexOf(" -"));
 			if (theController.checkNumberLesson(codiceCorso, lessonCreable, textField_NumLezioni.getText())) {
 				theController.updateDetailsCourse(textField_NumLezioni.getText(),
 						textField_PresenzeObbligatorie.getText(), codiceCorso);
@@ -334,7 +338,7 @@ public class PanelDettagliCorso extends JPanel {
 		table.getColumnModel().getColumn(2).setPreferredWidth(100);
 		table.getColumnModel().getColumn(3).setPreferredWidth(100);
 	}
-	
+
 	public void mostraTabellaCorsi() {
 		if (table.getRowCount() == 0) {
 			theController.showCoursesDetails(table);
