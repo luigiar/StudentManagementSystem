@@ -186,6 +186,7 @@ public class PanelAggiungiCorso extends JPanel {
 						valoreCorrente = valoreCorrente.concat(valoreAggiunto.indent(2));
 						model.setValueAt(valoreCorrente, rigaPressed, 3);
 						c.updateAreaTematica(valoreCorrente, idCorsoClicked);
+						setGrandezzaColonneTable();
 						
 						JOptionPane.showMessageDialog(null, "Area tematica aggiunta con successo", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);

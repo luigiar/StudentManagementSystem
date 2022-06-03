@@ -231,7 +231,8 @@ public class PanelGestisciCorso extends JPanel {
 						valoreCorrente = valoreCorrente.concat(valoreAggiunto.indent(2));
 						model.setValueAt(valoreCorrente, rigaPressed, 3);
 						c.updateAreaTematica(valoreCorrente, idCorsoClicked);
-
+						setGrandezzaColonneTable();
+						
 						JOptionPane.showMessageDialog(null, "Area tematica aggiunta con successo", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
 						comboBox_areaTematica.setSelectedIndex(0);
@@ -261,6 +262,7 @@ public class PanelGestisciCorso extends JPanel {
 					} else if (!input.isBlank()) {
 						table.setValueAt(input, rigaPressed, 3);
 						c.updateAreaTematica(input, table.getValueAt(rigaPressed, 0).toString());
+						setGrandezzaColonneTable();
 						JOptionPane.showMessageDialog(null, "Modifica effettuata", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
