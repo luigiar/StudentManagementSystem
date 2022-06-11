@@ -1,14 +1,7 @@
 package Controller;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.util.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLWarning;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
@@ -47,7 +40,7 @@ import dbSettings.Connessione;
 import dbSettings.DBBuilder;
 
 public class Controller {
-	// Riferimenti al Login e Main Frame
+
 	private LoginFrame loginFrame;
 	private MainFrame mainFrame;
 	private StudenteDAO student = new StudenteDAOImpl();
@@ -75,11 +68,12 @@ public class Controller {
 			e.printStackTrace();
 		}
 		conn = connessioneDB.getConnection();
-
-		// Start Controller
+		
+		// Start Controler
 		Controller c = new Controller();
-	}
 
+	}
+		
 	// launcher finestre
 	public Controller() {
 //		loginFrame = new LoginFrame(this);

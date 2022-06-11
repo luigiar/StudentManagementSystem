@@ -35,7 +35,7 @@ public class PanelGestisciStudente extends JPanel {
 	private JTextField txtDate;
 	private JTextField txtId;
 	private DefaultTableModel model;
-	private PanelAggiornaStudente panelAggiornaStudente;
+	private PanelDettagliStudente panelDettagliStudente;
 	private JLabel lblGestioneStudenti;
 	private JLabel lblAggiornaStudente;
 	private JPanel panel_indietro;
@@ -54,14 +54,14 @@ public class PanelGestisciStudente extends JPanel {
 		setBounds(0, 0, 673, 581);
 
 		panel_gestisciStudente = new JPanel();
-		panelAggiornaStudente = new PanelAggiornaStudente(c);
+		panelDettagliStudente = new PanelDettagliStudente(c);
 		JButton update_button = new JButton("Dettagli");
 		update_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!textFieldNome.getText().isBlank() && !txtCognome.getText().isBlank() && !txtDate.getText().isBlank()
 						&& !txtId.getText().isBlank()) {
-				panelAggiornaStudente.showElementsPanelAggiornaStudente();
-				panelAggiornaStudente.setStudentDetails(txtId.getText(), textFieldNome.getText(), txtCognome.getText());
+				panelDettagliStudente.showElementsPanelDettagliStudente();
+				panelDettagliStudente.setStudentDetails(txtId.getText(), textFieldNome.getText(), txtCognome.getText());
 				}
 			}
 		});
@@ -100,7 +100,7 @@ public class PanelGestisciStudente extends JPanel {
 		lblGestioneStudenti.setBounds(223, 11, 197, 28);
 		panel.add(lblGestioneStudenti);
 
-		lblAggiornaStudente = new JLabel("Aggiorna Studente");
+		lblAggiornaStudente = new JLabel("Dettagli Studente");
 		lblAggiornaStudente.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAggiornaStudente.setFont(new Font("Yu Gothic UI", Font.BOLD, 15));
 		lblAggiornaStudente.setBounds(223, 11, 197, 28);
@@ -111,13 +111,13 @@ public class PanelGestisciStudente extends JPanel {
 		panel_indietro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panelAggiornaStudente.setVisible(false);
+				panelDettagliStudente.setVisible(false);
 				panel_gestisciStudente.setVisible(true);
 				lblAggiornaStudente.setVisible(false);
 				lblGestioneStudenti.setVisible(true);
 				panel_indietro.setVisible(false);
-				panelAggiornaStudente.clearTableData();
-				panelAggiornaStudente.clearTextField();
+				panelDettagliStudente.clearTableData();
+				panelDettagliStudente.clearTextField();
 
 			}
 		});
@@ -215,15 +215,15 @@ public class PanelGestisciStudente extends JPanel {
 					lblGestioneStudenti.setVisible(false);
 					panel_indietro.setVisible(true);
 
-					add(panelAggiornaStudente);
-					setAggiorna(panelAggiornaStudente);
+					add(panelDettagliStudente);
+					setAggiorna(panelDettagliStudente);
 					table.clearSelection();
 					clearFields();
 				}
 			}
 		});
 		update_button.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
-		update_button.setBackground(new Color(123, 104, 238));
+		update_button.setBackground(new Color(50, 205, 50));
 		update_button.setBounds(434, 461, 89, 29);
 		panel_gestisciStudente.add(update_button);
 
@@ -247,7 +247,7 @@ public class PanelGestisciStudente extends JPanel {
 	}
 
 	public void setAggiorna(JPanel aggiornaPanel) {
-		panelAggiornaStudente.setVisible(false);
+		panelDettagliStudente.setVisible(false);
 		aggiornaPanel.setVisible(true);
 		}
 
@@ -274,9 +274,9 @@ public class PanelGestisciStudente extends JPanel {
 		theController.displayStudent(table);
 	}
 	
-	public void resetAggiorna() {
-		if(panelAggiornaStudente.isVisible()) {
-			panelAggiornaStudente.setVisible(false);
+	public void resetDettagli() {
+		if(panelDettagliStudente.isVisible()) {
+			panelDettagliStudente.setVisible(false);
 			panel_gestisciStudente.setVisible(true);
 			lblAggiornaStudente.setVisible(false);
 			lblGestioneStudenti.setVisible(true);

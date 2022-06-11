@@ -167,7 +167,7 @@ public class PanelAggiungiCorso extends JPanel {
 
 
 		JButton addArea_button = new JButton("Aggiungi");
-		addArea_button.setToolTipText("Aggiungi area");
+		addArea_button.setToolTipText("Seleziona un corso e aggiungi un'area");
 		addArea_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();

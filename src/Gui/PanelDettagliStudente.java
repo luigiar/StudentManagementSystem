@@ -23,7 +23,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class PanelAggiornaStudente extends JPanel {
+public class PanelDettagliStudente extends JPanel {
 	private final JSeparator separator = new JSeparator();
 	private JComboBox comboBoxCorsi;
 	private Controller theController;
@@ -39,7 +39,7 @@ public class PanelAggiornaStudente extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelAggiornaStudente(Controller c) {
+	public PanelDettagliStudente(Controller c) {
 		theController = c;
 		setBackground(new Color(255, 215, 0));
 		setBounds(0, 56, 673, 525);
@@ -233,7 +233,7 @@ public class PanelAggiornaStudente extends JPanel {
 		textField_nameCourse.setText("");
 	}
 
-	public void showElementsPanelAggiornaStudente() {
+	public void showElementsPanelDettagliStudente() {
 		comboBoxCorsi.removeAllItems();
 		theController.mostraCorsiComboBox(comboBoxCorsi);
 	}

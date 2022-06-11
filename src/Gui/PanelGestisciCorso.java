@@ -197,7 +197,7 @@ public class PanelGestisciCorso extends JPanel {
 		add(comboBox_areaTematica);
 		comboBox_areaTematica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (comboBox_areaTematica.getSelectedItem().equals("Aggiungi Area")) {
+				if (comboBox_areaTematica.getSelectedItem().equals("Seleziona un corso e aggiungi un'area")) {
 					String itemAdd = JOptionPane.showInputDialog(null, "Inserisci l'area tematica da aggiungere");
 					if (itemAdd == null) {
 						JOptionPane.showMessageDialog(null, "Inserimento non eseguito!", "Attenzione",

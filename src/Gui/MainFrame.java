@@ -32,7 +32,7 @@ public class MainFrame extends JFrame {
 	private final JPanel course_panel = new JPanel();
 	private final JLabel welcome_label = new JLabel("Benvenuto");
 	JPanel addStudent_panel = new JPanel();
-	JPanel manageStudent_panel = new JPanel();
+	JPanel detailsStudent_panel = new JPanel();
 	private final JPanel addCourse_panel = new JPanel();
 	private final JLabel addCourse_label = new JLabel("Aggiungi Corso");
 	private final JPanel manageCourse_panel = new JPanel();
@@ -114,7 +114,7 @@ public class MainFrame extends JFrame {
 				panelAggiungiStudente.showElementsPanelAggiungiStudente();
 				panelGestisciCorso.clearTextField();
 				panelGestisciStudente.clearFields();
-				panelGestisciStudente.resetAggiorna();
+				panelGestisciStudente.resetDettagli();
 				panelAggiungiCorso.clearTextField();
 				panelDettagliCorso.clearFields();
 				attendancePanel.clearFields();
@@ -131,7 +131,7 @@ public class MainFrame extends JFrame {
 		addStudent_label.setBounds(75, 11, 119, 25);
 		addStudent_panel.add(addStudent_label);
 		
-		manageStudent_panel.addMouseListener(new PanelButtonMouseAdapter(manageStudent_panel) {
+		detailsStudent_panel.addMouseListener(new PanelButtonMouseAdapter(detailsStudent_panel) {
 			public void mouseClicked(MouseEvent e) {
 				menuSelected(panelGestisciStudente);
 				panelGestisciStudente.showElementsPanelGestisciStudente();
@@ -143,16 +143,16 @@ public class MainFrame extends JFrame {
 				nascondisubMenu();
 			}
 		});
-		manageStudent_panel.setBackground(new Color(255, 215, 0));
-		manageStudent_panel.setBounds(0, 47, 258, 45);
-		student_panel.add(manageStudent_panel);
-		manageStudent_panel.setLayout(null);
+		detailsStudent_panel.setBackground(new Color(255, 215, 0));
+		detailsStudent_panel.setBounds(0, 47, 258, 45);
+		student_panel.add(detailsStudent_panel);
+		detailsStudent_panel.setLayout(null);
 		
 		JLabel manageStudent_label = new JLabel("Gestisci Studente");
 		manageStudent_label.setHorizontalAlignment(SwingConstants.CENTER);
 		manageStudent_label.setFont(new Font("Yu Gothic UI", Font.BOLD, 12));
 		manageStudent_label.setBounds(64, 11, 124, 23);
-		manageStudent_panel.add(manageStudent_label);
+		detailsStudent_panel.add(manageStudent_label);
 		course_panel.setBounds(0,270,258,137);
 		
 		side_panel.add(course_panel);
@@ -166,7 +166,7 @@ public class MainFrame extends JFrame {
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
 				panelDettagliCorso.clearFields();
-				panelGestisciStudente.resetAggiorna();
+				panelGestisciStudente.resetDettagli();
 				attendancePanel.clearFields();
 				nascondisubMenu();
 			}
@@ -187,7 +187,7 @@ public class MainFrame extends JFrame {
 				panelGestisciCorso.showElementsPanel();
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
-				panelGestisciStudente.resetAggiorna();
+				panelGestisciStudente.resetDettagli();
 				panelAggiungiCorso.clearTextField();
 				panelDettagliCorso.clearFields();
 				attendancePanel.clearFields();
@@ -210,7 +210,7 @@ public class MainFrame extends JFrame {
 				panelDettagliCorso.showElementsPanelDettagliCorso();
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
-				panelGestisciStudente.resetAggiorna();
+				panelGestisciStudente.resetDettagli();
 				panelAggiungiCorso.clearTextField();
 				panelGestisciCorso.clearTextField();
 				attendancePanel.clearFields();
@@ -241,7 +241,7 @@ public class MainFrame extends JFrame {
 				panelHome.showElementsMainPanel();
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
-				panelGestisciStudente.resetAggiorna();
+				panelGestisciStudente.resetDettagli();
 				panelAggiungiCorso.clearTextField();
 				panelGestisciCorso.clearTextField();
 				panelDettagliCorso.clearFields();
@@ -350,7 +350,7 @@ public class MainFrame extends JFrame {
 				attendancePanel.showElementsPanelAttendance();
 				panelAggiungiStudente.clearTextField();
 				panelGestisciStudente.clearFields();
-				panelGestisciStudente.resetAggiorna();
+				panelGestisciStudente.resetDettagli();
 				panelAggiungiCorso.clearTextField();
 				panelGestisciCorso.clearTextField();
 				panelDettagliCorso.clearFields();

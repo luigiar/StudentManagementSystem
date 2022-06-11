@@ -201,7 +201,7 @@ public class PanelDettagliCorso extends JPanel {
 						int numeroLezioni = Integer.parseInt(textField_NumLezioni.getText());
 						if (numeroPresenze > numeroLezioni) {
 							JOptionPane.showMessageDialog(null,
-									"Numero presenze obbligatorie è maggiore\n del totale delle lezioni!", "Attenzione",
+									"Numero presenze obbligatorie maggiore\n del totale delle lezioni!", "Attenzione",
 									JOptionPane.WARNING_MESSAGE);
 						} else {
 							updateDetails();
