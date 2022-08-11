@@ -30,6 +30,7 @@ public class LezioneDAOImpl implements LezioneDAO {
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 
+
 	@Override
 	public ArrayList<Lezione> displayLezioniComboBox(int id) throws SQLException {
 		ArrayList<Lezione> lezioni = new ArrayList<Lezione>();

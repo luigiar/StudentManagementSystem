@@ -75,7 +75,8 @@ public class PanelGestisciStudente extends JPanel {
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if (input == JOptionPane.YES_OPTION) {
 						c.deleteStudent(table);
-						JOptionPane.showMessageDialog(null, "Corso eliminato correttamente", "Conferma",
+						clearFields();
+						JOptionPane.showMessageDialog(null, "Studente eliminato correttamente", "Conferma",
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						JOptionPane.showMessageDialog(null, "Eliminazione non eseguita", "Conferma",

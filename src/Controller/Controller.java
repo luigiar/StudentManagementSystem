@@ -62,24 +62,73 @@ public class Controller {
 			connessioneDB = Connessione.getInstance();
 			conn = connessioneDB.getConnection();
 			builder = new DBBuilder(conn);
+	
 
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
+
 		conn = connessioneDB.getConnection();
 		
-		// Start Controler
+		
+		// Creazione delle sequence
+		builder.sequenceStudente(conn);
+		builder.sequenceCorso(conn);
+		builder.sequenceAdmin(conn);
+		builder.sequenceAreeTematiche(conn);
+		builder.sequenceLezioneID(conn);
+		builder.sequencePartecipazioneCorsoID(conn);
+		builder.sequencePartecipazioneLezioneID(conn);
+		builder.sequencePartecipazioneStudenteID(conn);
+		builder.sequenceLezioneCorsoID(conn);
+		builder.sequenceRegistrazioneCorsoID(conn);
+		builder.sequenceRegistrazioneID(conn);
+		builder.sequenceRegistrazioneStudenteID(conn);
+		
+		//Creazione delle classi
+		builder.tableStudente(conn);
+		builder.tableCorso(conn);
+		builder.tableAmministratore(conn);
+		builder.tableLezione(conn);
+		builder.tableAreeTematiche(conn);
+		builder.tableAttendance(conn);
+		builder.tableRegistrazione(conn);
+		
+		//Creazione trigger
+		builder.triggerAfterLezioneInsert(conn);
+		builder.triggerAfterRegistrazioneInsert(conn);
+		builder.triggerBeforeAdminRegister(conn);
+		builder.triggerBeforeIscrizioneStudente(conn);
+		builder.triggerBeforeLezioneInsert(conn);
+		builder.triggerBeforeUpdateDateCourse(conn);
+		builder.triggerBeforeUpdateMaxPArtecipanti(conn);
+		builder.triggerCheckDateFirstLesson(conn);
+		builder.triggerDeleteRegistration(conn);
+		
+		//Creazione funzioni
+		builder.functionCheckLogin(conn);
+		builder.functionCheckNumberLesson(conn);
+		builder.functionDeleteRegisteredCourse(conn);
+		builder.functionGetDataTable(conn);
+		builder.functionGetDetailsCourse(conn);
+		builder.functionGetStudentiIdonei(conn);
+		builder.functionInsertRegistration(conn);
+		builder.functionShowTableStudentCourse(conn);
+		builder.functionUpdatePresence(conn);
+		
+		
+		// Start Controller
 		Controller c = new Controller();
+
 
 	}
 		
 	// launcher finestre
 	public Controller() {
-//		loginFrame = new LoginFrame(this);
-//		loginFrame.setVisible(true);
-		mainFrame = new MainFrame(this);
-		mainFrame.setVisible(true);
+		loginFrame = new LoginFrame(this);
+		loginFrame.setVisible(true);
+
 	}
 
 	public void showTotalStudentsNumber(JLabel label) {

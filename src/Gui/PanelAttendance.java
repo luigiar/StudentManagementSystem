@@ -129,7 +129,7 @@ public class PanelAttendance extends JPanel {
 
 		});
 		btn_mostraLezioni.setBackground(new Color(0, 139, 139));
-		btn_mostraLezioni.setBounds(325, 98, 75, 23);
+		btn_mostraLezioni.setBounds(364, 98, 75, 23);
 		add(btn_mostraLezioni);
 
 		JScrollPane scrollPane = new JScrollPane((Component) null);
@@ -199,7 +199,7 @@ public class PanelAttendance extends JPanel {
 				clearFields();
 			}
 		});
-		comboBoxCorsi.setBounds(135, 98, 163, 22);
+		comboBoxCorsi.setBounds(135, 98, 188, 22);
 		add(comboBoxCorsi);
 		table.getTableHeader().setReorderingAllowed(false);
 
