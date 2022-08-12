@@ -14,13 +14,11 @@ public class Connessione {
 	private String url = "jdbc:postgresql://" + ip + ":" + port + "/postgres";
 
 	private Connessione() throws SQLException {
-		// Carica il drive ed ottiene una connessione dal db default postgres
+		// Carica il drive ed ottiene una connessione dal db 
 		try {
 			Class.forName("org.postgresql.Driver");
-			connection = DriverManager.getConnection(url, username, password);
-
-			// connessione al db progetto
-			String url1 = "jdbc:postgresql://" + ip + ":" + port + "/test";
+			
+			String url1 = "jdbc:postgresql://" + ip + ":" + port + "/db_project";
 			connection = DriverManager.getConnection(url1, username, password);
 			System.out.println("Connessione Effettuata db_project");
 
@@ -28,11 +26,15 @@ public class Connessione {
 			System.out.println("Connessione del Database fallita, errore ");
 		} catch (PSQLException ex) {
 			System.out.println("Database non esiste");
+			// connessione al db default
+			connection = DriverManager.getConnection(url, username, password);
 			DBBuilder db = new DBBuilder();
 			db.creationDatabase(connection);
 
 			String url1 = "jdbc:postgresql://" + ip + ":" + port + "/test";
 			connection = DriverManager.getConnection(url1, username, password);
+			System.out.println("Connessione Effettuata db_project");
+
 		}
 	}
 

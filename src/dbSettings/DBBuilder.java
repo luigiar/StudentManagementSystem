@@ -29,7 +29,7 @@ public class DBBuilder {
 	public void creationDatabase(Connection connessione) throws SQLException {
 		Statement st = connessione.createStatement();
 		try {
-			String sql = "CREATE DATABASE test";
+			String sql = "CREATE DATABASE db_project";
 			st.execute(sql);
 			System.out.println("database creato!");
 		} catch (PSQLException e) {

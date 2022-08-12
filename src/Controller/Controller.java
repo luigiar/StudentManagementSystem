@@ -66,9 +66,7 @@ public class Controller {
 
 			e.printStackTrace();
 		}
-		
-//		conn = connessioneDB.getConnection();
-		
+				
 		
 		// Creazione delle sequence
 		builder.sequenceStudente(conn);
