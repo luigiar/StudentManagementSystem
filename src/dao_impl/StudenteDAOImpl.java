@@ -135,6 +135,7 @@ public class StudenteDAOImpl implements StudenteDAO {
 				if (mostraStudentiST != null)
 					conn.close();
 			} catch (SQLException se) {
+				se.printStackTrace();
 			}
 			try {
 				if (conn != null)
@@ -162,24 +163,26 @@ public class StudenteDAOImpl implements StudenteDAO {
 				id = risultato.getInt(1);
 			}
 		} catch (SQLException e) {
-
-		}
+			e.printStackTrace();
+		}finally {
 		try {
 			if (mostraID != null)
 				conn.close();
 		} catch (SQLException se) {
-		}
-		try {
-			if (conn != null)
-				conn.close();
-		} catch (SQLException se) {
 			se.printStackTrace();
+		} 
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException exc) {
+				exc.printStackTrace();
+			}
 		}
 		return id;
 	}
 
 	@Override
-	public void mostraStudentiIdonei(int idCorso,JTable table) throws SQLException {
+	public void mostraStudentiIdonei(int idCorso, JTable table) throws SQLException {
 		Connessione connect = Connessione.getInstance();
 		conn = connect.getConnection();
 
@@ -197,10 +200,9 @@ public class StudenteDAOImpl implements StudenteDAO {
 			String cognome = result.getString("cognome");
 			int presenze = result.getInt("presenze");
 
-			
-			model.addRow(new Object[] {id,nome,cognome, presenze});
+			model.addRow(new Object[] { id, nome, cognome, presenze });
 		}
-		
+
 	}
 
 	@Override
@@ -223,12 +225,12 @@ public class StudenteDAOImpl implements StudenteDAO {
 			aggiornaPresenza.setBoolean(4, presence);
 			aggiornaPresenza.executeUpdate();
 			System.out.println("presenza aggiornata");
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -262,7 +264,7 @@ public class StudenteDAOImpl implements StudenteDAO {
 				boolean presenza = result.getBoolean("presenza");
 				model.addRow(new Object[] { idStudente, nome, cognome, data, presenza });
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -270,7 +272,7 @@ public class StudenteDAOImpl implements StudenteDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -295,7 +297,7 @@ public class StudenteDAOImpl implements StudenteDAO {
 		DefaultTableModel registrationStudent = (DefaultTableModel) table.getModel();
 		int row = table.getSelectedRow();
 		registrationStudent.removeRow(row);
-		
+
 	}
 
 	@Override
@@ -316,11 +318,11 @@ public class StudenteDAOImpl implements StudenteDAO {
 				String nomeCorso = risultato.getString(2);
 				registrationStudent.addRow(new Object[] { idCorso, nomeCorso });
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -358,7 +360,7 @@ public class StudenteDAOImpl implements StudenteDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override

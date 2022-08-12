@@ -62,14 +62,12 @@ public class Controller {
 			connessioneDB = Connessione.getInstance();
 			conn = connessioneDB.getConnection();
 			builder = new DBBuilder(conn);
-	
-
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-
-		conn = connessioneDB.getConnection();
+		
+//		conn = connessioneDB.getConnection();
 		
 		
 		// Creazione delle sequence

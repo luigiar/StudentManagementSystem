@@ -14,27 +14,30 @@ public class Connessione {
 	private String url = "jdbc:postgresql://" + ip + ":" + port + "/postgres";
 
 	private Connessione() throws SQLException {
-		// Carica il drive ed ottiene una connessione
+		// Carica il drive ed ottiene una connessione dal db default postgres
 		try {
 			Class.forName("org.postgresql.Driver");
 			connection = DriverManager.getConnection(url, username, password);
-			
-			// creazione database progetto
-			DBBuilder db = new DBBuilder();
-			db.creationDatabase(connection);
-			
-			//connessione al db progetto
+
+			// connessione al db progetto
 			String url1 = "jdbc:postgresql://" + ip + ":" + port + "/test";
 			connection = DriverManager.getConnection(url1, username, password);
 			System.out.println("Connessione Effettuata db_project");
-			
+
 		} catch (ClassNotFoundException e) {
-			System.out.println("Connessione del Database fallita");
+			System.out.println("Connessione del Database fallita, errore ");
+		} catch (PSQLException ex) {
+			System.out.println("Database non esiste");
+			DBBuilder db = new DBBuilder();
+			db.creationDatabase(connection);
+
+			String url1 = "jdbc:postgresql://" + ip + ":" + port + "/test";
+			connection = DriverManager.getConnection(url1, username, password);
 		}
 	}
 
 	// restituita l'istanza si può fare la return della connection
-	public Connection getConnection() { // 2. costruttore che non accetta par e privato
+	public Connection getConnection() { // 2. costruttore che non accetta parametri e privato
 		return connection;
 	}
 

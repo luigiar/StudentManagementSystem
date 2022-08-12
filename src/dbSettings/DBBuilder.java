@@ -2,6 +2,7 @@ package dbSettings;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,9 +22,9 @@ public class DBBuilder {
 		connessione = null;
 	}
 
-	private boolean connessioneEsistente() {
-		return !(connessione == null);
-	}
+//	private boolean connessioneEsistente() {
+//		return !(connessione == null);
+//	}
 
 	public void creationDatabase(Connection connessione) throws SQLException {
 		Statement st = connessione.createStatement();
@@ -76,7 +77,7 @@ public class DBBuilder {
 						+ "    START 1"
 						+ "    MINVALUE 1"
 						+ "    MAXVALUE 9223372036854775807";
-				int result = st.executeUpdate(sql);
+				 st.executeUpdate(sql);
 				st.close();
 			} else {
 				System.out.println("La sequence codice studente è già presente!");
