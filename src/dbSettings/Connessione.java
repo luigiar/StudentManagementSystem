@@ -7,10 +7,10 @@ import org.postgresql.util.PSQLException;
 public class Connessione {
 	private static Connessione instance; // 1.dichiarazione di una var di tipo della classe stessa, statico e privato
 	private Connection connection = null;
-	private String username = "postgres";
-	private String password = "fasterbunny";
+	private String username = "miousername";
+	private String password = "miapassord";
 	private String ip = "localhost";
-	private String port = "5432";
+	private String port = "miaporta";
 	private String url = "jdbc:postgresql://" + ip + ":" + port + "/postgres";
 
 	private Connessione() throws SQLException {
@@ -38,7 +38,7 @@ public class Connessione {
 		}
 	}
 
-	// restituita l'istanza si può fare la return della connection
+	// restituita l'istanza si puÃ² fare la return della connection
 	public Connection getConnection() { // 2. costruttore che non accetta parametri e privato
 		return connection;
 	}
@@ -49,9 +49,9 @@ public class Connessione {
 			// creazione oggetto Connessione, se non esiste
 			instance = new Connessione();
 		} else
-		// se esiste verifica se è stata chiusa
+		// se esiste verifica se Ã¨ stata chiusa
 		if (instance.getConnection().isClosed()) {
-			// se lo è, se ne può creare un'altra
+			// se lo Ã¨, se ne puÃ² creare un'altra
 			instance = new Connessione();
 		}
 		return instance;
