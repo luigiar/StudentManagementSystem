@@ -1,1 +1,16 @@
-/bin/
+# Eclipse & IDE
+.classpath
+.project
+.settings/
+.vscode/
+.idea/
+
+# Compiled files
+*.class
+bin/
+out/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
