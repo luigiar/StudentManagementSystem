@@ -1,4 +1,4 @@
-# 🎓 Student Management System
+#  Student Management System
 
 A robust Java desktop application designed to manage university courses, student enrollments, and attendance tracking.
 This project was engineered following **Software Engineering principles**, specifically adopting the **DAO (Data Access Object) pattern** to decouple the business logic from the persistence layer.
@@ -26,7 +26,7 @@ The database is not just a storage container but ensures data integrity through 
 * **Statistics & Reporting:** View real-time stats (min/max/average students) and filter data via `TableRowFilter`.
 * **Attendance Tracking:** Monitor student presence for each lesson to determine course completion eligibility.
 
-## 📸 Screenshots
+##  Screenshots
 
 Here is a glimpse of the application in action:
 
@@ -38,14 +38,14 @@ Here is a glimpse of the application in action:
 
 ![Student List](screenshots/tabella.png)
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 * **Language:** Java
 * **GUI:** Java Swing (JFrame, JPanel, custom `TableModel`)
 * **Database:** PostgreSQL / Relational DB
 * **Documentation:** Full UML analysis (Class & Sequence Diagrams) available in the `docs/` folder.
 
-## 📂 Documentation
+##  Documentation
 
 For a deep dive into the engineering process behind this software, check the `docs/` folder:
 
@@ -59,5 +59,3 @@ For a deep dive into the engineering process behind this software, check the `do
 3. Configure the `Connessione` class with your DB credentials.
 4. Run `MainFrame` class.
 
----
-*Developed by Luigi Ariola - Computer Science Student @ UniNA*
