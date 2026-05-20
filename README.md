@@ -1,11 +1,12 @@
 #  Student Management System
+**University of Naples Federico II**
+*Object Orientation - Database Project*
 
-A robust Java desktop application designed to manage university courses, student enrollments, and attendance tracking.
+A Java desktop application designed to manage university courses, student enrollments, and attendance tracking.
 This project was engineered following **Software Engineering principles**, specifically adopting the **DAO (Data Access Object) pattern** to decouple the business logic from the persistence layer.
 
 ## Software Architecture
-
-This project is not just a collection of scripts, but a fully designed system:
+This project incudes
 
 * **Architectural Pattern:** MVC-inspired structure with a dedicated **Controller** mediating between the GUI and the Data Layer.
 * **Persistence Layer:** Implemented via **DAO Pattern** (`AdminDAO`, `CorsoDAO`, `StudenteDAO`) to handle CRUD operations abstractly.
@@ -13,7 +14,7 @@ This project is not just a collection of scripts, but a fully designed system:
 
 ## Database Engineering (PostgreSQL)
 
-The database is not just a storage container but ensures data integrity through **Advanced PL/pgSQL**:
+The database contains
 
 * **Automated Logic:** Implemented **15+ Triggers** to handle complex events (e.g., `after_lezione_insert` automatically populates attendance records).
 * **Data Integrity:** Custom **Stored Procedures** enforce constraints (e.g., ensuring course capacity is never exceeded via `before_iscrizione_studente`).
