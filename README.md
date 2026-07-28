@@ -16,7 +16,7 @@ This project incudes
 
 The database contains
 
-* **Automated Logic:** Implemented **15+ Triggers** to handle complex events (e.g., `after_lezione_insert` automatically populates attendance records).
+* **Automated Logic:** Implemented **+ Triggers** to handle  events (e.g., `after_lezione_insert` automatically populates attendance records).
 * **Data Integrity:** Custom **Stored Procedures** enforce constraints (e.g., ensuring course capacity is never exceeded via `before_iscrizione_studente`).
 * **Security:** Login credentials verification logic encapsulated directly within the DB layer via `check_login` function.
 
@@ -42,9 +42,9 @@ Here is a glimpse of the application in action:
 ##  Tech Stack
 
 * **Language:** Java
-* **GUI:** Java Swing (JFrame, JPanel, custom `TableModel`)
+* **GUI:** Java Swing 
 * **Database:** PostgreSQL / Relational DB
-* **Documentation:** Full UML analysis (Class & Sequence Diagrams) available in the `docs/` folder.
+* **Documentation:**  UML analysis (Class & Sequence Diagrams) available in the `docs/` folder.
 
 ##  Documentation
 
